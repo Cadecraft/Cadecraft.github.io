@@ -1,0 +1,194 @@
+@font-face { font-family: Starbase Disconnect;
+    src: url('cadecraft.herokuapp.com/static/fonts/starbase-disconnect.woff2') format(woff2),
+    url('cadecraft.herokuapp.com/static/fonts/starbase-disconnect.woff') format(woff);
+}
+@font-face { font-family: Starbase Disconnect; font-weight:bold;
+    src: url('cadecraft.herokuapp.com/static/fonts/starbase-disconnect.woff2') format(woff2),
+    url('cadecraft.herokuapp.com/static/fonts/starbase-disconnect.woff') format(woff);
+}
+body {
+    background-color:rgb(21, 25, 31);
+}
+input[type=text] {
+    background-color:rgb(54, 56, 59);
+    color:white;
+    border:none;
+    border-radius:4px;
+    width:70%;
+    margin:8px 8px;
+    padding:6px 6px;
+    box-shadow:0px 0px 5px black;
+}
+h1 {
+    color:white;
+    font-family:Arial;
+    font-style:normal;
+}
+h2 {
+    color:rgb(191, 196, 204);
+    font-family:Arial;
+    font-style:normal;
+}
+h3 {
+    color:rgb(90, 92, 95);
+    font-family:arial;
+    font-style:normal;
+    margin-left:8px;
+}
+h4 {
+    color:#177ab4;
+    font-family:'Starbase Disconnect';
+    font-size:16px;
+    margin-left:8px;
+}
+.h4min {
+    color:rgb(90, 92, 95);
+    font-family:'Starbase Disconnect';
+    font-size:9px;
+    margin-left:8px;
+}
+.pgtitle {
+    color:#1ca0cb;
+    font-family:'Starbase Disconnect';
+    font-size:16px;
+    margin-left:8px;
+}
+text {
+    color:rgb(191, 196, 204);
+    font-family:Arial;
+    font-style:normal;
+    font-size:16px;
+}
+hr {
+    border-color: rgb(90, 92, 95);
+}
+div {
+    background-color:rgb(11, 14, 17);
+    margin:8px;
+    color:rgb(191, 196, 204);
+    font-family:monospace;
+    font-style:normal;
+    font-size:14px;
+    border-radius:4px;
+}
+.button1 {
+    background-color:#12649e;
+    color:white;
+    border:none;
+    border-radius:4px;
+    padding:6px 2px;
+    box-shadow:0px 3px 5px black;
+    width: 20%;
+    height: auto;
+    cursor: pointer;
+    transition: border-radius 0.2s;
+}
+.button1:hover {
+    background-color:#0e4783;
+    transition: border-radius 0.2s;
+    border-radius:8px;
+}
+.button1:active {
+    background-color:#0c3779;
+    transition: border-radius 0.2s;
+    border-radius:8px;
+}
+.button1:disabled {
+    background-color:rgb(94, 94, 94);
+    transition: border-radius 0.2s;
+    border-radius:4px;
+}
+.button2 {
+    background-color:#12649e;
+    color:white;
+    border:none;
+    border-radius:0px;
+    padding:2px 2px;
+    box-shadow:0px 3px 5px black;
+    width: 17%;
+    height: 25px;
+    cursor: pointer;
+    transition:border-radius 0.2s;
+}
+.button2:hover {
+    background-color:#0e4783;
+    border-radius:12px;
+}
+.button2:active {
+    background-color:#0c3779;
+    border-radius:12px;
+}
+.button2:disabled {
+    background-color:rgb(94, 94, 94);
+    border-radius:12px;
+}
+.emph1 {
+    color:#177ab4;
+}
+.newsdiv {
+    width:20%;
+    height:120px;
+    display:inline-flex;
+    background-color:rgba(0,0,0,.4);
+    background-blend-mode: multiply;
+    box-shadow: 0px 0px 5px #5a5c5f;
+    transform: scale(1.0, 1.0);
+    transition: height 0.5s, background-color 0.5s, box-shadow 0.5s, transform 0.2s;
+}
+.newsdiv:hover {
+    height:160px;
+    background-color:rgba(0,0,0,.1);
+    box-shadow: 0px 0px 12px #5a5c5f;
+    transform: scale(1.05, 1.05);
+    transition: height 0.5s, background-color 0.5s, box-shadow 0.5s, transform 0.2s;
+}
+.hoverimg {
+    transform: scale(1.0, 1.0);
+    opacity: 1.0;
+    transition: transform 0.2s, opacity 0.2s;
+    z-index: 0.0;
+}
+.hoverimg:hover {
+    transform: scale(0.97, 0.97);
+    opacity: 0.8;
+    transition: transform 0.2s, opacity 0.2s;
+}
+.hoverimg:active {
+    transform: scale(1.5, 1.5); /* 0.88, 0.88 */
+    opacity: 1.0; /* 0.6 */
+    transition: transform 0.2s, opacity 0.2s;
+}
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    height: 300px; /* Only for demonstrations */
+}
+.noscrollbar::-webkit-scrollbar{
+    width: 0%;
+}
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+a:link {
+    color: #177ab4;
+    background-color: transparent;
+    text-decoration: underline;
+}
+a:visited {
+    color: #177ab4;
+    background-color: transparent;
+    text-decoration: underline;
+}
+a:hover {
+    color: #0e4783;
+    background-color: transparent;
+    text-decoration: underline;
+}
+a:active {
+    color: #0e4783;
+    background-color: transparent;
+    text-decoration: underline;
+}
