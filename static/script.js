@@ -1,5 +1,5 @@
 //const socket = io.connect('http://localhost:5500'); // Set to IP address or URL along with script
-const socket = io.connect('https://cadecraft.herokuapp.com');
+//const socket = io.connect('https://cadecraft.herokuapp.com');
 
 //const messageForm = document.getElementById('send-container');
 //const messageInput = document.getElementById('message-input');
