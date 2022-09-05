@@ -16,12 +16,14 @@ var morningStar = '[unsuccessful]';
 morningStar = '[successful]';
 // Print to console: welcome message
 console.log('===============');
-console.log('Welcome to Landform Eclipse! Please don\'t cheat...');
-console.log('\n  Landform Eclipse>LOGGED [REM init sequence]');
+console.log('Welcome to Landform Eclipse by Cadecraft! Please don\'t cheat...');
+console.log('-');
+console.log('  Landform Eclipse>LOGGED [REM init sequence]');
 console.log('  recentVersion>'+recentVersion);
 console.log('  editDate>'+editDate);
 console.log('  morningStar>'+morningStar);
-console.log('\nAre you a *developer*? `dbgm=true;`');
+console.log('-');
+console.log('Are you a *developer*? `dbgm=true;`');
 console.log('===============');
 // Update on-screen version
 /* to add~ */
