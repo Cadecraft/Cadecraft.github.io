@@ -34,7 +34,8 @@ console.log('===============');
 
 // Game defs
 var dbgm = false; // Debug mode: allows flight, etc.
-var globalScale = 1.0;
+var globalScale = 2.0;
+var blockWidth = 18;
 var worldMap = [
     [0,0,0,0,0],
     [0,0,0,0,0],
@@ -51,8 +52,8 @@ var worldMap = [
 //
 
 function screenToWorld(inscreenx, inscreeny) {
-    var newx = (inscreenx-(window.innerWidth*0.5))/(18*globalScale);
-    var newy = (inscreeny-(window.innerHeight*0.5))/(18*globalScale);
+    var newx = (inscreenx-(window.innerWidth*0.5))/(blockWidth*globalScale);
+    var newy = (inscreeny-(window.innerHeight*0.5))/(blockWidth*globalScale);
     //newx += mychar.locx;
     //newy += mychar.locy;
     return({
@@ -61,8 +62,8 @@ function screenToWorld(inscreenx, inscreeny) {
     });
 }
 function worldToScreen(inworldx, inworldy) {
-    var newx = ((inworldx/*-mychar.locx*/)*(18*globalScale))+(window.innerWidth*0.5);
-    var newy = ((inworldx/*-mychar.locx*/)*(18*globalScale))+(window.innerWidth*0.5);
+    var newx = ((inworldx/*-mychar.locx*/)*(blockWidth*globalScale))+(window.innerWidth*0.5);
+    var newy = ((inworldx/*-mychar.locx*/)*(blockWidth*globalScale))+(window.innerWidth*0.5);
     return({
         'x': newx,
         'y': newy
@@ -190,7 +191,7 @@ function gameInput() {
 function render() {
     // Set global scale if screen width has changed?
     // Defs
-    var iwidth=18*globalScale;
+    var iwidth=blockWidth*globalScale;
     var offsetx = 0/*mychar.locx*/*-1 + (window.innerWidth*0.5)/iwidth;
     var offsety = 0/*mychar.locy*/*-1 + (window.innerHeight*0.5)/iwidth;
     var thistime = new Date();
@@ -198,8 +199,8 @@ function render() {
     var c = document.getElementById('gamecanvas');
     var ctx = c.getContext('2d');
     // Canvas size
-    //ctx.canvas.width = window.innerWidth-20;
-    //ctx.canvas.height = window.innerHeight-20;
+    ctx.canvas.width = window.innerWidth-20;
+    ctx.canvas.height = window.innerHeight-20;
     // Canvas defs
     ctx.imageSmoothingEnabled = false;
     // Clear canvas with sky/bg
@@ -217,7 +218,7 @@ function render() {
                 // Determine location and whether is in view; cull outside (toadd)
                 var drawx = (x+offsetx)*iwidth;
                 var drawy = (y+offsety)*iwidth;
-                if(drawx > iwidth*-1 && drawx < window.innerWidth && drawy <= iwidth*-1 && drawy < window.innerHeight) {
+                if(drawx > iwidth*-1 && drawx < window.innerWidth && drawy > iwidth*-1 && drawy < window.innerHeight) {
                     // Draw
                     try {
                         ctx.fillStyle = 'rgb(200, 0, 0)';
