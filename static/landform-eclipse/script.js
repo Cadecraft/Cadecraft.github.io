@@ -42,6 +42,7 @@ var worldMap = [
     [0,0,0,0,0],
     [2,2,2,2,2]
 ]
+var mychar = new Player(2, 2);
 
 // Game def objects: music/audios
 
@@ -54,16 +55,16 @@ var worldMap = [
 function screenToWorld(inscreenx, inscreeny) {
     var newx = (inscreenx-(window.innerWidth*0.5))/(blockWidth*globalScale);
     var newy = (inscreeny-(window.innerHeight*0.5))/(blockWidth*globalScale);
-    //newx += mychar.locx;
-    //newy += mychar.locy;
+    newx += mychar.locx;
+    newy += mychar.locy;
     return({
         'x': newx,
         'y': newy
     });
 }
 function worldToScreen(inworldx, inworldy) {
-    var newx = ((inworldx/*-mychar.locx*/)*(blockWidth*globalScale))+(window.innerWidth*0.5);
-    var newy = ((inworldx/*-mychar.locx*/)*(blockWidth*globalScale))+(window.innerWidth*0.5);
+    var newx = ((inworldx-mychar.locx)*(blockWidth*globalScale))+(window.innerWidth*0.5);
+    var newy = ((inworldx-mychar.locy)*(blockWidth*globalScale))+(window.innerWidth*0.5);
     return({
         'x': newx,
         'y': newy
@@ -192,8 +193,8 @@ function render() {
     // Set global scale if screen width has changed?
     // Defs
     var iwidth=blockWidth*globalScale;
-    var offsetx = 0/*mychar.locx*/*-1 + (window.innerWidth*0.5)/iwidth;
-    var offsety = 0/*mychar.locy*/*-1 + (window.innerHeight*0.5)/iwidth;
+    var offsetx = mychar.locx*-1 + (window.innerWidth*0.5)/iwidth;
+    var offsety = mychar.locy*-1 + (window.innerHeight*0.5)/iwidth;
     var thistime = new Date();
     // Get canvas
     var c = document.getElementById('gamecanvas');
