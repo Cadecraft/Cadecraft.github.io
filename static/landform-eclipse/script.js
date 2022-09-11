@@ -1,8 +1,11 @@
 // LANDFORM ECLIPSE script
 
 /*
-TO ADD:
-> None
+TO ADD (also search: `toadd`):
+> Velocity correction veleq (?)
+> Settling down onto ground effect (falling y loc)
+> Single jump
+> Roof collisions
 RECENT CHANGES
 > None
 */
@@ -19,6 +22,7 @@ var morningStar = '[unsuccessful]';
 // Morning star: testing
 morningStar = '[successful]';
 // Print to console: welcome message
+console.log('\n\n\n');
 console.log('===============');
 console.log('Welcome to Landform Eclipse by Cadecraft! Please don\'t cheat...');
 console.log('-');
@@ -28,6 +32,9 @@ console.log('  editDate>'+editDate);
 console.log('  morningStar>'+morningStar);
 console.log('-');
 console.log('Are you a *developer*? `dbgm=true;`');
+console.log('Found any *bugs*? Please report them~ https://discord.gg/wahdQHBs4Z');
+console.log('===============');
+console.log('\n\n\n');
 console.log('===============');
 // Update on-screen version
 /* to add~ */
@@ -37,12 +44,15 @@ var dbgm = false; // Debug mode: allows flight, etc.
 var globalScale = 2.0;
 var blockWidth = 18;
 var worldMap = [
-    [0,0,0,0,0],
-    [0,0,0,0,0],
-    [0,0,0,0,0],
-    [2,2,2,2,2]
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [2,0,0,0,0,0,0,0,0,0,0],
+    [2,2,0,0,0,0,0,2,0,0,0],
+    [0,0,0,0,0,0,2,2,2,0,0],
+    [0,0,0,0,0,0,2,2,2,0,0],
+    [1,0,0,2,2,2,2,2,2,2,2],
+    [2,2,2,2,2,2,2,2,2,2,2]
 ]
-var mychar = new Player(2, 2);
+var mychar = new Player(3, 2);
 
 // Game def objects: music/audios
 
@@ -64,7 +74,7 @@ function screenToWorld(inscreenx, inscreeny) {
 }
 function worldToScreen(inworldx, inworldy) {
     var newx = ((inworldx-mychar.locx)*(blockWidth*globalScale))+(window.innerWidth*0.5);
-    var newy = ((inworldx-mychar.locy)*(blockWidth*globalScale))+(window.innerWidth*0.5);
+    var newy = ((inworldy-mychar.locy)*(blockWidth*globalScale))+(window.innerWidth*0.5);
     return({
         'x': newx,
         'y': newy
@@ -136,7 +146,7 @@ document.addEventListener('keyup',
 //
 //
 
-const gameInterval = 20;
+var gameInterval = 17;
 setInterval(gameLoop, gameInterval);
 
 // On first start game
@@ -149,9 +159,11 @@ gameStart(); // call
 // Game loop
 function gameLoop() {
     // Reduce timers
+    // Determine velocity equalization based on time passed (?) (toadd?)
     // Handle input if not dead
     gameInput();
     // Apply char physics
+    mychar.applyPhysics(worldMap);
     // Apply entity physics
     // Apply projectiles velocity
     // Check collision (projectiles and items) if not dead
@@ -173,15 +185,18 @@ function gameInput() {
     // Use controls
     if(inputs.includes('left')) {
         // Move left
+        mychar.addVel(mychar.phys_accel*-1, 0);
     }
     if(inputs.includes('right')) {
         // Move right
+        mychar.addVel(mychar.phys_accel, 0);
     }
     if(inputs.includes('down')) {
         // Crouch
     }
     if(inputs.includes('jump')) {
         // Jump
+        mychar.jump(1);
     }
     if(mousedown) {
         // Click
@@ -200,36 +215,65 @@ function render() {
     var c = document.getElementById('gamecanvas');
     var ctx = c.getContext('2d');
     // Canvas size
-    ctx.canvas.width = window.innerWidth-20;
-    ctx.canvas.height = window.innerHeight-20;
+    ctx.canvas.width = window.innerWidth-8;
+    ctx.canvas.height = window.innerHeight-8;
     // Canvas defs
     ctx.imageSmoothingEnabled = false;
     // Clear canvas with sky/bg
-    ctx.fillStyle = 'rgb(20, 20, 255)';
+    ctx.fillStyle = 'rgb(20, 25, 30)';
     ctx.fillRect(0, 0, c.width, c.height);
+    ctx.globalAlpha = 1.0;
 
+    // WORLD
     // Render blocks
     for(let y = 0; y < worldMap.length; y++) {
         for(let x = 0; x < worldMap[0].length; x++) {
             // Each block:
             var thisblock = worldMap[y][x];
+            var drawx = (x+offsetx)*iwidth;
+                var drawy = (y+offsety)*iwidth;
             if(thisblock == 0) {
 
             } else {
                 // Determine location and whether is in view; cull outside (toadd)
-                var drawx = (x+offsetx)*iwidth;
-                var drawy = (y+offsety)*iwidth;
                 if(drawx > iwidth*-1 && drawx < window.innerWidth && drawy > iwidth*-1 && drawy < window.innerHeight) {
                     // Draw
                     try {
                         ctx.fillStyle = 'rgb(200, 0, 0)';
                         ctx.fillRect(drawx, drawy, Math.ceil(iwidth), Math.ceil(iwidth));
-                    }
-                    catch(err) {
-                        console.log('Err rendering block: '+thisblock);
+                    } catch(err) {
+                        console.log('err: rendering block: '+thisblock);
                     }
                 }
             }
+            // Dbg: is highlighted?
+            if(((mychar.dbg_highl_bl1[1] == x && mychar.dbg_highl_bl1[0] == y)
+                || (mychar.dbg_highl_bl2[1] == x && mychar.dbg_highl_bl2[0] == y))
+                && mychar.dbg_highl_enable) {
+                // Highlight~
+                var drawx = (x+offsetx)*iwidth;
+                var drawy = (y+offsety)*iwidth;
+                ctx.fillStyle = 'rgb(0, 255, 255)';
+                ctx.globalAlpha = 0.5;
+                ctx.fillRect(drawx, drawy, Math.ceil(iwidth), Math.ceil(iwidth));
+                ctx.globalAlpha = 1.0;
+            }
         }
     }
+
+    // CHARACTERS
+    // Render player
+    var drawx = (mychar.locx+offsetx)*iwidth;
+    var drawy = (mychar.locy+offsety)*iwidth;
+    try {
+        ctx.fillStyle = 'rgb(0, 200, 0)';
+        ctx.fillRect(drawx, drawy, Math.ceil(iwidth), Math.ceil(iwidth));
+        ctx.fillStyle = 'rgb(0, 100, 0)';
+        ctx.fillRect(drawx, drawy-iwidth, Math.ceil(iwidth), Math.ceil(iwidth));
+    } catch(err) {
+        console.log('err: rendering PLAYER');
+    }
+
+
+    // FX
 }
