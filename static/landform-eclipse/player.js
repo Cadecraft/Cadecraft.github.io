@@ -1,4 +1,5 @@
 // LANDFORM ECLIPSE script
+
 // Player script
 class Player {
     // Constructor/reset
@@ -12,6 +13,7 @@ class Player {
         this.locy = locy;
         this.velx = 0;
         this.vely = 0;
+        this.isFalling = true;
         // Physics defs
         this.phys_decel = 0.03;
         this.phys_accel = 0.08;
@@ -19,6 +21,7 @@ class Player {
         this.phys_velxmax = 0.1;
         this.phys_velymax = 0.6;
         this.phys_xshrinkbias = 0.15;
+        this.phys_yheightbias = 0.3;
         this.phys_jumpvel = 0.4; // 0.4
         // Dbg defs
         this.dbg_highl_enable = false; // false
@@ -46,11 +49,11 @@ class Player {
         // Check valid X
         //this.dbg_highl_bl1 = [Math.floor(this.locy), Math.floor(this.locx)];
         //this.dbg_highl_bl2 = [Math.floor(this.locy+1), Math.floor(this.locx)];
-        if(this.getMapBlock(map, Math.floor(this.locy), Math.floor(this.locx+direc)) != 0) { // map[Math.floor(this.locy)][Math.floor(this.locx+direc)+direcadj] != 0
+        if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy), Math.floor(this.locx+direc))].collision == 'solid') { // map[Math.floor(this.locy)][Math.floor(this.locx+direc)+direcadj] != 0
             this.locx -= this.velx;
             this.velx = 0;
         }
-        if(this.getMapBlock(map, Math.floor(this.locy+1), Math.floor(this.locx+direc)) != 0) { // map[Math.floor(this.locy+1)][Math.floor(this.locx+direc)+direcadj] != 0
+        if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy+1), Math.floor(this.locx+direc))].collision == 'solid') { // map[Math.floor(this.locy+1)][Math.floor(this.locx+direc)+direcadj] != 0
             this.locx -= this.velx;
             this.velx = 0;
         }
@@ -60,16 +63,30 @@ class Player {
         // Check valid Y
         // Below
         if(this.vely > 0) {
-            if(this.getMapBlock(map, Math.floor(this.locy+1), Math.floor(this.locx+this.phys_xshrinkbias)) != 0) { // map[Math.floor(this.locy+1)][Math.floor(this.locx+this.phys_xshrinkbias)] != 0
+            this.isFalling = true;
+            if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy+1), Math.floor(this.locx+this.phys_xshrinkbias))].collision == 'solid') { // map[Math.floor(this.locy+1)][Math.floor(this.locx+this.phys_xshrinkbias)] != 0
                 this.locy -= this.vely;
                 this.vely = 0;
+                this.isFalling = false;
             }
-            if(this.getMapBlock(map, Math.floor(this.locy+1), Math.floor(this.locx+1-this.phys_xshrinkbias)) != 0) { // map[Math.floor(this.locy+1)][Math.floor(this.locx+1-this.phys_xshrinkbias)] != 0
+            if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy+1), Math.floor(this.locx+1-this.phys_xshrinkbias))].collision == 'solid') { // map[Math.floor(this.locy+1)][Math.floor(this.locx+1-this.phys_xshrinkbias)] != 0
                 this.locy -= this.vely;
+                this.vely = 0;
+                this.isFalling = false;
+            }
+        }
+        // Above
+        if(this.vely < 0) {
+            this.isFalling = true;
+            if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy-1+this.phys_yheightbias), Math.floor(this.locx+this.phys_xshrinkbias))].collision == 'solid') { // map[Math.floor(this.locy+1)][Math.floor(this.locx+this.phys_xshrinkbias)] != 0
+                //this.locy -= this.vely;
+                this.vely = 0;
+            }
+            if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy-1+this.phys_yheightbias), Math.floor(this.locx+1-this.phys_xshrinkbias))].collision == 'solid') { // map[Math.floor(this.locy+1)][Math.floor(this.locx+1-this.phys_xshrinkbias)] != 0
+                //this.locy -= this.vely;
                 this.vely = 0;
             }
         }
-        // Above (toadd)
 
         // Deceleration
         if(this.velx > 0) {

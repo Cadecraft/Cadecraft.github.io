@@ -5,7 +5,7 @@ TO ADD (also search: `toadd`):
 > Velocity correction veleq (?)
 > Settling down onto ground effect (falling y loc)
 > Single jump
-> Roof collisions
+> Fix pixel rendering
 RECENT CHANGES
 > None
 */
@@ -42,21 +42,39 @@ console.log('===============');
 // Game defs
 var dbgm = false; // Debug mode: allows flight, etc.
 var globalScale = 2.0;
-var blockWidth = 18;
+var blockWidth = 16;
 var worldMap = [
     [0,0,0,0,0,0,0,0,0,0,0],
     [2,0,0,0,0,0,0,0,0,0,0],
-    [2,2,0,0,0,0,0,2,0,0,0],
-    [0,0,0,0,0,0,2,2,2,0,0],
-    [0,0,0,0,0,0,2,2,2,0,0],
-    [1,0,0,2,2,2,2,2,2,2,2],
-    [2,2,2,2,2,2,2,2,2,2,2]
-]
+    [1,2,0,0,0,0,0,2,2,0,0],
+    [0,0,0,0,0,0,2,1,1,0,0],
+    [0,0,0,0,0,0,1,1,1,0,2],
+    [2,0,0,2,2,2,1,1,1,2,1],
+    [1,2,2,1,1,1,1,1,1,1,1]
+];
+/*var worldStates = [
+    [{'hp':100},{'hp':100}]
+];*/
 var mychar = new Player(3, 2);
 
 // Game def objects: music/audios
 
 // Load images to the html
+for(let i = 0; i < Object.keys(BLOCKS).length; i++) {
+    // Get src url
+    var imgsrc = BLOCKS[i].img;
+    if(imgsrc == 'none') { continue; }
+    imgsrc = 'static/landform-eclipse/' + imgsrc;
+    // Load img
+    try {
+        const imgelement = document.createElement('img');
+        imgelement.src = imgsrc;
+        imgelement.id = BLOCKS[i].img;
+        document.getElementById('imgfiles').append(imgelement);
+    } catch(err) {
+        console.log('err: loading images: block id='+i);
+    }
+}
 
 // UTILITY FUNCTIONS
 //
@@ -232,15 +250,17 @@ function render() {
             var thisblock = worldMap[y][x];
             var drawx = (x+offsetx)*iwidth;
                 var drawy = (y+offsety)*iwidth;
-            if(thisblock == 0) {
-
+            if(BLOCKS[thisblock].img == 'none') {
+                // Do not draw
             } else {
                 // Determine location and whether is in view; cull outside (toadd)
                 if(drawx > iwidth*-1 && drawx < window.innerWidth && drawy > iwidth*-1 && drawy < window.innerHeight) {
                     // Draw
                     try {
-                        ctx.fillStyle = 'rgb(200, 0, 0)';
-                        ctx.fillRect(drawx, drawy, Math.ceil(iwidth), Math.ceil(iwidth));
+                        var imgloaded = document.getElementById(BLOCKS[thisblock].img);
+                        //ctx.fillStyle = 'rgb(200, 0, 0)';
+                        ctx.drawImage(imgloaded, 0, 0, 16, 16, drawx, drawy, Math.ceil(iwidth), Math.ceil(iwidth));
+                        //ctx.fillRect(drawx, drawy, Math.ceil(iwidth), Math.ceil(iwidth));
                     } catch(err) {
                         console.log('err: rendering block: '+thisblock);
                     }
@@ -273,7 +293,6 @@ function render() {
     } catch(err) {
         console.log('err: rendering PLAYER');
     }
-
 
     // FX
 }
