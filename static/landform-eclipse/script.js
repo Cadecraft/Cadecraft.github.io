@@ -259,7 +259,7 @@ function render() {
                     try {
                         var imgloaded = document.getElementById(BLOCKS[thisblock].img);
                         //ctx.fillStyle = 'rgb(200, 0, 0)';
-                        ctx.drawImage(imgloaded, 0, 0, 16, 16, drawx, drawy, Math.ceil(iwidth), Math.ceil(iwidth));
+                        ctx.drawImage(imgloaded, 0, 0, 16, 16, Math.floor(drawx), Math.floor(drawy), Math.ceil(iwidth), Math.ceil(iwidth));
                         //ctx.fillRect(drawx, drawy, Math.ceil(iwidth), Math.ceil(iwidth));
                     } catch(err) {
                         console.log('err: rendering block: '+thisblock);
@@ -275,7 +275,7 @@ function render() {
                 var drawy = (y+offsety)*iwidth;
                 ctx.fillStyle = 'rgb(0, 255, 255)';
                 ctx.globalAlpha = 0.5;
-                ctx.fillRect(drawx, drawy, Math.ceil(iwidth), Math.ceil(iwidth));
+                ctx.fillRect(Math.floor(drawx), Math.floor(drawy), Math.ceil(iwidth), Math.ceil(iwidth));
                 ctx.globalAlpha = 1.0;
             }
         }
