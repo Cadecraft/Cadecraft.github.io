@@ -32,8 +32,8 @@ console.log('-');
 console.log('Are you a *developer*? `dbgm=true;`');
 console.log('Found any *bugs*? Please report them~ https://discord.gg/wahdQHBs4Z');
 console.log('===============');
-console.log('\n\n\n');
-console.log('===============');
+//console.log('\n\n\n');
+//console.log('===============');
 // Update on-screen version
 /* to add~ */
 
@@ -41,20 +41,46 @@ console.log('===============');
 var dbgm = false; // Debug mode: allows flight, etc.
 var globalScale = 2.0;
 var blockWidth = 16;
+var generateWorld = false;
 var worldMap = [
     [2,2,2],
     [1,1,1],
     [1,1,1]
 ];
-worldMap = maps["m-testing-default"]
-/*var worldStates = [
-    [{'hp':100},{'hp':100}]
-];*/
+var worldStates = [];
+
+// Load game defs: load/generate map and world states
+console.log('loading world: loading...');
+try {
+    // Map (load from datas-maps.js file OR generate)
+    if(generateWorld) {
+        console.log('loading world: generating...');
+        // (toadd)
+    } else {
+        console.log('loading world: fetching...');
+        worldMap = maps["m-testing-default"];
+    }
+    console.log('loading world: world states...');
+    // World states (generate)
+    for(let y = 0; y < worldMap.length; y++) {
+        worldStates.push([]);
+        for(let x = 0; x < worldMap.length; x++) {
+            worldStates[y].push({
+                'dmg': 0,
+                'state': 0
+            });
+        }
+    }
+} catch(err) { console.log('err: loading map \'m-testing-default\' or loading world states'); }
+console.log('loading world: completed~!')
+
+// Load game defs: player character (mychar)
 var mychar = new Player(3, 2);
 
-// Game def objects: music/audios
+// Load game defs: music/audios
 
 // Load images to the html
+console.log('loading images: loading...');
 for(let i = 0; i < Object.keys(BLOCKS).length; i++) {
     // Get src url
     var imgsrc = BLOCKS[i].img;
@@ -70,6 +96,7 @@ for(let i = 0; i < Object.keys(BLOCKS).length; i++) {
         console.log('err: loading images: block id='+i);
     }
 }
+console.log('loading images: completed~!');
 
 // UTILITY FUNCTIONS
 //
