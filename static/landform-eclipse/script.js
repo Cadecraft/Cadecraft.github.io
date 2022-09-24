@@ -14,9 +14,7 @@ RECENT CHANGES
 //
 //
 
-// Sys defs (REM init sequence)
-const recentVersion = '0.0.1';
-const editDate = '2022/9/5';
+// Sys defs (REM init sequence pt 2)
 var morningStar = '[unsuccessful]';
 
 // Morning star: testing
@@ -44,14 +42,11 @@ var dbgm = false; // Debug mode: allows flight, etc.
 var globalScale = 2.0;
 var blockWidth = 16;
 var worldMap = [
-    [0,0,0,0,0,0,0,0,0,0,0],
-    [2,0,0,0,0,0,0,0,0,0,0],
-    [1,2,0,0,0,0,0,2,2,0,0],
-    [0,0,0,0,0,0,2,1,1,0,0],
-    [0,0,0,0,0,0,1,1,1,0,2],
-    [2,0,0,2,2,2,1,1,1,2,1],
-    [1,2,2,1,1,1,1,1,1,1,1]
+    [2,2,2],
+    [1,1,1],
+    [1,1,1]
 ];
+worldMap = maps["m-testing-default"]
 /*var worldStates = [
     [{'hp':100},{'hp':100}]
 ];*/
