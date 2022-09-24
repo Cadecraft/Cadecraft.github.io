@@ -15,14 +15,14 @@ class Player {
         this.vely = 0;
         this.isFalling = true;
         // Physics defs
-        this.phys_decel = 0.03;
-        this.phys_accel = 0.08;
+        this.phys_decel = 0.023; // 0.023
+        this.phys_accel = 0.034; // 0.034
         this.phys_grav = 0.023;
-        this.phys_velxmax = 0.1;
+        this.phys_velxmax = 0.145; // 0.14
         this.phys_velymax = 0.6;
         this.phys_xshrinkbias = 0.15;
         this.phys_yheightbias = 0.3;
-        this.phys_jumpvel = 0.4; // 0.4
+        this.phys_jumpvel = 0.33; // 0.33
         // Dbg defs
         this.dbg_highl_enable = false; // false
         this.dbg_highl_bl1 = [0,0];
@@ -32,7 +32,7 @@ class Player {
     getMapBlock(map, locy, locx) {
         if(locy >= 0 && locy < map.length && locx >= 0 && locx < map[0].length) {
             return map[locy][locx];
-        } else { return 0; }
+        } else { return -1; }
     }
     // Apply physics/vel
     applyPhysics(map) {
@@ -63,14 +63,21 @@ class Player {
         // Check valid Y
         // Below
         if(this.vely > 0) {
+            var wasFalling = this.isFalling;
             this.isFalling = true;
-            if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy+1), Math.floor(this.locx+this.phys_xshrinkbias))].collision == 'solid') { // map[Math.floor(this.locy+1)][Math.floor(this.locx+this.phys_xshrinkbias)] != 0
-                this.locy -= this.vely;
+            if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy+1.1), Math.floor(this.locx+this.phys_xshrinkbias))].collision == 'solid') { // map[Math.floor(this.locy+1)][Math.floor(this.locx+this.phys_xshrinkbias)] != 0
+                //if(wasFalling) {
+                    //this.locy -= this.vely;
+                //}
+                this.locy = Math.floor(this.locy+0.1)-0.1
                 this.vely = 0;
                 this.isFalling = false;
             }
-            if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy+1), Math.floor(this.locx+1-this.phys_xshrinkbias))].collision == 'solid') { // map[Math.floor(this.locy+1)][Math.floor(this.locx+1-this.phys_xshrinkbias)] != 0
-                this.locy -= this.vely;
+            if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy+1.1), Math.floor(this.locx+1-this.phys_xshrinkbias))].collision == 'solid') { // map[Math.floor(this.locy+1)][Math.floor(this.locx+1-this.phys_xshrinkbias)] != 0
+                //if(wasFalling) {
+                    //this.locy -= this.vely;
+                //}
+                this.locy = Math.floor(this.locy+0.1)-0.1
                 this.vely = 0;
                 this.isFalling = false;
             }
@@ -110,6 +117,8 @@ class Player {
     }
     // Jump
     jump(strengthMult) {
-        this.vely = strengthMult*-1*this.phys_jumpvel
+        if(!this.isFalling) {
+            this.vely = strengthMult*-1*this.phys_jumpvel
+        }
     }
 }

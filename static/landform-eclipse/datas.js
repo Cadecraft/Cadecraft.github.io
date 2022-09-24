@@ -17,7 +17,16 @@ const IMGS_OTHER = [
 ]
 
 // Blocks info
+const BLOCKS_startsat = -1;
 const BLOCKS = {
+    '-1': {
+        iname: 'Void',
+        img: 'none',
+        placeable: false,
+        collision: 'none',
+        hp: -1,
+        drops: []
+    },
     0: {
         iname: 'Air', // Inv name
         idescr: 'Nothing to see here~ [unobtainable]', // Inv descr
@@ -25,7 +34,7 @@ const BLOCKS = {
         img: 'none', // `none` or static/landform-eclipse/<img>
         placeable: false, // Can be placed in the world
         collision: 'none', // Collision with entities
-        hp: 1, // Block health
+        hp: -1, // Block health: -1 = unmineable
         drops: [], // Block IDs to drop
     },
     1: {

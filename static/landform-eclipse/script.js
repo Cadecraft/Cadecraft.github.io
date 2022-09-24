@@ -3,9 +3,10 @@
 /*
 TO ADD (also search: `toadd`):
 > Velocity correction veleq (?)
+> Acceleration
 > Settling down onto ground effect (falling y loc)
-> Single jump
-> Fix pixel rendering
+> Single jump: due to above settling to ground effect
+> Respawn on fall too far
 RECENT CHANGES
 > None
 */
@@ -58,7 +59,7 @@ try {
         // (toadd)
     } else {
         console.log('loading world: fetching...');
-        worldMap = maps["m-testing-default"];
+        worldMap = maps["m-testing-2"];
     }
     console.log('loading world: world states...');
     // World states (generate)
@@ -71,7 +72,7 @@ try {
             });
         }
     }
-} catch(err) { console.log('err: loading map \'m-testing-default\' or loading world states'); }
+} catch(err) { console.log('err: loading map or loading world states'); }
 console.log('loading world: completed~!')
 
 // Load game defs: player character (mychar)
@@ -81,7 +82,7 @@ var mychar = new Player(3, 2);
 
 // Load images to the html
 console.log('loading images: loading...');
-for(let i = 0; i < Object.keys(BLOCKS).length; i++) {
+for(let i = BLOCKS_startsat; i < Object.keys(BLOCKS).length+BLOCKS_startsat; i++) {
     // Get src url
     var imgsrc = BLOCKS[i].img;
     if(imgsrc == 'none') { continue; }
@@ -119,6 +120,11 @@ function worldToScreen(inworldx, inworldy) {
         'x': newx,
         'y': newy
     });
+}
+function getMapBlock(map, locy, locx) {
+    if(locy >= 0 && locy < map.length && locx >= 0 && locx < map[0].length) {
+        return map[locy][locx];
+    } else { return -1; }
 }
 
 // INPUT
@@ -220,7 +226,7 @@ function gameInput() {
     if(keys['a']) { inputs.push('left'); }
     if(keys['d']) { inputs.push('right'); }
     if(keys['s']) { inputs.push('down'); }
-    if(keys[' '] || keys['w']) { inputs.push('jump'); keys[' ']=false; keys['w'] = false; }
+    if(keys[' '] || keys['w']) { inputs.push('jump'); }
 
     // Use controls
     if(inputs.includes('left')) {
@@ -240,6 +246,17 @@ function gameInput() {
     }
     if(mousedown) {
         // Click
+        // Based on item type in player inv (toadd~)
+        if(false) {
+            // use item
+        } else {
+            // Try to dig block
+            // Get map block (air = void = 0)
+            var newblock = getMapBlock(worldMap, pointerybl, pointerxbl);
+            if(BLOCKS[newblock].hp > 0) { // determines if mineable
+                worldMap[pointerybl][pointerxbl] = 0;
+            }
+        }
     }
 }
 
