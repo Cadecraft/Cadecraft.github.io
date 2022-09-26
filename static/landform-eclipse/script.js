@@ -4,9 +4,9 @@
 TO ADD (also search: `toadd`):
 > Velocity correction veleq (?)
 > Acceleration
-> Settling down onto ground effect (falling y loc)
-> Single jump: due to above settling to ground effect
+> Settling down onto ground effect (falling y loc)--snap y location closer to the ground (floor/ceil)
 > Respawn on fall too far
+> Reduce air control
 RECENT CHANGES
 > None
 */
@@ -65,7 +65,7 @@ try {
     // World states (generate)
     for(let y = 0; y < worldMap.length; y++) {
         worldStates.push([]);
-        for(let x = 0; x < worldMap.length; x++) {
+        for(let x = 0; x < worldMap[0].length; x++) {
             worldStates[y].push({
                 'dmg': 0,
                 'state': 0
@@ -125,6 +125,35 @@ function getMapBlock(map, locy, locx) {
     if(locy >= 0 && locy < map.length && locx >= 0 && locx < map[0].length) {
         return map[locy][locx];
     } else { return -1; }
+}
+function getMapBlockState(states, locy, locx) {
+    if(locy >= 0 && locy < states.length && locx >= 0 && locx < states[0].length) {
+        return states[locy][locx];
+    } else { return {
+        'dmg': 0,
+        'state': -1
+    }; }
+}
+
+// WORLD FUNCTIONS
+//
+//
+
+function tryDamageBlock(indmg) {
+    // Get map block (air = void = 0)
+    var newblock = getMapBlock(worldMap, pointerybl, pointerxbl);
+    var newblockState = getMapBlockState(worldStates, pointerybl, pointerxbl);
+    if(BLOCKS[newblock].hp > 0 && newblockState.state != -1) { // determines if mineable
+        // Deal damage to block
+        worldStates[pointerybl][pointerxbl].dmg++;
+        // Check that block health is in range
+        if(worldStates[pointerybl][pointerxbl].dmg >= BLOCKS[newblock].hp) {
+            // Destroy block and drop if necessary
+            worldMap[pointerybl][pointerxbl] = 0;
+        } else {
+            // Nothing
+        }
+    }
 }
 
 // INPUT
@@ -250,12 +279,9 @@ function gameInput() {
         if(false) {
             // use item
         } else {
+            // Is timer done? (toadd~)
             // Try to dig block
-            // Get map block (air = void = 0)
-            var newblock = getMapBlock(worldMap, pointerybl, pointerxbl);
-            if(BLOCKS[newblock].hp > 0) { // determines if mineable
-                worldMap[pointerybl][pointerxbl] = 0;
-            }
+            tryDamageBlock(1);
         }
     }
 }
