@@ -1,14 +1,17 @@
 // LANDFORM ECLIPSE script
 
 /*
-TO ADD (also search: `toadd`):
-> Velocity correction veleq (?)
+TO ADD (also search: `toadd`~):
+> Velocity correction veleq for time (?)
 > Acceleration
 > Settling down onto ground effect (falling y loc)--snap y location closer to the ground (floor/ceil)
 > Respawn on fall too far
 > Reduce air control
+> Tightness of deceleration
+
 RECENT CHANGES
 > None
+
 */
 
 // DEFS
@@ -97,6 +100,21 @@ for(let i = BLOCKS_startsat; i < Object.keys(BLOCKS).length+BLOCKS_startsat; i++
         console.log('err: loading images: block id='+i);
     }
 }
+for(let i = 0; i < IMGS_OTHER.length; i++) {
+    // Get src url
+    var imgsrc = IMGS_OTHER[i];
+    if(imgsrc == 'none') { continue; }
+    imgsrc = 'static/landform-eclipse/' + imgsrc;
+    // Load img
+    try {
+        const imgelement = document.createElement('img');
+        imgelement.src = imgsrc;
+        imgelement.id = IMGS_OTHER[i];
+        document.getElementById('imgfiles').append(imgelement);
+    } catch(err) {
+        console.log('err: loading images: img_other id='+i);
+    }
+}
 console.log('loading images: completed~!');
 
 // UTILITY FUNCTIONS
@@ -153,7 +171,9 @@ function tryDamageBlock(indmg) {
         } else {
             // Nothing
         }
+        return true;
     }
+    else { return false; }
 }
 
 // INPUT
@@ -221,7 +241,8 @@ document.addEventListener('keyup',
 //
 //
 
-var gameInterval = 17;
+// Game interval settings
+const gameInterval = 17;
 setInterval(gameLoop, gameInterval);
 
 // On first start game
@@ -231,9 +252,17 @@ function gameStart() {
 }
 gameStart(); // call
 
+// Timers
+var timers = {
+    "timer_mining": 0
+};
+
 // Game loop
 function gameLoop() {
     // Reduce timers
+    for(let i = 0; i < Object.keys(timers).length; i++) {
+        timers[Object.keys(timers)[i]] -= 17;
+    }
     // Determine velocity equalization based on time passed (?) (toadd?)
     // Handle input if not dead
     gameInput();
@@ -279,9 +308,14 @@ function gameInput() {
         if(false) {
             // use item
         } else {
-            // Is timer done? (toadd~)
-            // Try to dig block
-            tryDamageBlock(1);
+            // Is timer done?
+            if(timers["timer_mining"] <= 0) {
+                // Try to dig block
+                var blockDamaged = tryDamageBlock(1);
+                if(blockDamaged) {
+                    timers["timer_mining"] = mychar.cooldown_mining;
+                }
+            }
         }
     }
 }
@@ -318,16 +352,26 @@ function render() {
             if(BLOCKS[thisblock].img == 'none') {
                 // Do not draw
             } else {
-                // Determine location and whether is in view; cull outside (toadd)
+                // Determine location and whether is in view; cull outside (check that it works properly: toadd~)
                 if(drawx > iwidth*-1 && drawx < window.innerWidth && drawy > iwidth*-1 && drawy < window.innerHeight) {
-                    // Draw
+                    // Draw block
                     try {
                         var imgloaded = document.getElementById(BLOCKS[thisblock].img);
-                        //ctx.fillStyle = 'rgb(200, 0, 0)';
                         ctx.drawImage(imgloaded, 0, 0, 16, 16, Math.floor(drawx), Math.floor(drawy), Math.ceil(iwidth), Math.ceil(iwidth));
-                        //ctx.fillRect(drawx, drawy, Math.ceil(iwidth), Math.ceil(iwidth));
                     } catch(err) {
                         console.log('err: rendering block: '+thisblock);
+                    }
+                    // Draw damage
+                    try {
+                        if(BLOCKS[thisblock].hp > 0 && getMapBlockState(worldStates, y, x).dmg > 0) {
+                            var dmgamt = Math.round((getMapBlockState(worldStates, y, x).dmg/BLOCKS[thisblock].hp)*6-1);
+                            if(dmgamt >= 0 && dmgamt <= 5) {
+                                var imgloaded = document.getElementById('images/overlays/Dmg_'+dmgamt+'.png');
+                                ctx.drawImage(imgloaded, 0, 0, 16, 16, Math.floor(drawx), Math.floor(drawy), Math.ceil(iwidth), Math.ceil(iwidth));
+                            }
+                        }
+                    } catch(err) {
+                        console.log('err: rendering block dmg: '+thisblock);
                     }
                 }
             }

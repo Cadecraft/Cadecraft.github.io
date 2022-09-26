@@ -14,6 +14,8 @@ class Player {
         this.velx = 0;
         this.vely = 0;
         this.isFalling = true;
+        // Cooldown defs
+        this.cooldown_mining = 50;
         // Physics defs
         this.phys_decel = 0.023; // 0.023
         this.phys_accel = 0.034; // 0.034

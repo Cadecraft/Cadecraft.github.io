@@ -1,3 +1,6 @@
+// LANDFORM ECLIPSE datas
+
+// Maps (premade; generally should be generated in-game)
 var maps = {
     "m-testing-default": [
         [0,0,0,0,0,0,0,0,0,0,0],
