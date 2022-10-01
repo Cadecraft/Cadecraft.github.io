@@ -25,10 +25,40 @@ class Player {
         this.phys_xshrinkbias = 0.15;
         this.phys_yheightbias = 0.3;
         this.phys_jumpvel = 0.33; // 0.33
+        // Inv defs
+        this.inventory = [
+            [1,1],[2,1]
+        ]; // [itemid,itemstackamt]
+        this.inv_selected = 0;
+        this.inv_maxstack = 8;
+        this.inv_menuwidth = 10;
         // Dbg defs
         this.dbg_highl_enable = false; // false
         this.dbg_highl_bl1 = [0,0];
         this.dbg_highl_bl2 = [0,0];
+    }
+    // Inv funcs
+    invAddBlock(inid, inamt=1) {
+        // For each instance to add
+        for(let i = 0; i < inamt; i++) {
+            // Loop through inv and try to add
+            var added = false;
+            for(let j = 0; j < this.inventory.length; j++) {
+                // find open slot OR same item not fully stacked
+                if(this.inventory[j][1] >= this.inv_maxstack) {
+                    continue;
+                } else if(this.inventory[j][0] == inid) {
+                    this.inventory[j][1]++; // Add
+                    added = true;
+                    break;
+                }
+            }
+            if(!added) {
+                // Still not added; simply add to the end as a new stack
+                this.inventory.push([inid, 1]);
+            }
+        }
+        return 0;
     }
     // Get map block
     getMapBlock(map, locy, locx) {

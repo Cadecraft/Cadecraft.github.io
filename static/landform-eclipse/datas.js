@@ -13,7 +13,10 @@ const IMGS_OTHER = [
     'images/overlays/Dmg_2.png',
     'images/overlays/Dmg_3.png',
     'images/overlays/Dmg_4.png',
-    'images/overlays/Dmg_5.png'
+    'images/overlays/Dmg_5.png',
+    'images/ui/Cursor.png',
+    'images/ui/Invbox.png',
+    'images/ui/Invbox2.png'
 ]
 
 // Blocks info
@@ -24,6 +27,7 @@ const BLOCKS = {
         img: 'none',
         placeable: false,
         collision: 'none',
+        hardness: -1,
         hp: -1,
         drops: []
     },
@@ -34,6 +38,7 @@ const BLOCKS = {
         img: 'none', // `none` or static/landform-eclipse/<img>
         placeable: false, // Can be placed in the world
         collision: 'none', // Collision with entities
+        hardness: -1,
         hp: -1, // Block health: -1 = unmineable
         drops: [], // Block IDs to drop
     },
@@ -44,6 +49,7 @@ const BLOCKS = {
         img: 'images/blocks/Block_Dirt.png',
         placeable: true,
         collision: 'solid',
+        hardness: 1,
         hp: 10,
         drops: [1]
     },
@@ -54,6 +60,7 @@ const BLOCKS = {
         img: 'images/blocks/Block_Grass_Enchanted_2.png',
         placeable: true,
         collision: 'solid',
+        hardness: 1,
         hp: 10,
         drops: [2]
     },
@@ -64,6 +71,7 @@ const BLOCKS = {
         img: 'images/blocks/Block_Plant_Grass_Enchanted.png',
         placeable: true,
         collision: 'none',
+        hardness: 1,
         hp: 1,
         drops: [3]
     },
@@ -74,6 +82,7 @@ const BLOCKS = {
         img: 'images/blocks/Block_Stone.png',
         placeable: true,
         collision: 'solid',
+        hardness: 2,
         hp: 20,
         drops: [4]
     },
@@ -84,6 +93,7 @@ const BLOCKS = {
         img: 'images/blocks/Block_Stone_Cobble.png',
         placeable: true,
         collision: 'solid',
+        hardness: 2,
         hp: 20,
         drops: [5]
     },
@@ -94,7 +104,19 @@ const BLOCKS = {
         img: 'images/blocks/Block_Stone_Cobble_Moss.png',
         placeable: true,
         collision: 'solid',
+        hardness: 2,
         hp: 20,
         drops: [6]
+    },
+    7: {
+        iname: 'Bedrock',
+        idescr: 'A solid foundation in this world. It can never be erased.',
+        irarity: 4,
+        img: 'images/blocks/Block_Stone_Bedrock.png',
+        placeable: false,
+        collision: 'solid',
+        hardness: -1,
+        hp: -1,
+        drops: []
     }
 };

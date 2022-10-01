@@ -161,13 +161,16 @@ function tryDamageBlock(indmg) {
     // Get map block (air = void = 0)
     var newblock = getMapBlock(worldMap, pointerybl, pointerxbl);
     var newblockState = getMapBlockState(worldStates, pointerybl, pointerxbl);
-    if(BLOCKS[newblock].hp > 0 && newblockState.state != -1) { // determines if mineable
+    if(BLOCKS[newblock].hardness > 0 && newblockState.state != -1) { // determines if mineable
         // Deal damage to block
         worldStates[pointerybl][pointerxbl].dmg++;
         // Check that block health is in range
         if(worldStates[pointerybl][pointerxbl].dmg >= BLOCKS[newblock].hp) {
-            // Destroy block and drop if necessary
+            // Destroy block, drop items, trigger extra events if necessary
             worldMap[pointerybl][pointerxbl] = 0;
+            for(let i = 0; i < BLOCKS[newblock].drops.length; i++) {
+                mychar.invAddBlock(BLOCKS[newblock].drops[i]);
+            }
         } else {
             // Nothing
         }
@@ -336,10 +339,16 @@ function render() {
     ctx.canvas.height = window.innerHeight-8;
     // Canvas defs
     ctx.imageSmoothingEnabled = false;
-    // Clear canvas with sky/bg
-    ctx.fillStyle = 'rgb(20, 25, 30)';
-    ctx.fillRect(0, 0, c.width, c.height);
     ctx.globalAlpha = 1.0;
+    // Clear canvas with sky
+    //ctx.fillStyle = 'rgb(20, 25, 30)';
+    ctx.fillStyle = '#54cbf0'; //'#60a3b5';
+    ctx.fillRect(0, 0, c.width, c.height);
+    // Background
+    // Fake bg
+    ctx.fillStyle = 'rgb(20, 25, 30)';
+    var parallaxMedianY = (-8*mychar.locy) + (c.height/2);
+    ctx.fillRect(0, parallaxMedianY, c.width, c.height-parallaxMedianY);
 
     // WORLD
     // Render blocks
@@ -348,7 +357,7 @@ function render() {
             // Each block:
             var thisblock = worldMap[y][x];
             var drawx = (x+offsetx)*iwidth;
-                var drawy = (y+offsety)*iwidth;
+            var drawy = (y+offsety)*iwidth;
             if(BLOCKS[thisblock].img == 'none') {
                 // Do not draw
             } else {
@@ -404,4 +413,25 @@ function render() {
     }
 
     // FX
+    // (toadd~)
+
+    // UI
+    // Render inv bar
+    var inv_boxwidth = 1;
+    for(let i = 0; i < mychar.inv_menuwidth; i++) {
+        // Box
+        if(i == mychar.inv_selected) { ctx.globalAlpha = 1.0; }
+        else { ctx.globalAlpha = 0.5; }
+        var imgloaded = document.getElementById('images/ui/Invbox2.png');
+        ctx.drawImage(imgloaded, 0, 0, 20, 20, 20+i*44, 20, 40, 40);
+        ctx.globalAlpha = 1.0;
+        // Contents
+        if(mychar.inventory.length > i) {
+            if(BLOCKS[mychar.inventory[i][0]].img != 'none') {
+                var imgloaded2 = document.getElementById(BLOCKS[mychar.inventory[i][0]].img);
+                ctx.drawImage(imgloaded2, 0, 0, 16, 16, 24+i*44, 24, blockWidth*2, blockWidth*2);
+            }
+        }
+    }
+    ctx.globalAlpha = 1.0;
 }
