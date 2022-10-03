@@ -118,5 +118,16 @@ const BLOCKS = {
         hardness: -1,
         hp: -1,
         drops: []
+    },
+    8: {
+        iname: 'Pick',
+        idescr: 'A pickaxe',
+        irarity: 1,
+        img: 'images/items/item_pick.png',
+        placeable: false,
+        collision: 'item',
+        hardness: -1,
+        hp: -1,
+        drops: []
     }
 };

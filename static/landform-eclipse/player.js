@@ -16,6 +16,7 @@ class Player {
         this.isFalling = true;
         // Cooldown defs
         this.cooldown_mining = 50;
+        this.justPlacedBlock = false;
         // Physics defs
         this.phys_decel = 0.023; // 0.023
         this.phys_accel = 0.034; // 0.034
@@ -27,7 +28,7 @@ class Player {
         this.phys_jumpvel = 0.33; // 0.33
         // Inv defs
         this.inventory = [
-            [1,1],[2,1]
+            [8,1],[-1,0]
         ]; // [itemid,itemstackamt]
         this.inv_selected = 0;
         this.inv_maxstack = 8;
@@ -51,14 +52,35 @@ class Player {
                     this.inventory[j][1]++; // Add
                     added = true;
                     break;
+                } else if(this.inventory[j][0] == -1) {
+                    this.inventory[j][0] = inid;
+                    this.inventory[j][1] = 1;
+                    added = true;
+                    break;
                 }
             }
             if(!added) {
                 // Still not added; simply add to the end as a new stack
                 this.inventory.push([inid, 1]);
+                added = true;
             }
         }
         return 0;
+    }
+    invGetSelected() {
+        // Get the item at selected index
+        if(this.inv_selected < this.inventory.length) {
+            return this.inventory[this.inv_selected];
+        } else { return [-1,0]; }
+    }
+    invReduceBlock(inindex) {
+        // Decrease amount in the stack
+        if(inindex < this.inventory.length) {
+            this.inventory[inindex][1]--;
+            if(this.inventory[inindex][1] <= 0) {
+                this.inventory[inindex][0] = -1;
+            }
+        }
     }
     // Get map block
     getMapBlock(map, locy, locx) {

@@ -170,6 +170,7 @@ function tryDamageBlock(indmg) {
             worldMap[pointerybl][pointerxbl] = 0;
             for(let i = 0; i < BLOCKS[newblock].drops.length; i++) {
                 mychar.invAddBlock(BLOCKS[newblock].drops[i]);
+                //mychar.justMinedBlock = true;
             }
         } else {
             // Nothing
@@ -268,6 +269,7 @@ function gameLoop() {
     }
     // Determine velocity equalization based on time passed (?) (toadd?)
     // Handle input if not dead
+    updatePointerwr()
     gameInput();
     // Apply char physics
     mychar.applyPhysics(worldMap);
@@ -288,6 +290,9 @@ function gameInput() {
     if(keys['d']) { inputs.push('right'); }
     if(keys['s']) { inputs.push('down'); }
     if(keys[' '] || keys['w']) { inputs.push('jump'); }
+    for(let i = 0; i < 10; i++) {
+        if(keys[''+i]) { inputs.push('inv'+i); }
+    }
 
     // Use controls
     if(inputs.includes('left')) {
@@ -305,14 +310,25 @@ function gameInput() {
         // Jump
         mychar.jump(1);
     }
+    for(let i = 0; i < 10; i++) {
+        if(inputs.includes('inv'+i)) {
+            if(i == 0) { mychar.inv_selected = 9; }
+            else { mychar.inv_selected = i-1; }
+        }
+    }
     if(mousedown) {
         // Click
         // Based on item type in player inv (toadd~)
-        if(false) {
-            // use item
+        if(mychar.invGetSelected()[0] == -100) {
+            // Use item
+        } else if(getMapBlock(worldMap, pointerybl, pointerxbl) == 0 && BLOCKS[mychar.invGetSelected()[0]].placeable) {
+            // Place block if enabled
+            worldMap[pointerybl][pointerxbl] = mychar.invGetSelected()[0];
+            mychar.invReduceBlock(mychar.inv_selected);
+            //justPlacedBlock = true;
         } else {
-            // Is timer done?
-            if(timers["timer_mining"] <= 0) {
+            // Dig block
+            if(timers["timer_mining"] <= 0 && (mychar.invGetSelected()[0] == -1 || mychar.invGetSelected()[0] == 8) /*(mychar.invGetSelected()[0] != getMapBlock(worldMap, pointerybl, pointerxbl)) && !mychar.justPlacedBlock*/) {
                 // Try to dig block
                 var blockDamaged = tryDamageBlock(1);
                 if(blockDamaged) {
@@ -320,7 +336,7 @@ function gameInput() {
                 }
             }
         }
-    }
+    } else { mychar.justPlacedBlock = false; }
 }
 
 // Render
