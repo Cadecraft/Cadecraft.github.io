@@ -3,8 +3,8 @@
 // Generally consts which do not change
 
 // Sys defs (REM init sequence pt1)
-const recentVersion = '0.0.1';
-const editDate = '2022/9/24';
+const recentVersion = '0.0.2';
+const editDate = '2022/10/2';
 
 // Other images info
 const IMGS_OTHER = [

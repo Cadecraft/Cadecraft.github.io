@@ -168,9 +168,11 @@ function tryDamageBlock(indmg) {
         if(worldStates[pointerybl][pointerxbl].dmg >= BLOCKS[newblock].hp) {
             // Destroy block, drop items, trigger extra events if necessary
             worldMap[pointerybl][pointerxbl] = 0;
+            worldStates[pointerybl][pointerxbl].dmg = 0;
+            worldStates[pointerybl][pointerxbl].state = 0;
             for(let i = 0; i < BLOCKS[newblock].drops.length; i++) {
                 mychar.invAddBlock(BLOCKS[newblock].drops[i]);
-                //mychar.justMinedBlock = true;
+                mychar.justMinedBlock = true;
             }
         } else {
             // Nothing
@@ -323,12 +325,16 @@ function gameInput() {
             // Use item
         } else if(getMapBlock(worldMap, pointerybl, pointerxbl) == 0 && BLOCKS[mychar.invGetSelected()[0]].placeable) {
             // Place block if enabled
-            worldMap[pointerybl][pointerxbl] = mychar.invGetSelected()[0];
-            mychar.invReduceBlock(mychar.inv_selected);
-            //justPlacedBlock = true;
+            if(!mychar.justMinedBlock) {
+                worldMap[pointerybl][pointerxbl] = mychar.invGetSelected()[0];
+                worldStates[pointerybl][pointerxbl].dmg = 0;
+                worldStates[pointerybl][pointerxbl].state = 0;
+                mychar.invReduceBlock(mychar.inv_selected);
+                mychar.justPlacedBlock = true;
+            }
         } else {
             // Dig block
-            if(timers["timer_mining"] <= 0 && (mychar.invGetSelected()[0] == -1 || mychar.invGetSelected()[0] == 8) /*(mychar.invGetSelected()[0] != getMapBlock(worldMap, pointerybl, pointerxbl)) && !mychar.justPlacedBlock*/) {
+            if(timers["timer_mining"] <= 0 && (/*mychar.invGetSelected()[0] == -1 || */mychar.invGetSelected()[0] == 8) && !mychar.justPlacedBlock) {
                 // Try to dig block
                 var blockDamaged = tryDamageBlock(1);
                 if(blockDamaged) {
@@ -336,7 +342,7 @@ function gameInput() {
                 }
             }
         }
-    } else { mychar.justPlacedBlock = false; }
+    } else { mychar.justPlacedBlock = false; mychar.justMinedBlock = false; }
 }
 
 // Render

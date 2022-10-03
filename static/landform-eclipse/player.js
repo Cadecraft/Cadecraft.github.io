@@ -17,6 +17,7 @@ class Player {
         // Cooldown defs
         this.cooldown_mining = 50;
         this.justPlacedBlock = false;
+        this.justMinedBlock = false;
         // Physics defs
         this.phys_decel = 0.023; // 0.023
         this.phys_accel = 0.034; // 0.034
