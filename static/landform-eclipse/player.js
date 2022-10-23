@@ -32,7 +32,7 @@ class Player {
             [8,1],[-1,0]
         ]; // [itemid,itemstackamt]
         this.inv_selected = 0;
-        this.inv_maxstack = 8;
+        this.inv_maxstack = 64;
         this.inv_menuwidth = 10;
         // Dbg defs
         this.dbg_highl_enable = false; // false

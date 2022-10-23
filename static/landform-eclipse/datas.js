@@ -129,5 +129,16 @@ const BLOCKS = {
         hardness: -1,
         hp: -1,
         drops: []
+    },
+    9: {
+        iname: "Snow",
+        idescr: "Soft but cold. It has a powdery consistency and melts upon your hand.",
+        irarity: 0,
+        img: 'images/blocks/Block_Grass_Snow.png',
+        placeable: true,
+        collision: 'solid',
+        hardness: 1,
+        hp: 10,
+        drops: [9]
     }
 };

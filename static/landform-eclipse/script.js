@@ -48,7 +48,7 @@ console.log('===============');
 var dbgm = false; // Debug mode: allows flight, etc.
 var globalScale = 2.0;
 var blockWidth = 16;
-var generateWorld = false;
+var generateWorld = true; // def: true (dbg: true/false)
 var worldMap = [
     [2,2,2],
     [1,1,1],
@@ -57,32 +57,35 @@ var worldMap = [
 var worldStates = [];
 
 // Load game defs: load/generate map and world states
-console.log('loading world: loading...');
-try {
-    // Map (load from datas-maps.js file OR generate)
-    if(generateWorld) {
-        console.log('loading world: generating...');
-        // (toadd)
-    } else {
-        console.log('loading world: fetching...');
-        worldMap = maps["m-testing-2"];
-    }
-    console.log('loading world: world states...');
-    // World states (generate)
-    for(let y = 0; y < worldMap.length; y++) {
-        worldStates.push([]);
-        for(let x = 0; x < worldMap[0].length; x++) {
-            worldStates[y].push({
-                'dmg': 0,
-                'state': 0
-            });
+function mapRegen(inGenerateWorld) {
+    console.log('loading world: loading...');
+    try {
+        // Map (load from datas-maps.js file OR generate)
+        if(inGenerateWorld) {
+            console.log('loading world: generating...');
+            wgenMain();
+        } else {
+            console.log('loading world: fetching...');
+            worldMap = maps["m-testing-2"];
         }
-    }
-} catch(err) { console.log('err: loading map or loading world states'); }
-console.log('loading world: completed~!')
+        console.log('loading world: world states...');
+        // World states (generate)
+        for(let y = 0; y < worldMap.length; y++) {
+            worldStates.push([]);
+            for(let x = 0; x < worldMap[0].length; x++) {
+                worldStates[y].push({
+                    'dmg': 0,
+                    'state': 0
+                });
+            }
+        }
+    } catch(err) { console.log('err: loading map or loading world states'); }
+    console.log('loading world: completed~!');
+}
+mapRegen(generateWorld);
 
 // Load game defs: player character (mychar)
-var mychar = new Player(3, 2);
+var mychar = new Player(50, 10);
 
 // Load game defs: music/audios
 
@@ -468,4 +471,94 @@ function render() {
         }
     }
     ctx.globalAlpha = 1.0;
+    // Render dbg messages
+    if(dbgm) {
+        ctx.fillStyle = 'black';
+        ctx.font = '14px Courier New';
+        ctx.globalAlpha = 1.0;
+        ctx.fillText('DBG: mychar.locx='+mychar.locx, window.innerWidth-200, 20);
+    }
+}
+
+// WORLDGEN FUNCTIONS
+//
+//
+
+// Worldgen main
+function wgenMain() {
+    // Worldgen defs
+    //console.log('-');
+    console.log('  gen: defs');
+    var worldgen_simple = false; // def: false (dbg: true)
+    var worldgen_width = 90;
+    var worldgen_height = 50;
+    var worldgen_horizonoffset = 10;
+    var worldgenMap_heights = []; // Main horizon height
+    var worldgenMap_heights2 = []; // Dirt offset
+    worldMap = [];
+    // Worldgen type
+    console.log('  gen: types');
+    if(worldgen_simple) {
+        // Worldgen simple (for testing; flat world)
+        for(let y = 0; y < worldgen_height; y++) {
+            worldMap.push([]);
+            for(let x = 0; x < worldgen_width; x++) {
+                // air=0-9;grass=10;dirt=11-12;stone=13+
+                if(y < 9+worldgen_horizonoffset) {
+                    worldMap[y].push(0);
+                } else if(y == 9+worldgen_horizonoffset) {
+                    if(Math.random() < 0.5) worldMap[y].push(3);
+                    else worldMap[y].push(0);
+                } else if(y==10+worldgen_horizonoffset) {
+                    worldMap[y].push(2);
+                } else if(y < 13+worldgen_horizonoffset) {
+                    worldMap[y].push(1);
+                } else if(y >= 13+worldgen_horizonoffset) {
+                    if(Math.random() < 0.2) worldMap[y].push(5);
+                    else worldMap[y].push(4)
+                    
+                }
+            }
+        }
+    } else {
+        // Worldgen main
+        // generate biomes (toadd)
+        // generate topography (heights) (toadd)
+        var lastHeight = 0;
+        for(let x = 0; x < worldgen_width; x++) {
+            var newHeight = lastHeight;
+            // Generate new heights
+            newHeight = Math.floor(Math.random()*3)-1;
+            var newHeight2 = Math.floor(Math.random()*2);
+            // Add
+            worldgenMap_heights.push(newHeight);
+            worldgenMap_heights2.push(newHeight2);
+            lastHeight = newHeight;
+        }
+        // generate blocks
+        for(let y = 0; y < worldgen_height; y++) {
+            worldMap.push([]);
+            for(let x = 0; x < worldgen_width; x++) {
+                // air=0-9;grass=10;dirt=11-12;stone=13+
+                if(y < 9+worldgen_horizonoffset+worldgenMap_heights[x]) {
+                    worldMap[y].push(0); // Sky
+                } else if(y == 9+worldgen_horizonoffset+worldgenMap_heights[x]) {
+                    if(Math.random() < 0.5) worldMap[y].push(3); // Tall grass
+                    else worldMap[y].push(0);
+                } else if(y==10+worldgen_horizonoffset+worldgenMap_heights[x]) {
+                    worldMap[y].push(2); // Grass
+                } else if(y < 13+worldgen_horizonoffset+worldgenMap_heights[x]+worldgenMap_heights2[x]) {
+                    worldMap[y].push(1); // Dirt
+                } else if(y >= 13+worldgen_horizonoffset+worldgenMap_heights[x]+worldgenMap_heights2[x]) {
+                    if(Math.random() < 0.2) worldMap[y].push(5); // Stone
+                    else worldMap[y].push(4)
+                    
+                }
+            }
+        }
+        // carve caves (toadd)
+        // (toadd)
+    }
+    //console.log('-');
+    console.log('loading world... generation complete');
 }
