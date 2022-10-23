@@ -490,9 +490,11 @@ function wgenMain() {
     //console.log('-');
     console.log('  gen: defs');
     var worldgen_simple = false; // def: false (dbg: true)
-    var worldgen_width = 90;
-    var worldgen_height = 50;
-    var worldgen_horizonoffset = 10;
+    const worldgen_width = 90;
+    const worldgen_height = 50;
+    const worldgen_horizonoffset = 10;
+    const worldgen_heightoffsetmax = 6;
+    const worldgen_rateGrass = 0.4;
     var worldgenMap_heights = []; // Main horizon height
     var worldgenMap_heights2 = []; // Dirt offset
     worldMap = [];
@@ -504,38 +506,38 @@ function wgenMain() {
             worldMap.push([]);
             for(let x = 0; x < worldgen_width; x++) {
                 // air=0-9;grass=10;dirt=11-12;stone=13+
-                if(y < 9+worldgen_horizonoffset) {
-                    worldMap[y].push(0);
-                } else if(y == 9+worldgen_horizonoffset) {
-                    if(Math.random() < 0.5) worldMap[y].push(3);
-                    else worldMap[y].push(0);
-                } else if(y==10+worldgen_horizonoffset) {
-                    worldMap[y].push(2);
-                } else if(y < 13+worldgen_horizonoffset) {
-                    worldMap[y].push(1);
-                } else if(y >= 13+worldgen_horizonoffset) {
-                    if(Math.random() < 0.2) worldMap[y].push(5);
-                    else worldMap[y].push(4)
-                    
-                }
+                if(y < 9+worldgen_horizonoffset) worldMap[y].push(0);
+                else if(y == 9+worldgen_horizonoffset) worldMap[y].push(0);
+                else if(y==10+worldgen_horizonoffset) worldMap[y].push(2);
+                else if(y < 13+worldgen_horizonoffset) worldMap[y].push(1);
+                else if(y >= 13+worldgen_horizonoffset) worldMap[y].push(4);
             }
         }
     } else {
-        // Worldgen main
-        // generate biomes (toadd)
-        // generate topography (heights) (toadd)
+        // Worldgen normal
+        // Generate biomes (toadd)
+        // Generate topography (heights) (toadd)
         var lastHeight = 0;
         for(let x = 0; x < worldgen_width; x++) {
+            var thisbiome = 0;
             var newHeight = lastHeight;
             // Generate new heights
-            newHeight = Math.floor(Math.random()*3)-1;
+            if(thisbiome == 0) {
+                newHeight += Math.floor(Math.random()*3)-1; // Normal biome
+            } else if(thisbiome == 1) {
+                newHeight += Math.floor(Math.random()*5)-2; // Desert biome
+            } else if(thisbiome == 12) {
+                newHeight += Math.floor(Math.random()*10)-5; // RARE mesa biome
+            }
+            if(newHeight > worldgen_heightoffsetmax) newHeight = worldgen_heightoffsetmax;
+            if(newHeight < -1*worldgen_heightoffsetmax) newHeight = -1*worldgen_heightoffsetmax;
             var newHeight2 = Math.floor(Math.random()*2);
             // Add
             worldgenMap_heights.push(newHeight);
             worldgenMap_heights2.push(newHeight2);
             lastHeight = newHeight;
         }
-        // generate blocks
+        // Generate blocks
         for(let y = 0; y < worldgen_height; y++) {
             worldMap.push([]);
             for(let x = 0; x < worldgen_width; x++) {
@@ -543,20 +545,19 @@ function wgenMain() {
                 if(y < 9+worldgen_horizonoffset+worldgenMap_heights[x]) {
                     worldMap[y].push(0); // Sky
                 } else if(y == 9+worldgen_horizonoffset+worldgenMap_heights[x]) {
-                    if(Math.random() < 0.5) worldMap[y].push(3); // Tall grass
-                    else worldMap[y].push(0);
+                    if(Math.random() < worldgen_rateGrass) { worldMap[y].push(3); } // Tall grass
+                    else { worldMap[y].push(0); }
                 } else if(y==10+worldgen_horizonoffset+worldgenMap_heights[x]) {
                     worldMap[y].push(2); // Grass
                 } else if(y < 13+worldgen_horizonoffset+worldgenMap_heights[x]+worldgenMap_heights2[x]) {
                     worldMap[y].push(1); // Dirt
                 } else if(y >= 13+worldgen_horizonoffset+worldgenMap_heights[x]+worldgenMap_heights2[x]) {
                     if(Math.random() < 0.2) worldMap[y].push(5); // Stone
-                    else worldMap[y].push(4)
-                    
+                    else worldMap[y].push(4);
                 }
             }
         }
-        // carve caves (toadd)
+        // Carve caves (toadd)
         // (toadd)
     }
     //console.log('-');
