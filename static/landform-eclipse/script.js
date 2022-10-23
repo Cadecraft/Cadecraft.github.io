@@ -8,6 +8,9 @@ TO ADD (also search: `toadd`~):
 > Respawn on fall too far
 > Reduce air control
 > Tightness of deceleration
+> Background blocks!
+> Background on screen
+> Plants erasing if block below is mined
 
 RECENT CHANGES
 > None
@@ -28,10 +31,10 @@ console.log('\n\n\n');
 console.log('===============');
 console.log('Welcome to Landform Eclipse by Cadecraft! Please don\'t cheat...');
 console.log('-');
-console.log('  Landform Eclipse>LOGGED [REM init sequence]');
-console.log('  recentVersion>'+recentVersion);
-console.log('  editDate>'+editDate);
-console.log('  morningStar>'+morningStar);
+console.log('  Landform Eclipse> LOGGED [REM init sequence]');
+console.log('  recentVersion>    '+recentVersion);
+console.log('  editDate>         '+editDate);
+console.log('  morningStar>      '+morningStar);
 console.log('-');
 console.log('Are you a *developer*? `dbgm=true;`');
 console.log('Found any *bugs*? Please report them~ https://discord.gg/wahdQHBs4Z');
@@ -449,9 +452,18 @@ function render() {
         ctx.globalAlpha = 1.0;
         // Contents
         if(mychar.inventory.length > i) {
+            // Block img
             if(BLOCKS[mychar.inventory[i][0]].img != 'none') {
                 var imgloaded2 = document.getElementById(BLOCKS[mychar.inventory[i][0]].img);
                 ctx.drawImage(imgloaded2, 0, 0, 16, 16, 24+i*44, 24, blockWidth*2, blockWidth*2);
+            }
+            // Amount
+            if(mychar.inventory[i][1] > 1) {
+                var invamt = mychar.inventory[i][1];
+                ctx.fillStyle = 'white';
+                ctx.font = '14px Tahoma';
+                ctx.globalAlpha = 0.8;
+                ctx.fillText(''+invamt, 24+i*44, 57);
             }
         }
     }
