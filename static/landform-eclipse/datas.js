@@ -5,6 +5,7 @@
 // Sys defs (REM init sequence pt1)
 const recentVersion = '0.0.2';
 const editDate = '2022/10/2';
+const createdDate = '2022/9/5';
 
 // Other images info
 const IMGS_OTHER = [
@@ -140,5 +141,38 @@ const BLOCKS = {
         hardness: 1,
         hp: 10,
         drops: [9]
+    },
+    10: {
+        iname: "Wood",
+        idescr: "A firm block of wood. It makes a solid sound when you hit it.",
+        irarity: 0,
+        img: 'images/blocks/Block_Wood.png',
+        placeable: true,
+        collision: 'solid',
+        hardness: 1,
+        hp: 15,
+        drops: [10]
+    },
+    11: {
+        iname: "Wood Wall",
+        idescr: "A wooden wall.",
+        irarity: 0,
+        img: 'images/blocks/Block_Wood_bg.png',
+        placeable: true,
+        collision: 'none',
+        hardness: 1,
+        hp: 15,
+        drops: [11]
+    },
+    12: {
+        iname: "Highland Leaves",
+        idescr: "These leaves are rigid and covered in a thin layer of frost.",
+        irarity: 0,
+        img: 'images/blocks/Block_Leaves_Grasslands_2.png',
+        placeable: true,
+        collision: 'none',
+        hardness: 1,
+        hp: 4,
+        drops: [12]
     }
 };
