@@ -188,6 +188,25 @@ function tryDamageBlock(indmg) {
     else { return false; }
 }
 
+function getBlockLightLvl(locy, locx) {
+    // ADD closest x
+    for(let y = -6; y < 6+1; y++) {
+        for(let x = -6; x < 6+1; x++) {
+            // If block is touching any nearby air:
+            resultBlock = getMapBlock(worldMap, locy+y, locx+x);
+            if(resultBlock == 0) {
+                if(x > -2 && x < 2 && y > -2 && y < 2) {
+                    return 5;
+                } else if(x > -4 && x < 4 && y > -4 && y < 4) {
+                    return 5; // return 4;
+                } else { return 5; } // return 3;
+            }
+        }
+    }
+    // Not touching any air
+    return 0;
+}
+
 // INPUT
 //
 //
@@ -390,7 +409,15 @@ function render() {
                 // Do not draw
             } else {
                 // Determine location and whether is in view; cull outside (check that it works properly: toadd~)
+                ctx.globalAlpha = 1;
                 if(drawx > iwidth*-1 && drawx < window.innerWidth && drawy > iwidth*-1 && drawy < window.innerHeight) {
+                    // Determine light level (if 0, do not draw; just draw black)
+                    var lightLvl = getBlockLightLvl(y, x);
+                    if(lightLvl == 0) {
+                        ctx.fillStyle = 'rgb(0, 0, 0)';
+                        ctx.fillRect(Math.floor(drawx), Math.floor(drawy), Math.ceil(iwidth), Math.ceil(iwidth));
+                        continue;
+                    }
                     // Draw block
                     try {
                         var imgloaded = document.getElementById(BLOCKS[thisblock].img);
@@ -409,6 +436,13 @@ function render() {
                         }
                     } catch(err) {
                         console.log('err: rendering block dmg: '+thisblock);
+                    }
+                    // Draw light level
+                    if(lightLvl < 5) {
+                        ctx.fillStyle = 'rgb(0, 0, 0)';
+                        if(lightLvl == 4) { ctx.globalAlpha = 0.2; }
+                        else if(lightLvl == 3) { ctx.globalAlpha = 0.4; }
+                        ctx.fillRect(Math.floor(drawx), Math.floor(drawy), Math.ceil(iwidth), Math.ceil(iwidth));
                     }
                 }
             }
