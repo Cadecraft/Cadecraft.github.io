@@ -519,7 +519,10 @@ function render() {
         ctx.fillStyle = 'black';
         ctx.font = '14px Courier New';
         ctx.globalAlpha = 1.0;
-        ctx.fillText('DBG: mychar.locx='+mychar.locx, window.innerWidth-200, 20);
+        ctx.fillText('DBG: mychar.locx='+mychar.locx, window.innerWidth-250, 20*1);
+        ctx.fillText('DBG: mychar.locy='+mychar.locy, window.innerWidth-250, 20*2);
+        ctx.fillText('DBG: pointerxbl ='+pointerxbl, window.innerWidth-250, 20*3);
+        ctx.fillText('DBG: pointerybl ='+pointerybl, window.innerWidth-250, 20*4);
     }
 }
 
