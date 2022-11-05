@@ -10,7 +10,9 @@ TO ADD (also search: `toadd`~):
 > Tightness of deceleration
 > Background blocks!
 > Background on screen
+> Platform collision (tree leaves)
 > Plants erasing if block below is mined
+> Renderer efficiency
 
 RECENT CHANGES
 > None
@@ -55,6 +57,7 @@ var worldMap = [
     [1,1,1]
 ];
 var worldStates = [];
+var world_eventState = "normal";
 
 // Load game defs: load/generate map and world states
 function mapRegen(inGenerateWorld) {
@@ -190,21 +193,22 @@ function tryDamageBlock(indmg) {
 
 function getBlockLightLvl(locy, locx) {
     // ADD closest x
-    for(let y = -6; y < 6+1; y++) {
-        for(let x = -6; x < 6+1; x++) {
-            // If block is touching any nearby air:
+    var greatestLightLvl = 0;
+    for(let y = -7; y < 7+1; y++) {
+        for(let x = -7; x < 7+1; x++) {
+            // If block is touching any nearby air (and is light out) OR is near torch:
             resultBlock = getMapBlock(worldMap, locy+y, locx+x);
-            if(resultBlock == 0) {
-                if(x > -2 && x < 2 && y > -2 && y < 2) {
-                    return 5;
-                } else if(x > -4 && x < 4 && y > -4 && y < 4) {
-                    return 5; // return 4;
-                } else { return 5; } // return 3;
+            if( (resultBlock == 0 && world_eventState != "eclipse") || resultBlock == 14 || resultBlock == 13 ) {
+                if(x > -3 && x < 3 && y > -3 && y < 3) {
+                    return 5; // Since 5 is the greatest, no need to continue
+                } else if(x > -5 && x < 5 && y > -5 && y < 5) {
+                    if(greatestLightLvl < 4) greatestLightLvl = 4;
+                } else { if(greatestLightLvl < 3) greatestLightLvl = 3; }
             }
         }
     }
     // Not touching any air
-    return 0;
+    return greatestLightLvl;
 }
 
 // INPUT
@@ -409,7 +413,6 @@ function render() {
                 // Do not draw
             } else {
                 // Determine location and whether is in view; cull outside (check that it works properly: toadd~)
-                ctx.globalAlpha = 1;
                 if(drawx > iwidth*-1 && drawx < window.innerWidth && drawy > iwidth*-1 && drawy < window.innerHeight) {
                     // Determine light level (if 0, do not draw; just draw black)
                     var lightLvl = getBlockLightLvl(y, x);
@@ -441,8 +444,9 @@ function render() {
                     if(lightLvl < 5) {
                         ctx.fillStyle = 'rgb(0, 0, 0)';
                         if(lightLvl == 4) { ctx.globalAlpha = 0.2; }
-                        else if(lightLvl == 3) { ctx.globalAlpha = 0.4; }
+                        else if(lightLvl == 3) { ctx.globalAlpha = 0.5; }
                         ctx.fillRect(Math.floor(drawx), Math.floor(drawy), Math.ceil(iwidth), Math.ceil(iwidth));
+                        ctx.globalAlpha = 1;
                     }
                 }
             }

@@ -170,9 +170,31 @@ const BLOCKS = {
         irarity: 0,
         img: 'images/blocks/Block_Leaves_Grasslands_2.png',
         placeable: true,
-        collision: 'none',
+        collision: 'platform',
         hardness: 1,
         hp: 4,
         drops: [12]
+    },
+    13: {
+        iname: "Wall Torch",
+        idescr: "Mounted to the wall, its flickering glow warmly lights up the space.",
+        irarity: 1,
+        img: 'images/blocks/Block_Torch_bg.png',
+        placeable: true,
+        collision: 'none',
+        hardness: 2,
+        hp: 20,
+        drops: [13]
+    },
+    14: {
+        iname: "Torch",
+        idescr: "Its flickering glow warmly lights up the space.",
+        irarity: 1,
+        img: 'images/blocks/Block_Torch.png',
+        placeable: true,
+        collision: 'none',
+        hardness: 1,
+        hp: 4,
+        drops: [14]
     }
 };
