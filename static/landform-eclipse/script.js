@@ -391,9 +391,12 @@ function render() {
     // Canvas defs
     ctx.imageSmoothingEnabled = false;
     ctx.globalAlpha = 1.0;
-    // Clear canvas with sky
+    // Clear canvas with sky (determine sky color)
+    var skyColor = '#54cbf0'
+    if(world_eventState == 'normal') skyColor = '#54cbf0';
+    else if(world_eventState == 'eclipse') skyColor = '#1f0d11';
     //ctx.fillStyle = 'rgb(20, 25, 30)';
-    ctx.fillStyle = '#54cbf0'; //'#60a3b5';
+    ctx.fillStyle = skyColor; //'#60a3b5';
     ctx.fillRect(0, 0, c.width, c.height);
     // Background
     // Fake bg
