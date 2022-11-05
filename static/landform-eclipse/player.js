@@ -41,6 +41,11 @@ class Player {
     }
     // Inv funcs
     invAddBlock(inid, inamt=1) {
+        // Check that block exists
+        if(inid >= Object.keys(BLOCKS).length) {
+            console.log("Err: Block id "+inid+" does not exist");
+            return 1;
+        };
         // For each instance to add
         for(let i = 0; i < inamt; i++) {
             // Loop through inv and try to add

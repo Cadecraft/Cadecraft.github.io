@@ -410,6 +410,7 @@ function render() {
         for(let x = 0; x < worldMap[0].length; x++) {
             // Each block:
             var thisblock = worldMap[y][x];
+            if(thisblock >= Object.keys(BLOCKS).length) { continue }; // Error: do not render block
             var drawx = (x+offsetx)*iwidth;
             var drawy = (y+offsety)*iwidth;
             if(BLOCKS[thisblock].img == 'none') {
@@ -497,6 +498,7 @@ function render() {
         // Contents
         if(mychar.inventory.length > i) {
             // Block img
+            if(mychar.inventory[i][0] >= Object.keys(BLOCKS).length) { continue }; // Error: do not render block
             if(BLOCKS[mychar.inventory[i][0]].img != 'none') {
                 var imgloaded2 = document.getElementById(BLOCKS[mychar.inventory[i][0]].img);
                 ctx.drawImage(imgloaded2, 0, 0, 16, 16, 24+i*44, 24, blockWidth*2, blockWidth*2);
