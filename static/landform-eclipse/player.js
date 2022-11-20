@@ -122,10 +122,10 @@ class Player {
         this.locy += this.vely;
         // Check valid Y
         // Below
-        if(this.vely > 0) {
+        if(this.vely > 0) { // Falling
             var wasFalling = this.isFalling;
             this.isFalling = true;
-            if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy+1.1), Math.floor(this.locx+this.phys_xshrinkbias))].collision == 'solid') { // map[Math.floor(this.locy+1)][Math.floor(this.locx+this.phys_xshrinkbias)] != 0
+            if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy+1.1), Math.floor(this.locx+this.phys_xshrinkbias))].collision == 'solid'/* || BLOCKS[this.getMapBlock(map, Math.floor(this.locy+1.1), Math.floor(this.locx+this.phys_xshrinkbias))].collision == 'platform'*/) { // map[Math.floor(this.locy+1)][Math.floor(this.locx+this.phys_xshrinkbias)] != 0
                 //if(wasFalling) {
                     //this.locy -= this.vely;
                 //}
@@ -133,7 +133,7 @@ class Player {
                 this.vely = 0;
                 this.isFalling = false;
             }
-            else if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy+1.1), Math.floor(this.locx+1-this.phys_xshrinkbias))].collision == 'solid') { // map[Math.floor(this.locy+1)][Math.floor(this.locx+1-this.phys_xshrinkbias)] != 0
+            else if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy+1.1), Math.floor(this.locx+1-this.phys_xshrinkbias))].collision == 'solid'/* || BLOCKS[this.getMapBlock(map, Math.floor(this.locy+1.1), Math.floor(this.locx+1-this.phys_xshrinkbias))].collision == 'platform'*/) { // map[Math.floor(this.locy+1)][Math.floor(this.locx+1-this.phys_xshrinkbias)] != 0
                 //if(wasFalling) {
                     //this.locy -= this.vely;
                 //}
@@ -143,7 +143,7 @@ class Player {
             }
         }
         // Above
-        if(this.vely < 0) {
+        if(this.vely < 0) { // Rising
             this.isFalling = true;
             if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy-1+this.phys_yheightbias), Math.floor(this.locx+this.phys_xshrinkbias))].collision == 'solid') { // map[Math.floor(this.locy+1)][Math.floor(this.locx+this.phys_xshrinkbias)] != 0
                 //this.locy -= this.vely;

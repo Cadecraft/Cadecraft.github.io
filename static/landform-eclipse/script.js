@@ -13,6 +13,7 @@ TO ADD (also search: `toadd`~):
 > Platform collision (tree leaves)
 > Plants erasing if block below is mined
 > Renderer efficiency
+> Only calculate light levels if a block is changed
 
 RECENT CHANGES
 > None
@@ -392,15 +393,22 @@ function render() {
     ctx.imageSmoothingEnabled = false;
     ctx.globalAlpha = 1.0;
     // Clear canvas with sky (determine sky color)
-    var skyColor = '#54cbf0'
-    if(world_eventState == 'normal') skyColor = '#54cbf0';
-    else if(world_eventState == 'eclipse') skyColor = '#1f0d11';
+    var skyColor = '#54cbf0';
+    var horizonColor = '#14191e';
+    if(world_eventState == 'normal') {
+        skyColor = '#54cbf0'; // Azure
+        horizonColor = '#14191e'; // Slate
+    }
+    else if(world_eventState == 'eclipse') {
+        skyColor = '#1f0d11'; // Dark red
+        horizonColor = '#0d1114'; // Dark slate
+    }
     //ctx.fillStyle = 'rgb(20, 25, 30)';
     ctx.fillStyle = skyColor; //'#60a3b5';
     ctx.fillRect(0, 0, c.width, c.height);
     // Background
     // Fake bg
-    ctx.fillStyle = 'rgb(20, 25, 30)';
+    ctx.fillStyle = horizonColor;
     var parallaxMedianY = (-8*mychar.locy) + (c.height/2);
     ctx.fillRect(0, parallaxMedianY, c.width, c.height-parallaxMedianY);
 
