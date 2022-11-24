@@ -49,6 +49,7 @@ console.log('===============');
 
 // Game defs
 var dbgm = false; // Debug mode: allows flight, etc.
+var dbg_fps = 0;
 var globalScale = 2.0;
 var blockWidth = 16;
 var generateWorld = true; // def: true (dbg: true/false)
@@ -353,7 +354,8 @@ function gameInput() {
         // Based on item type in player inv (toadd~)
         if(mychar.invGetSelected()[0] == -100) {
             // Use item
-        } else if(getMapBlock(worldMap, pointerybl, pointerxbl) == 0 && BLOCKS[mychar.invGetSelected()[0]].placeable) {
+        }
+        else if(getMapBlock(worldMap, pointerybl, pointerxbl) == 0 && BLOCKS[mychar.invGetSelected()[0]].placeable) {
             // Place block if enabled
             if(!mychar.justMinedBlock) {
                 worldMap[pointerybl][pointerxbl] = mychar.invGetSelected()[0];
@@ -362,7 +364,8 @@ function gameInput() {
                 mychar.invReduceBlock(mychar.inv_selected);
                 mychar.justPlacedBlock = true;
             }
-        } else {
+        }
+        else {
             // Dig block
             if(timers["timer_mining"] <= 0 && (/*mychar.invGetSelected()[0] == -1 || */mychar.invGetSelected()[0] == 8) && !mychar.justPlacedBlock) {
                 // Try to dig block
@@ -372,265 +375,6 @@ function gameInput() {
                 }
             }
         }
-    } else { mychar.justPlacedBlock = false; mychar.justMinedBlock = false; }
-}
-
-// Render
-function render() {
-    // Set global scale if screen width has changed?
-    // Defs
-    var iwidth=blockWidth*globalScale;
-    var offsetx = mychar.locx*-1 + (window.innerWidth*0.5)/iwidth;
-    var offsety = mychar.locy*-1 + (window.innerHeight*0.5)/iwidth;
-    var thistime = new Date();
-    // Get canvas
-    var c = document.getElementById('gamecanvas');
-    var ctx = c.getContext('2d');
-    // Canvas size
-    ctx.canvas.width = window.innerWidth-8;
-    ctx.canvas.height = window.innerHeight-8;
-    // Canvas defs
-    ctx.imageSmoothingEnabled = false;
-    ctx.globalAlpha = 1.0;
-    // Clear canvas with sky (determine sky color)
-    var skyColor = '#54cbf0';
-    var horizonColor = '#14191e';
-    if(world_eventState == 'normal') {
-        skyColor = '#54cbf0'; // Azure
-        horizonColor = '#14191e'; // Slate
     }
-    else if(world_eventState == 'eclipse') {
-        skyColor = '#1f0d11'; // Dark red
-        horizonColor = '#0d1114'; // Dark slate
-    }
-    //ctx.fillStyle = 'rgb(20, 25, 30)';
-    ctx.fillStyle = skyColor; //'#60a3b5';
-    ctx.fillRect(0, 0, c.width, c.height);
-    // Background
-    // Fake bg
-    ctx.fillStyle = horizonColor;
-    var parallaxMedianY = (-8*mychar.locy) + (c.height/2);
-    ctx.fillRect(0, parallaxMedianY, c.width, c.height-parallaxMedianY);
-
-    // WORLD
-    // Render blocks
-    for(let y = 0; y < worldMap.length; y++) {
-        for(let x = 0; x < worldMap[0].length; x++) {
-            // Each block:
-            var thisblock = worldMap[y][x];
-            if(thisblock >= Object.keys(BLOCKS).length) { continue }; // Error: do not render block
-            var drawx = (x+offsetx)*iwidth;
-            var drawy = (y+offsety)*iwidth;
-            if(BLOCKS[thisblock].img == 'none') {
-                // Do not draw
-            } else {
-                // Determine location and whether is in view; cull outside (check that it works properly: toadd~)
-                if(drawx > iwidth*-1 && drawx < window.innerWidth && drawy > iwidth*-1 && drawy < window.innerHeight) {
-                    // Determine light level (if 0, do not draw; just draw black)
-                    var lightLvl = getBlockLightLvl(y, x);
-                    if(lightLvl == 0) {
-                        ctx.fillStyle = 'rgb(0, 0, 0)';
-                        ctx.fillRect(Math.floor(drawx), Math.floor(drawy), Math.ceil(iwidth), Math.ceil(iwidth));
-                        continue;
-                    }
-                    // Draw block
-                    try {
-                        var imgloaded = document.getElementById(BLOCKS[thisblock].img);
-                        ctx.drawImage(imgloaded, 0, 0, 16, 16, Math.floor(drawx), Math.floor(drawy), Math.ceil(iwidth), Math.ceil(iwidth));
-                    } catch(err) {
-                        console.log('err: rendering block: '+thisblock);
-                    }
-                    // Draw damage
-                    try {
-                        if(BLOCKS[thisblock].hp > 0 && getMapBlockState(worldStates, y, x).dmg > 0) {
-                            var dmgamt = Math.round((getMapBlockState(worldStates, y, x).dmg/BLOCKS[thisblock].hp)*6-1);
-                            if(dmgamt >= 0 && dmgamt <= 5) {
-                                var imgloaded = document.getElementById('images/overlays/Dmg_'+dmgamt+'.png');
-                                ctx.drawImage(imgloaded, 0, 0, 16, 16, Math.floor(drawx), Math.floor(drawy), Math.ceil(iwidth), Math.ceil(iwidth));
-                            }
-                        }
-                    } catch(err) {
-                        console.log('err: rendering block dmg: '+thisblock);
-                    }
-                    // Draw light level
-                    if(lightLvl < 5) {
-                        ctx.fillStyle = 'rgb(0, 0, 0)';
-                        if(lightLvl == 4) { ctx.globalAlpha = 0.2; }
-                        else if(lightLvl == 3) { ctx.globalAlpha = 0.5; }
-                        ctx.fillRect(Math.floor(drawx), Math.floor(drawy), Math.ceil(iwidth), Math.ceil(iwidth));
-                        ctx.globalAlpha = 1;
-                    }
-                }
-            }
-            // Dbg: is highlighted?
-            if(((mychar.dbg_highl_bl1[1] == x && mychar.dbg_highl_bl1[0] == y)
-                || (mychar.dbg_highl_bl2[1] == x && mychar.dbg_highl_bl2[0] == y))
-                && mychar.dbg_highl_enable) {
-                // Highlight~
-                var drawx = (x+offsetx)*iwidth;
-                var drawy = (y+offsety)*iwidth;
-                ctx.fillStyle = 'rgb(0, 255, 255)';
-                ctx.globalAlpha = 0.5;
-                ctx.fillRect(Math.floor(drawx), Math.floor(drawy), Math.ceil(iwidth), Math.ceil(iwidth));
-                ctx.globalAlpha = 1.0;
-            }
-        }
-    }
-
-    // CHARACTERS
-    // Render player
-    var drawx = (mychar.locx+offsetx)*iwidth;
-    var drawy = (mychar.locy+offsety)*iwidth;
-    try {
-        ctx.fillStyle = 'rgb(0, 200, 0)';
-        ctx.fillRect(drawx, drawy, Math.ceil(iwidth), Math.ceil(iwidth));
-        ctx.fillStyle = 'rgb(0, 100, 0)';
-        ctx.fillRect(drawx, drawy-iwidth, Math.ceil(iwidth), Math.ceil(iwidth));
-    } catch(err) {
-        console.log('err: rendering PLAYER');
-    }
-
-    // FX
-    // (toadd~)
-
-    // UI
-    // Render inv bar
-    var inv_boxwidth = 1;
-    for(let i = 0; i < mychar.inv_menuwidth; i++) {
-        // Box
-        if(i == mychar.inv_selected) { ctx.globalAlpha = 1.0; }
-        else { ctx.globalAlpha = 0.5; }
-        var imgloaded = document.getElementById('images/ui/Invbox2.png');
-        ctx.drawImage(imgloaded, 0, 0, 20, 20, 20+i*44, 20, 40, 40);
-        ctx.globalAlpha = 1.0;
-        // Contents
-        if(mychar.inventory.length > i) {
-            // Block img
-            if(mychar.inventory[i][0] >= Object.keys(BLOCKS).length) { continue }; // Error: do not render block
-            if(BLOCKS[mychar.inventory[i][0]].img != 'none') {
-                var imgloaded2 = document.getElementById(BLOCKS[mychar.inventory[i][0]].img);
-                ctx.drawImage(imgloaded2, 0, 0, 16, 16, 24+i*44, 24, blockWidth*2, blockWidth*2);
-            }
-            // Amount
-            if(mychar.inventory[i][1] > 1) {
-                var invamt = mychar.inventory[i][1];
-                ctx.fillStyle = 'white';
-                ctx.font = '14px Tahoma';
-                ctx.globalAlpha = 0.8;
-                ctx.fillText(''+invamt, 24+i*44, 57);
-            }
-        }
-    }
-    ctx.globalAlpha = 1.0;
-    // Render dbg messages
-    if(dbgm) {
-        ctx.fillStyle = 'black';
-        ctx.font = '14px Courier New';
-        ctx.globalAlpha = 1.0;
-        ctx.fillText('DBG: mychar.locx='+mychar.locx, window.innerWidth-250, 20*1);
-        ctx.fillText('DBG: mychar.locy='+mychar.locy, window.innerWidth-250, 20*2);
-        ctx.fillText('DBG: pointerxbl ='+pointerxbl, window.innerWidth-250, 20*3);
-        ctx.fillText('DBG: pointerybl ='+pointerybl, window.innerWidth-250, 20*4);
-    }
-}
-
-// WORLDGEN FUNCTIONS
-//
-//
-
-// Worldgen main
-function wgenMain() {
-    // Worldgen defs
-    //console.log('-');
-    console.log('  gen: defs');
-    var worldgen_simple = false; // def: false (dbg: true)
-    const worldgen_width = 90; // 90
-    const worldgen_height = 50; // 50
-    const worldgen_horizonoffset = 10; // 10
-    const worldgen_heightoffsetmax = 6; // 6
-    const worldgen_rateGrass = 0.4; // 0.4
-    const worldgen_rateTrees = 0.05; // 0.05
-    var worldgenMap_heights = []; // Main horizon height
-    var worldgenMap_heights2 = []; // Dirt offset
-    var worldgenMap_features = []; // Features such as trees, etc.
-    worldMap = [];
-    // Worldgen type
-    console.log('  gen: types');
-    if(worldgen_simple) {
-        // Worldgen simple (for testing; flat world)
-        for(let y = 0; y < worldgen_height; y++) {
-            worldMap.push([]);
-            for(let x = 0; x < worldgen_width; x++) {
-                // air=0-9;grass=10;dirt=11-12;stone=13+
-                if(y < 9+worldgen_horizonoffset) worldMap[y].push(0);
-                else if(y == 9+worldgen_horizonoffset) worldMap[y].push(0);
-                else if(y==10+worldgen_horizonoffset) worldMap[y].push(2);
-                else if(y < 13+worldgen_horizonoffset) worldMap[y].push(1);
-                else if(y >= 13+worldgen_horizonoffset) worldMap[y].push(4);
-            }
-        }
-    } else {
-        // Worldgen normal
-        // Generate biomes (toadd)
-        // Generate topography (heights and features)
-        var lastHeight = 0;
-        for(let x = 0; x < worldgen_width; x++) {
-            var thisbiome = 0;
-            var newHeight = lastHeight;
-            var newFeature = "";
-            // Generate new heights
-            if(thisbiome == 0) {
-                newHeight += Math.floor(Math.random()*3)-1; // Normal biome
-            } else if(thisbiome == 1) {
-                newHeight += Math.floor(Math.random()*5)-2; // Desert biome
-            } else if(thisbiome == 12) {
-                newHeight += Math.floor(Math.random()*10)-5; // RARE mesa biome
-            }
-            if(newHeight > worldgen_heightoffsetmax) newHeight = worldgen_heightoffsetmax;
-            if(newHeight < -1*worldgen_heightoffsetmax) newHeight = -1*worldgen_heightoffsetmax;
-            var newHeight2 = Math.floor(Math.random()*2);
-            // Generate new features
-            if(thisbiome == 0) {
-                if(Math.random() < worldgen_rateTrees && x < worldgen_width-6 && x > 5) { newFeature = "tree"; }
-                else if(Math.random() < worldgen_rateGrass) { newFeature = "tall grass"; }
-            }
-            // Add
-            worldgenMap_heights.push(newHeight);
-            worldgenMap_heights2.push(newHeight2);
-            worldgenMap_features.push(newFeature);
-            lastHeight = newHeight;
-        }
-        // Generate blocks
-        for(let y = 0; y < worldgen_height; y++) {
-            worldMap.push([]);
-            for(let x = 0; x < worldgen_width; x++) {
-                // air=0-9;grass=10;dirt=11-12;stone=13+
-                if(y < 9+worldgen_horizonoffset+worldgenMap_heights[x]) {
-                    worldMap[y].push(0); // Sky
-                } else if(y == 9+worldgen_horizonoffset+worldgenMap_heights[x]) {
-                    // Features (1 block above ground)
-                    if(worldgenMap_features[x] == "tall grass") { worldMap[y].push(3); }
-                    else if(worldgenMap_features[x] == "tree") {
-                        worldMap[y].push(11);
-                        let treeHeight = Math.floor(Math.random()*4)+2;
-                        for(let i = 0; i < treeHeight; i++) { worldMap[y-i-1][x] = 11; }
-                        for(let i = 0; i < 5; i++) { worldMap[y-treeHeight-1][x+i-2] = 12; }
-                    }
-                    else { worldMap[y].push(0); }
-                } else if(y==10+worldgen_horizonoffset+worldgenMap_heights[x]) {
-                    if(worldgenMap_features[x] == "tree") { worldMap[y].push(1); }
-                    else { worldMap[y].push(2); } // Grass
-                } else if(y < 13+worldgen_horizonoffset+worldgenMap_heights[x]+worldgenMap_heights2[x]) {
-                    worldMap[y].push(1); // Dirt
-                } else if(y >= 13+worldgen_horizonoffset+worldgenMap_heights[x]+worldgenMap_heights2[x]) {
-                    if(Math.random() < 0.2) worldMap[y].push(5); // Stone
-                    else worldMap[y].push(4);
-                }
-            }
-        }
-        // Carve caves (toadd)
-        // (toadd)
-    }
-    //console.log('-');
-    console.log('loading world... generation complete');
+    else { mychar.justPlacedBlock = false; mychar.justMinedBlock = false; }
 }

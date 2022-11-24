@@ -143,7 +143,7 @@ class Player {
             }
         }
         // Above
-        if(this.vely < 0) { // Rising
+        else if(this.vely < 0) { // Rising
             this.isFalling = true;
             if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy-1+this.phys_yheightbias), Math.floor(this.locx+this.phys_xshrinkbias))].collision == 'solid') { // map[Math.floor(this.locy+1)][Math.floor(this.locx+this.phys_xshrinkbias)] != 0
                 //this.locy -= this.vely;
