@@ -50,6 +50,8 @@ console.log('===============');
 // Game defs
 var dbgm = false; // Debug mode: allows flight, etc.
 var dbg_fps = 0;
+var dbg_totalframes = 0;
+var dbg_fps_avg = 0;
 var globalScale = 2.0;
 var blockWidth = 16;
 var generateWorld = true; // def: true (dbg: true/false)
@@ -280,6 +282,7 @@ document.addEventListener('keyup',
 
 // Game interval settings
 const gameInterval = 17;
+var lastDate = Date.now();
 setInterval(gameLoop, gameInterval);
 
 // On first start game
@@ -296,6 +299,14 @@ var timers = {
 
 // Game loop
 function gameLoop() {
+    // Determine fps
+    if(dbgm) {
+        var msElapsed = Date.now() - lastDate;
+    lastDate = Date.now();
+    dbg_fps = 1/(msElapsed/1000); // inverse of (seconds per frame)
+    dbg_fps_avg = ((dbg_fps)+(dbg_fps_avg)*dbg_totalframes)/(dbg_totalframes+1)
+    dbg_totalframes++;
+    }
     // Reduce timers
     for(let i = 0; i < Object.keys(timers).length; i++) {
         timers[Object.keys(timers)[i]] -= 17;

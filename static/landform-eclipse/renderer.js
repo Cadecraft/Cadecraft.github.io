@@ -146,11 +146,23 @@ function render() {
         ctx.fillStyle = 'black';
         ctx.font = '14px Courier New';
         ctx.globalAlpha = 1.0;
-        ctx.fillText('DBG: mychar.locx= '+mychar.locx, window.innerWidth-250, 20*1);
-        ctx.fillText('DBG: mychar.locy= '+mychar.locy, window.innerWidth-250, 20*2);
-        ctx.fillText('DBG: pointerxbl = '+pointerxbl, window.innerWidth-250, 20*3);
-        ctx.fillText('DBG: pointerybl = '+pointerybl, window.innerWidth-250, 20*4);
-        ctx.fillText('DBG: pointer_bl = type '+getMapBlock(worldMap, pointerybl, pointerxbl));
-        ctx.fillText('DBG: frameHz    = '+dbg_fps);
+        ctx.fillText('     DEGUG MENU', window.innerWidth-250, 20);
+        dbgmren(ctx, 2, 'mychar.locx= '+roundpretty(mychar.locx));
+        dbgmren(ctx, 3, 'mychar.locy= '+roundpretty(mychar.locy));
+        dbgmren(ctx, 4, 'pointerxbl = '+roundpretty(pointerxbl));
+        dbgmren(ctx, 5, 'pointerybl = '+roundpretty(pointerybl));
+        dbgmren(ctx, 6, 'pointer_bl = type '+getMapBlock(worldMap, pointerybl, pointerxbl));
+        dbgmren(ctx, 7, 'fps        = '+roundpretty(dbg_fps));
+        dbgmren(ctx, 8, 'fps_avg    = '+roundpretty(dbg_fps_avg));
     }
+}
+
+// Dbg message renderer
+function dbgmren(ctx, order, msg) {
+    const vertSpacing = 20;
+    const rightOffset = 250;
+    ctx.fillText('DBG: '+msg, window.innerWidth-rightOffset, vertSpacing*order);
+}
+function roundpretty(innum) {
+    return ""+(Math.round(innum*100)/100);
 }
