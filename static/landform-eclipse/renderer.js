@@ -60,16 +60,16 @@ function render() {
                     }
                     // Draw block
                     try {
-                        var imgloaded = document.getElementById(BLOCKS[thisblock].img);
-                        ctx.drawImage(imgloaded, 0, 0, 16, 16, Math.floor(drawx), Math.floor(drawy), Math.ceil(iwidth), Math.ceil(iwidth));
-                    } catch(err) { console.log('err: rendering block: '+thisblock); }
+                        //var imgloaded = document.getElementById(BLOCKS[thisblock].img);
+                        ctx.drawImage(allimgs[BLOCKS[thisblock].img], 0, 0, 16, 16, Math.floor(drawx), Math.floor(drawy), Math.ceil(iwidth), Math.ceil(iwidth));
+                    } catch(err) { console.log('err: rendering block: '+thisblock+': '+err); }
                     // Draw damage
                     try {
                         if(BLOCKS[thisblock].hp > 0 && getMapBlockState(worldStates, y, x).dmg > 0) {
                             var dmgamt = Math.round((getMapBlockState(worldStates, y, x).dmg/BLOCKS[thisblock].hp)*6-1);
                             if(dmgamt >= 0 && dmgamt <= 5) {
-                                var imgloaded = document.getElementById('images/overlays/Dmg_'+dmgamt+'.png');
-                                ctx.drawImage(imgloaded, 0, 0, 16, 16, Math.floor(drawx), Math.floor(drawy), Math.ceil(iwidth), Math.ceil(iwidth));
+                                //var imgloaded = document.getElementById('images/overlays/Dmg_'+dmgamt+'.png');
+                                ctx.drawImage(allimgs['images/overlays/Dmg_'+dmgamt+'.png'], 0, 0, 16, 16, Math.floor(drawx), Math.floor(drawy), Math.ceil(iwidth), Math.ceil(iwidth));
                             }
                         }
                     } catch(err) { console.log('err: rendering block dmg: '+thisblock); }
@@ -119,16 +119,16 @@ function render() {
         // Box
         if(i == mychar.inv_selected) { ctx.globalAlpha = 1.0; }
         else { ctx.globalAlpha = 0.5; }
-        var imgloaded = document.getElementById('images/ui/Invbox2.png');
-        ctx.drawImage(imgloaded, 0, 0, 20, 20, 20+i*44, 20, 40, 40);
+        //var imgloaded = document.getElementById('images/ui/Invbox2.png');
+        ctx.drawImage(allimgs['images/ui/Invbox2.png'], 0, 0, 20, 20, 20+i*44, 20, 40, 40);
         ctx.globalAlpha = 1.0;
         // Contents
         if(mychar.inventory.length > i) {
             // Block img
             if(mychar.inventory[i][0] >= Object.keys(BLOCKS).length) { continue }; // Error: do not render block
             if(BLOCKS[mychar.inventory[i][0]].img != 'none') {
-                var imgloaded2 = document.getElementById(BLOCKS[mychar.inventory[i][0]].img);
-                ctx.drawImage(imgloaded2, 0, 0, 16, 16, 24+i*44, 24, blockWidth*2, blockWidth*2);
+                //var imgloaded2 = document.getElementById(BLOCKS[mychar.inventory[i][0]].img);
+                ctx.drawImage(allimgs[BLOCKS[mychar.inventory[i][0]].img], 0, 0, 16, 16, 24+i*44, 24, blockWidth*2, blockWidth*2);
             }
             // Amount
             if(mychar.inventory[i][1] > 1) {

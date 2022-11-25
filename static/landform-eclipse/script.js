@@ -82,6 +82,7 @@ function mapRegen(inGenerateWorld) {
             for(let x = 0; x < worldMap[0].length; x++) {
                 worldStates[y].push({
                     'dmg': 0,
+                    'light': 0,
                     'state': 0
                 });
             }
@@ -97,6 +98,8 @@ var mychar = new Player(50, 10);
 // Load game defs: music/audios
 
 // Load images to the html
+var allimgs = {};
+//var otherimgs = {};
 console.log('loading images: loading...');
 for(let i = BLOCKS_startsat; i < Object.keys(BLOCKS).length+BLOCKS_startsat; i++) {
     // Get src url
@@ -105,10 +108,11 @@ for(let i = BLOCKS_startsat; i < Object.keys(BLOCKS).length+BLOCKS_startsat; i++
     imgsrc = 'static/landform-eclipse/' + imgsrc;
     // Load img
     try {
-        const imgelement = document.createElement('img');
+        var imgelement = document.createElement('img');
         imgelement.src = imgsrc;
         imgelement.id = BLOCKS[i].img;
         document.getElementById('imgfiles').append(imgelement);
+        allimgs[BLOCKS[i].img] = document.getElementById(BLOCKS[i].img);
     } catch(err) {
         console.log('err: loading images: block id='+i);
     }
@@ -120,10 +124,11 @@ for(let i = 0; i < IMGS_OTHER.length; i++) {
     imgsrc = 'static/landform-eclipse/' + imgsrc;
     // Load img
     try {
-        const imgelement = document.createElement('img');
+        var imgelement = document.createElement('img');
         imgelement.src = imgsrc;
         imgelement.id = IMGS_OTHER[i];
         document.getElementById('imgfiles').append(imgelement);
+        allimgs[IMGS_OTHER[i]] = document.getElementById(IMGS_OTHER[i]);
     } catch(err) {
         console.log('err: loading images: img_other id='+i);
     }
@@ -179,10 +184,12 @@ function tryDamageBlock(indmg) {
         worldStates[pointerybl][pointerxbl].dmg++;
         // Check that block health is in range
         if(worldStates[pointerybl][pointerxbl].dmg >= BLOCKS[newblock].hp) {
-            // Destroy block, drop items, trigger extra events if necessary
+            // Destroy block, drop items, trigger extra events if necessary (including light level changes) (toadd)
             worldMap[pointerybl][pointerxbl] = 0;
             worldStates[pointerybl][pointerxbl].dmg = 0;
             worldStates[pointerybl][pointerxbl].state = 0;
+            // Light lvl change: 1) was/is block a light source? if so, for all blocks within 8 away, recalc lvl and store
+            // Also must change in the renderer: use the worldState instead of recalculating each frame (toadd)
             for(let i = 0; i < BLOCKS[newblock].drops.length; i++) {
                 mychar.invAddBlock(BLOCKS[newblock].drops[i]);
                 mychar.justMinedBlock = true;
