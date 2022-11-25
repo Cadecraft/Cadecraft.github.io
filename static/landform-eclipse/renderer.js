@@ -52,7 +52,7 @@ function render() {
                 // Determine location and whether is in view; cull outside (check that it works properly: toadd~)
                 if(drawx > iwidth*-1 && drawx < window.innerWidth && drawy > iwidth*-1 && drawy < window.innerHeight) {
                     // Determine light level (if 0, do not draw; just draw black)
-                    var lightLvl = getBlockLightLvl(y, x);
+                    var lightLvl = getMapBlockState(worldStates, y, x).light; //getBlockLightLvl(y, x);
                     if(lightLvl == 0) {
                         ctx.fillStyle = 'rgb(0, 0, 0)';
                         ctx.fillRect(Math.floor(drawx), Math.floor(drawy), Math.ceil(iwidth), Math.ceil(iwidth));

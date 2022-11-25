@@ -13,7 +13,7 @@ TO ADD (also search: `toadd`~):
 > Platform collision (tree leaves)
 > Plants erasing if block below is mined
 > Renderer efficiency
-> Only calculate light levels if a block is changed
+> Only calculate light levels NEAR a changed block for performance
 
 RECENT CHANGES
 > None
@@ -82,11 +82,13 @@ function mapRegen(inGenerateWorld) {
             for(let x = 0; x < worldMap[0].length; x++) {
                 worldStates[y].push({
                     'dmg': 0,
-                    'light': 0,
+                    'light': 5,
                     'state': 0
                 });
             }
         }
+        // Light lvls (update for states)
+        updateBlockLightLvls();
     } catch(err) { console.log('err: loading map or loading world states'); }
     console.log('loading world: completed~!');
 }
@@ -167,8 +169,15 @@ function getMapBlockState(states, locy, locx) {
         return states[locy][locx];
     } else { return {
         'dmg': 0,
+        'light': 5,
         'state': -1
     }; }
+}
+function setMapBlockState(locy, locx, key, val) {
+    if(locy >= 0 && locy < worldStates.length && locx >= 0 && locx < worldStates[0].length) {
+        worldStates[locy][locx][key] = val;
+        return true;
+    } else { return false; }
 }
 
 // WORLD FUNCTIONS
@@ -188,12 +197,12 @@ function tryDamageBlock(indmg) {
             worldMap[pointerybl][pointerxbl] = 0;
             worldStates[pointerybl][pointerxbl].dmg = 0;
             worldStates[pointerybl][pointerxbl].state = 0;
-            // Light lvl change: 1) was/is block a light source? if so, for all blocks within 8 away, recalc lvl and store
-            // Also must change in the renderer: use the worldState instead of recalculating each frame (toadd)
             for(let i = 0; i < BLOCKS[newblock].drops.length; i++) {
                 mychar.invAddBlock(BLOCKS[newblock].drops[i]);
                 mychar.justMinedBlock = true;
             }
+            // Light lvl change: 1) was/is block a light source? if so, for all blocks within 8 away, recalc lvl and store
+            updateBlockLightLvls();
         } else {
             // Nothing
         }
@@ -220,6 +229,14 @@ function getBlockLightLvl(locy, locx) {
     }
     // Not touching any air
     return greatestLightLvl;
+}
+
+function updateBlockLightLvls() {
+    for(let y = 0; y < worldMap.length; y++) {
+        for(let x = 0; x < worldMap[0].length; x++) {
+            setMapBlockState(y, x, 'light', getBlockLightLvl(y, x));
+        }
+    }
 }
 
 // INPUT
@@ -381,6 +398,8 @@ function gameInput() {
                 worldStates[pointerybl][pointerxbl].state = 0;
                 mychar.invReduceBlock(mychar.inv_selected);
                 mychar.justPlacedBlock = true;
+                // Update light lvls (toadd)
+                updateBlockLightLvls();
             }
         }
         else {
