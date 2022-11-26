@@ -14,6 +14,7 @@ TO ADD (also search: `toadd`~):
 > Plants erasing if block below is mined
 > Renderer efficiency
 > Only calculate light levels NEAR a changed block for performance
+> Prevent block placed inside player
 
 RECENT CHANGES
 > None
@@ -95,7 +96,7 @@ function mapRegen(inGenerateWorld) {
 mapRegen(generateWorld);
 
 // Load game defs: player character (mychar)
-var mychar = new Player(50, 10);
+var mychar = new Player(50, 10); // 50, 10
 
 // Load game defs: music/audios
 
@@ -179,6 +180,19 @@ function setMapBlockState(locy, locx, key, val) {
         return true;
     } else { return false; }
 }
+// Download file function
+function download(filename, text) {
+    console.log('Attempt to download: '+filename);
+    // Create element
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,'+encodeURIComponent(text));
+    element.setAttribute('download', filename);
+    element.style.display = 'none';
+    // Activate and remove
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+}
 
 // WORLD FUNCTIONS
 //
@@ -190,7 +204,7 @@ function tryDamageBlock(indmg) {
     var newblockState = getMapBlockState(worldStates, pointerybl, pointerxbl);
     if(BLOCKS[newblock].hardness > 0 && newblockState.state != -1) { // determines if mineable
         // Deal damage to block
-        worldStates[pointerybl][pointerxbl].dmg++;
+        worldStates[pointerybl][pointerxbl].dmg+=indmg;
         // Check that block health is in range
         if(worldStates[pointerybl][pointerxbl].dmg >= BLOCKS[newblock].hp) {
             // Destroy block, drop items, trigger extra events if necessary (including light level changes) (toadd)
@@ -358,6 +372,7 @@ function gameInput() {
     if(keys['d']) { inputs.push('right'); }
     if(keys['s']) { inputs.push('down'); }
     if(keys[' '] || keys['w']) { inputs.push('jump'); }
+    if(keys['v'] && keys['e']) { inputs.push('save'); keys['v']=false; keys['e']=false; }
     for(let i = 0; i < 10; i++) {
         if(keys[''+i]) { inputs.push('inv'+i); }
     }
@@ -406,7 +421,7 @@ function gameInput() {
             // Dig block
             if(timers["timer_mining"] <= 0 && (/*mychar.invGetSelected()[0] == -1 || */mychar.invGetSelected()[0] == 8) && !mychar.justPlacedBlock) {
                 // Try to dig block
-                var blockDamaged = tryDamageBlock(1);
+                var blockDamaged = tryDamageBlock(mychar.miningefficiency);
                 if(blockDamaged) {
                     timers["timer_mining"] = mychar.cooldown_mining;
                 }
@@ -414,4 +429,8 @@ function gameInput() {
         }
     }
     else { mychar.justPlacedBlock = false; mychar.justMinedBlock = false; }
+    if(dbgm && inputs.includes('save')) {
+        // Save world (only allowed in debug mode)
+        download('landform_world.ccdata', JSON.stringify(worldMap));
+    }
 }

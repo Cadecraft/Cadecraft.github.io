@@ -9,7 +9,7 @@ function wgenMain() {
     var worldgen_simple = false; // def: false (dbg: true)
     const worldgen_width = 150; // 90, 150
     const worldgen_height = 90; // 50, 90
-    const worldgen_horizonoffset = 10; // 10
+    const worldgen_horizonoffset = 22; // 22
     const worldgen_heightoffsetmax = 10; // 6, 10
     const worldgen_rateGrass = 0.4; // 0.4
     const worldgen_rateTrees = 0.05; // 0.05

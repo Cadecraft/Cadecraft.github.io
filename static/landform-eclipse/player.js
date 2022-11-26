@@ -16,6 +16,7 @@ class Player {
         this.isFalling = true;
         // Cooldown defs
         this.cooldown_mining = 50;
+        this.miningefficiency = 2; // Dmg to deal: def=1
         this.justPlacedBlock = false;
         this.justMinedBlock = false;
         // Physics defs
