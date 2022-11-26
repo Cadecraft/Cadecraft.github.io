@@ -8,13 +8,20 @@ TO ADD (also search: `toadd`~):
 > Respawn on fall too far
 > Reduce air control
 > Tightness of deceleration
+> Characters! (+ animations) (import from liwol)
 > Background blocks!
 > Background on screen
+> Title menu
 > Platform collision (tree leaves)
 > Plants erasing if block below is mined
 > Renderer efficiency
 > Only calculate light levels NEAR a changed block for performance
 > Prevent block placed inside player
+> Music vol settings
+> Sound effects (mining, breaking, walking, etc.)
+> Pickaxe leveling/upgrading (and reset to default efficiency being 1)
+> Specialized music per region (ex. don't play desert music in highlands)
+> Biomes
 
 RECENT CHANGES
 > None
@@ -99,6 +106,33 @@ mapRegen(generateWorld);
 var mychar = new Player(50, 10); // 50, 10
 
 // Load game defs: music/audios
+var gameMusics = [];
+for(let i = 0; i < MUSICS.length; i++) {
+    // Create music
+    try {
+        var thismusic = new Audio('static/landform-eclipse/'+MUSICS[i]);
+        thismusic.volume = MUSICS_VOL;
+        thismusic.addEventListener('ended', function() {
+            randomMusics();
+        });
+        gameMusics.push(thismusic);
+    } catch(err) { console.log('err: loading sounds: music id='+i); }
+}
+// Audios - func
+var hasMusicStarted = false; // User must first interact with document before sound can play
+function playSoundOnce(soundin) {
+    try {
+        soundin.currentTime=0;
+        soundin.play();
+    } catch(err) { console.log('err: playSoundOnce() failed'); }
+}
+function randomMusics() {
+    if(!hasMusicStarted) { hasMusicStarted = true; }
+    var choseni = Math.floor(Math.random() * gameMusics.length);
+    console.log('music: now playing: '+MUSICS[choseni]);
+    var chosen = gameMusics[choseni];
+    playSoundOnce(chosen);
+}
 
 // Load images to the html
 var allimgs = {};
@@ -401,9 +435,9 @@ function gameInput() {
     }
     if(mousedown) {
         // Click
-        // Based on item type in player inv (toadd~)
+        // Based on item type in player inv
         if(mychar.invGetSelected()[0] == -100) {
-            // Use item
+            // Use item (toadd~)
         }
         else if(getMapBlock(worldMap, pointerybl, pointerxbl) == 0 && BLOCKS[mychar.invGetSelected()[0]].placeable) {
             // Place block if enabled
@@ -427,6 +461,8 @@ function gameInput() {
                 }
             }
         }
+        // Random other click stuff
+        if(!hasMusicStarted) randomMusics();
     }
     else { mychar.justPlacedBlock = false; mychar.justMinedBlock = false; }
     if(dbgm && inputs.includes('save')) {

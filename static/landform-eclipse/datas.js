@@ -20,6 +20,15 @@ const IMGS_OTHER = [
     'images/ui/Invbox2.png'
 ]
 
+// Audios info
+const MUSICS = [
+    'sounds/S_01_Caverns.mp3', // Caverns
+    'sounds/S_04_10000.mp3', // Isekai 10000
+    'sounds/S_05_Desert.mp3', // Desert
+    'sounds/S_06_FullDive.mp3' // FULL DIVE
+]
+const MUSICS_VOL = 0.25;
+
 // Blocks info
 const BLOCKS_startsat = -1;
 const BLOCKS = {
