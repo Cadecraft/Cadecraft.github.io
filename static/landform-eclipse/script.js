@@ -12,7 +12,7 @@ TO ADD (also search: `toadd`~):
 > Background blocks!
 > Background on screen
 > Title menu
-> Platform collision (tree leaves)
+> Platform collision (tree leaves) (figure out from liwol)
 > Plants erasing if block below is mined
 > Renderer efficiency
 > Only calculate light levels NEAR a changed block for performance
@@ -22,6 +22,8 @@ TO ADD (also search: `toadd`~):
 > Pickaxe leveling/upgrading (and reset to default efficiency being 1)
 > Specialized music per region (ex. don't play desert music in highlands)
 > Biomes
+> Cookies to save progress (ask for consent)
+> Laser beam
 
 RECENT CHANGES
 > None
@@ -234,29 +236,40 @@ function download(filename, text) {
 
 function tryDamageBlock(indmg) {
     // Get map block (air = void = 0)
-    var newblock = getMapBlock(worldMap, pointerybl, pointerxbl);
-    var newblockState = getMapBlockState(worldStates, pointerybl, pointerxbl);
-    if(BLOCKS[newblock].hardness > 0 && newblockState.state != -1) { // determines if mineable
+    var thisblock = getMapBlock(worldMap, pointerybl, pointerxbl);
+    var thisblockState = getMapBlockState(worldStates, pointerybl, pointerxbl);
+    if(BLOCKS[thisblock].hardness > 0 && thisblockState.state != -1) { // determines if mineable
         // Deal damage to block
         worldStates[pointerybl][pointerxbl].dmg+=indmg;
         // Check that block health is in range
-        if(worldStates[pointerybl][pointerxbl].dmg >= BLOCKS[newblock].hp) {
-            // Destroy block, drop items, trigger extra events if necessary (including light level changes) (toadd)
-            worldMap[pointerybl][pointerxbl] = 0;
-            worldStates[pointerybl][pointerxbl].dmg = 0;
-            worldStates[pointerybl][pointerxbl].state = 0;
-            for(let i = 0; i < BLOCKS[newblock].drops.length; i++) {
-                mychar.invAddBlock(BLOCKS[newblock].drops[i]);
-                mychar.justMinedBlock = true;
-            }
-            // Light lvl change: 1) was/is block a light source? if so, for all blocks within 8 away, recalc lvl and store
-            updateBlockLightLvls();
+        if(worldStates[pointerybl][pointerxbl].dmg >= BLOCKS[thisblock].hp) {
+            destroyBlock(pointerybl, pointerxbl);
         } else {
             // Nothing
         }
         return true;
     }
     else { return false; }
+}
+
+// Destroy block, drop items, trigger extra events if necessary (including light level changes) (toadd)
+function destroyBlock(locy, locx) {
+    var oldblock = getMapBlock(worldMap, locy, locx);
+    var oldblockState = getMapBlockState(worldStates, locy, locx);
+    worldMap[locy][locx] = 0;
+    worldStates[locy][locx].dmg = 0;
+    worldStates[locy][locx].state = 0;
+    for(let i = 0; i < BLOCKS[oldblock].drops.length; i++) {
+        mychar.invAddBlock(BLOCKS[oldblock].drops[i]);
+        mychar.justMinedBlock = true;
+    }
+    // Update blocks nearby
+    if(getMapBlock(worldMap, locy-1, locx) == 3) {
+        destroyBlock(locy-1, locx);
+    }
+    // Light lvl change: 1) was/is now block a light source? if so, for all blocks within 8 away, recalc lvl and store
+    updateBlockLightLvls(locy-7, 15, locx-7, 15);
+    return true;
 }
 
 function getBlockLightLvl(locy, locx) {
@@ -279,12 +292,23 @@ function getBlockLightLvl(locy, locx) {
     return greatestLightLvl;
 }
 
-function updateBlockLightLvls() {
-    for(let y = 0; y < worldMap.length; y++) {
-        for(let x = 0; x < worldMap[0].length; x++) {
+function updateBlockLightLvls(y_start=0, y_len=-1, x_start=0, x_len=-1) {
+    var y_len2 = y_len;
+    var x_len2 = x_len;
+    if(y_len == -1) y_len2 = worldMap.length; // -1 = use full map
+    if(x_len == -1) x_len2 = worldMap[0].length;
+    for(let y = 0+y_start; y < y_start+y_len2; y++) {
+        for(let x = 0+x_start; x < x_start+x_len2; x++) {
             setMapBlockState(y, x, 'light', getBlockLightLvl(y, x));
         }
     }
+    return true;
+}
+
+// Set world event state (and updates)
+function setWorldEventState(newstate) {
+    world_eventState = newstate;
+    updateBlockLightLvls();
 }
 
 // INPUT
@@ -334,7 +358,7 @@ function updatePointerwr() {
 // Input checks (key down)
 document.addEventListener('keydown',
     function(e) {
-        var l = e.key.toLowerCase();
+        var l = e.key.toLowerCase(); // All keys are lowercase
         keys[l] = true;
         /*if(['Space', 'ArrowUp', 'ArrowDown'].indexOf(e.code) > -1) {
             e.preventDefault();
@@ -407,6 +431,8 @@ function gameInput() {
     if(keys['s']) { inputs.push('down'); }
     if(keys[' '] || keys['w']) { inputs.push('jump'); }
     if(keys['v'] && keys['e']) { inputs.push('save'); keys['v']=false; keys['e']=false; }
+    if(keys['arrowleft']) { inputs.push('invl'); keys['arrowleft']=false; } // All keys are lowercase
+    if(keys['arrowright']) { inputs.push('invr'); keys['arrowright']=false; }
     for(let i = 0; i < 10; i++) {
         if(keys[''+i]) { inputs.push('inv'+i); }
     }
@@ -429,9 +455,19 @@ function gameInput() {
     }
     for(let i = 0; i < 10; i++) {
         if(inputs.includes('inv'+i)) {
-            if(i == 0) { mychar.inv_selected = 9; }
-            else { mychar.inv_selected = i-1; }
+            // Select inventory based on number key
+            if(i == 0) { mychar.invSetSelected(9); }
+            else { mychar.invSetSelected(i-1); }
         }
+    }
+    if(inputs.includes('invl')) {
+        // Select inventory: left 1 (decrement)
+        console.log('e');
+        mychar.invIncrementSelected(-1);
+    }
+    if(inputs.includes('invr')) {
+        // Select inventory: right 1 (increment)
+        mychar.invIncrementSelected(1);
     }
     if(mousedown) {
         // Click

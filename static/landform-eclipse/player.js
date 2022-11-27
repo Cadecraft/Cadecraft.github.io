@@ -80,6 +80,15 @@ class Player {
             return this.inventory[this.inv_selected];
         } else { return [-1,0]; }
     }
+    invSetSelected(newinv_selected) {
+        // Set the selected index
+        this.inv_selected = newinv_selected;
+        if(this.inv_selected > 9) this.inv_selected = (this.inv_selected % 9) - 1;
+        else if(this.inv_selected < 0) this.inv_selected = 10+this.inv_selected;
+    }
+    invIncrementSelected(amt) {
+        this.invSetSelected(this.inv_selected + amt);
+    }
     invReduceBlock(inindex) {
         // Decrease amount in the stack
         if(inindex < this.inventory.length) {
