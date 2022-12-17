@@ -205,5 +205,49 @@ const BLOCKS = {
         hardness: 1,
         hp: 4,
         drops: [14]
+    },
+    15: {
+        iname: "Blue Tile Roof",
+        idescr: "A roof made out of tiles with a pleasant blue color.",
+        irarity: 2,
+        img: 'images/blocks/Block_TileRoofBlue_Shadowed.png',
+        placeable: true,
+        collision: 'block',
+        hardness: 1,
+        hp: 15,
+        drops: [15]
+    },
+    16: {
+        iname: "Blue Tile Roof Top",
+        idescr: "A roof made out of tiles with a pleasant blue color.",
+        irarity: 2,
+        img: 'images/blocks/Block_TileRoofBlue_Top.png',
+        placeable: true,
+        collision: 'block',
+        hardness: 1,
+        hp: 15,
+        drops: [16]
+    },
+    17: {
+        iname: "Blue Tile Roof Top (Left)",
+        idescr: "A roof made out of tiles with a pleasant blue color.",
+        irarity: 2,
+        img: 'images/blocks/Block_TileRoofBlue_Top_Left.png',
+        placeable: true,
+        collision: 'block',
+        hardness: 1,
+        hp: 15,
+        drops: [17]
+    },
+    18: {
+        iname: "Blue Tile Roof Top (Right)",
+        idescr: "A roof made out of tiles with a pleasant blue color.",
+        irarity: 2,
+        img: 'images/blocks/Block_TileRoofBlue_Top_Right.png',
+        placeable: true,
+        collision: 'block',
+        hardness: 1,
+        hp: 15,
+        drops: [18]
     }
 };
