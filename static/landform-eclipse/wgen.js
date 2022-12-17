@@ -7,12 +7,15 @@ function wgenMain() {
     //console.log('-');
     console.log('  gen: defs');
     var worldgen_simple = false; // def: false (dbg: true)
-    const worldgen_width = 150; // 90, 150
+    const worldgen_width = 500; // 90, 150, 500 (normal)
     const worldgen_height = 90; // 50, 90
     const worldgen_horizonoffset = 22; // 22
     const worldgen_heightoffsetmax = 10; // 6, 10
     const worldgen_rateGrass = 0.4; // 0.4
     const worldgen_rateTrees = 0.05; // 0.05
+    const worldgen_totalBiomes = 6;
+    const worldgen_biomesOrder = [4,1,0,2,3,5];
+    var worldgenMap_biomes = [];
     var worldgenMap_heights = []; // Main horizon height
     var worldgenMap_heights2 = []; // Dirt offset
     var worldgenMap_features = []; // Features such as trees, etc.
@@ -35,10 +38,22 @@ function wgenMain() {
     } else {
         // Worldgen normal
         // Generate biomes (toadd)
+        // Biomes (l->r): 4 Lbeach, 1 desert, 0 highlands, 2 plains, 3 mountains, 5 Rbeach
+        // Per biome:
+        //  Lbeach: ocean, sand, clams, palms, islands(?)
+        //  Desert: sand, mesa, cactus, caves, oasis
+        //  Highlands: karst, small villages, blue, trees
+        //  Plains: wheat, lakes, big villages, expansive, flat
+        //  Mountains: tall, ice and snow, caves, crystals
+        //  Rbeach: arctic ocean, ice and snow, igloo
         // Generate topography (heights and features)
+        for(let x = 0; x < worldgen_width; x++) {
+            var biomeProgress = Math.floor(x/worldgen_width * worldgen_totalBiomes);
+            worldgenMap_biomes.push(worldgen_biomesOrder[biomeProgress]);
+        }
         var lastHeight = 0;
         for(let x = 0; x < worldgen_width; x++) {
-            var thisbiome = 0;
+            var thisbiome = worldgenMap_biomes[x];
             var newHeight = lastHeight;
             var newFeature = "";
             // Generate new heights

@@ -39,8 +39,13 @@ function render() {
 
     // WORLD
     // Render blocks
-    for(let y = 0; y < worldMap.length; y++) {
-        for(let x = 0; x < worldMap[0].length; x++) {
+    const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
+    var winWidthBlockHalf = c.width / iwidth - 2; // only render what is visible
+    var winHeightBlockHalf = c.height / iwidth - 2; // - 2 (for both)
+    for(let y = clamp(Math.floor(mychar.locy - winHeightBlockHalf), 0, worldMap.length);
+        y < clamp(Math.floor(mychar.locy + winHeightBlockHalf), 0, worldMap.length); y++) { // let y = 0; y < worldMap.length; y++
+        for(let x = clamp(Math.floor(mychar.locx - winWidthBlockHalf), 0, worldMap[0].length);
+            x < clamp(Math.floor(mychar.locx + winWidthBlockHalf), 0, worldMap[0].length); x++) { // let x = 0; x < worldMap[0].length; x++
             // Each block:
             var thisblock = worldMap[y][x];
             if(thisblock >= Object.keys(BLOCKS).length) { continue }; // Error: do not render block

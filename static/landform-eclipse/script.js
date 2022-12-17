@@ -15,7 +15,6 @@ TO ADD (also search: `toadd`~):
 > Platform collision (tree leaves) (figure out from liwol)
 > Plants erasing if block below is mined
 > Renderer efficiency
-> Only calculate light levels NEAR a changed block for performance
 > Prevent block placed inside player
 > Music vol settings
 > Sound effects (mining, breaking, walking, etc.)
@@ -24,6 +23,10 @@ TO ADD (also search: `toadd`~):
 > Biomes
 > Cookies to save progress (ask for consent)
 > Laser beam
+> Water physics
+> World chunking!
+> NPCs
+> Render chunk (only loop through the blocks visible (i starts after 0))
 
 RECENT CHANGES
 > None
@@ -105,7 +108,7 @@ function mapRegen(inGenerateWorld) {
 mapRegen(generateWorld);
 
 // Load game defs: player character (mychar)
-var mychar = new Player(50, 10); // 50, 10
+var mychar = new Player(200, 10); // 50, 10; 200, 10
 
 // Load game defs: music/audios
 var gameMusics = [];
