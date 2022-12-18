@@ -11,6 +11,7 @@ TO ADD (also search: `toadd`~):
 > Characters! (+ animations) (import from liwol)
 > Background blocks!
 > Background on screen
+> Mining distance limit
 > Title menu
 > Platform collision (tree leaves) (figure out from liwol)
 > Plants erasing if block below is mined
@@ -18,7 +19,7 @@ TO ADD (also search: `toadd`~):
 > Prevent block placed inside player
 > Music vol settings
 > Sound effects (mining, breaking, walking, etc.)
-> Pickaxe leveling/upgrading (and reset to default efficiency being 1)
+> Pickaxe leveling/upgrading (and reset to default efficiency being 1) (Maybe use STACK AMT as level?)
 > Specialized music per region (ex. don't play desert music in highlands)
 > Biomes
 > Cookies to save progress (ask for consent)
@@ -26,7 +27,10 @@ TO ADD (also search: `toadd`~):
 > Water physics
 > World chunking!
 > NPCs
+> Enemies
+> Inv management
 > Render chunk (only loop through the blocks visible (i starts after 0))
+> Circular lighting (remove corners)
 
 RECENT CHANGES
 > None
@@ -421,7 +425,7 @@ function gameLoop() {
     // Check collision (projectiles and items) if not dead
     
     // Render
-    render();
+    render(dbgm);
 }
 
 // Game input

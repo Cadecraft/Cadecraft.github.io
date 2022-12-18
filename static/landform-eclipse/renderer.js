@@ -1,7 +1,7 @@
 // LANDFORM ECLIPSE script
 
 // Render
-function render() {
+function render(indbgm = false) {
     // Set global scale if screen width has changed?
     // Defs
     var iwidth=blockWidth*globalScale;
@@ -49,47 +49,47 @@ function render() {
             // Each block:
             var thisblock = worldMap[y][x];
             if(thisblock >= Object.keys(BLOCKS).length) { continue }; // Error: do not render block
-            var drawx = (x+offsetx)*iwidth;
-            var drawy = (y+offsety)*iwidth;
             if(BLOCKS[thisblock].img == 'none') {
                 // Do not draw
             } else {
-                // Determine location and whether is in view; cull outside (check that it works properly: toadd~)
-                if(drawx > iwidth*-1 && drawx < window.innerWidth && drawy > iwidth*-1 && drawy < window.innerHeight) {
-                    // Determine light level (if 0, do not draw; just draw black)
-                    var lightLvl = getMapBlockState(worldStates, y, x).light; //getBlockLightLvl(y, x);
-                    if(lightLvl == 0) {
-                        ctx.fillStyle = 'rgb(0, 0, 0)';
-                        ctx.fillRect(Math.floor(drawx), Math.floor(drawy), Math.ceil(iwidth), Math.ceil(iwidth));
-                        continue;
-                    }
-                    // Draw block
-                    try {
-                        //var imgloaded = document.getElementById(BLOCKS[thisblock].img);
-                        ctx.drawImage(allimgs[BLOCKS[thisblock].img], 0, 0, 16, 16, Math.floor(drawx), Math.floor(drawy), Math.ceil(iwidth), Math.ceil(iwidth));
-                    } catch(err) { console.log('err: rendering block: '+thisblock+': '+err); }
-                    // Draw damage
-                    try {
-                        if(BLOCKS[thisblock].hp > 0 && getMapBlockState(worldStates, y, x).dmg > 0) {
-                            var dmgamt = Math.round((getMapBlockState(worldStates, y, x).dmg/BLOCKS[thisblock].hp)*6-1);
-                            if(dmgamt >= 0 && dmgamt <= 5) {
-                                //var imgloaded = document.getElementById('images/overlays/Dmg_'+dmgamt+'.png');
-                                ctx.drawImage(allimgs['images/overlays/Dmg_'+dmgamt+'.png'], 0, 0, 16, 16, Math.floor(drawx), Math.floor(drawy), Math.ceil(iwidth), Math.ceil(iwidth));
-                            }
-                        }
-                    } catch(err) { console.log('err: rendering block dmg: '+thisblock); }
-                    // Draw light level
-                    if(lightLvl < 5) {
-                        ctx.fillStyle = 'rgb(0, 0, 0)';
-                        if(lightLvl == 4) ctx.globalAlpha = 0.2;
-                        else if(lightLvl == 3) ctx.globalAlpha = 0.5;
-                        ctx.fillRect(Math.floor(drawx), Math.floor(drawy), Math.ceil(iwidth), Math.ceil(iwidth));
-                        ctx.globalAlpha = 1;
-                    }
+                var drawx = (x+offsetx)*iwidth;
+                var drawy = (y+offsety)*iwidth;
+                // Determine location and whether is in view; cull outside (no longer needed with new loop conditions)
+                //if(drawx > iwidth*-1 && drawx < window.innerWidth && drawy > iwidth*-1 && drawy < window.innerHeight) {
+                // Determine light level (if 0, do not draw; just draw black)
+                var lightLvl = getMapBlockState(worldStates, y, x).light; //getBlockLightLvl(y, x);
+                if(lightLvl == 0) {
+                    ctx.fillStyle = 'rgb(0, 0, 0)';
+                    ctx.fillRect(Math.floor(drawx), Math.floor(drawy), Math.ceil(iwidth), Math.ceil(iwidth));
+                    continue;
                 }
+                // Draw block
+                try {
+                    //var imgloaded = document.getElementById(BLOCKS[thisblock].img);
+                    ctx.drawImage(allimgs[BLOCKS[thisblock].img], 0, 0, 16, 16, Math.floor(drawx), Math.floor(drawy), Math.ceil(iwidth), Math.ceil(iwidth));
+                } catch(err) { console.log('err: rendering block: '+thisblock+': '+err); }
+                // Draw damage
+                try {
+                    if(BLOCKS[thisblock].hp > 0 && getMapBlockState(worldStates, y, x).dmg > 0) {
+                        var dmgamt = Math.round((getMapBlockState(worldStates, y, x).dmg/BLOCKS[thisblock].hp)*6-1);
+                        if(dmgamt >= 0 && dmgamt <= 5) {
+                            //var imgloaded = document.getElementById('images/overlays/Dmg_'+dmgamt+'.png');
+                            ctx.drawImage(allimgs['images/overlays/Dmg_'+dmgamt+'.png'], 0, 0, 16, 16, Math.floor(drawx), Math.floor(drawy), Math.ceil(iwidth), Math.ceil(iwidth));
+                        }
+                    }
+                } catch(err) { console.log('err: rendering block dmg: '+thisblock); }
+                // Draw light level
+                if(lightLvl < 5) {
+                    ctx.fillStyle = 'rgb(0, 0, 0)';
+                    if(lightLvl == 4) ctx.globalAlpha = 0.2;
+                    else if(lightLvl == 3) ctx.globalAlpha = 0.5;
+                    ctx.fillRect(Math.floor(drawx), Math.floor(drawy), Math.ceil(iwidth), Math.ceil(iwidth));
+                    ctx.globalAlpha = 1;
+                }
+                //}
             }
             // Dbg: is highlighted?
-            if(((mychar.dbg_highl_bl1[1] == x && mychar.dbg_highl_bl1[0] == y)
+            if(indbgm && ((mychar.dbg_highl_bl1[1] == x && mychar.dbg_highl_bl1[0] == y)
                 || (mychar.dbg_highl_bl2[1] == x && mychar.dbg_highl_bl2[0] == y))
                 && mychar.dbg_highl_enable) {
                 // Highlight~
