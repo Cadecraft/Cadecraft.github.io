@@ -122,10 +122,12 @@ function render(indbgm = false) {
     var inv_boxwidth = 1;
     for(let i = 0; i < mychar.inv_menuwidth; i++) {
         // Box
-        if(i == mychar.inv_selected) { ctx.globalAlpha = 1.0; }
-        else { ctx.globalAlpha = 0.5; }
-        //var imgloaded = document.getElementById('images/ui/Invbox2.png');
-        ctx.drawImage(allimgs['images/ui/Invbox2.png'], 0, 0, 20, 20, 20+i*44, 20, 40, 40);
+        var boxFile = 'images/ui/Invbox2.png';
+        if(i == mychar.inv_selected) {
+            ctx.globalAlpha = 1.0;
+            boxFile = 'images/ui/Invbox2_Select.png';
+        } else { ctx.globalAlpha = 0.5; }
+        ctx.drawImage(allimgs[boxFile], 0, 0, 20, 20, 20+i*44, 20, 40, 40);
         ctx.globalAlpha = 1.0;
         // Contents
         if(mychar.inventory.length > i) {

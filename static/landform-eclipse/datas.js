@@ -17,7 +17,8 @@ const IMGS_OTHER = [
     'images/overlays/Dmg_5.png',
     'images/ui/Cursor.png',
     'images/ui/Invbox.png',
-    'images/ui/Invbox2.png'
+    'images/ui/Invbox2.png',
+    'images/ui/Invbox2_Select.png'
 ]
 
 // Audios info
@@ -212,7 +213,7 @@ const BLOCKS = {
         irarity: 2,
         img: 'images/blocks/Block_TileRoofBlue_Shadowed.png',
         placeable: true,
-        collision: 'block',
+        collision: 'solid',
         hardness: 1,
         hp: 15,
         drops: [15]
@@ -223,7 +224,7 @@ const BLOCKS = {
         irarity: 2,
         img: 'images/blocks/Block_TileRoofBlue_Top.png',
         placeable: true,
-        collision: 'block',
+        collision: 'solid',
         hardness: 1,
         hp: 15,
         drops: [16]
@@ -234,7 +235,7 @@ const BLOCKS = {
         irarity: 2,
         img: 'images/blocks/Block_TileRoofBlue_Top_Left.png',
         placeable: true,
-        collision: 'block',
+        collision: 'solid',
         hardness: 1,
         hp: 15,
         drops: [17]
@@ -245,9 +246,31 @@ const BLOCKS = {
         irarity: 2,
         img: 'images/blocks/Block_TileRoofBlue_Top_Right.png',
         placeable: true,
-        collision: 'block',
+        collision: 'solid',
         hardness: 1,
         hp: 15,
         drops: [18]
-    }
+    },
+    19: {
+        iname: "Water (source)",
+        idescr: "Water flows endlessly on this world, propelled downwards until reaching a solid surface.",
+        irarity: 0,
+        img: 'images/blocks/Block_Water2_Source.png',
+        placeable: true,
+        collision: 'water',
+        hardness: 1,
+        hp: 1,
+        drops: [19]
+    },
+    20: {
+        iname: "Water",
+        idescr: "A generated block formed by the pouring of water. [unobtainable]",
+        irarity: 0,
+        img: 'images/blocks/Block_Water2.png',
+        placeable: true, // false
+        collision: 'water',
+        hardness: -1,
+        hp: -1,
+        drops: []
+    },
 };

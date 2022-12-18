@@ -25,12 +25,15 @@ TO ADD (also search: `toadd`~):
 > Cookies to save progress (ask for consent)
 > Laser beam
 > Water physics
+> Lag on placing a block?
 > World chunking!
 > NPCs
 > Enemies
 > Inv management
 > Render chunk (only loop through the blocks visible (i starts after 0))
 > Circular lighting (remove corners)
+> Water source generation (on destroy done, on place)
+> Water physics
 
 RECENT CHANGES
 > None
@@ -79,6 +82,7 @@ var worldMap = [
 ];
 var worldStates = [];
 var world_eventState = "normal";
+var enemies = [];
 
 // Load game defs: load/generate map and world states
 function mapRegen(inGenerateWorld) {
@@ -271,12 +275,34 @@ function destroyBlock(locy, locx) {
         mychar.justMinedBlock = true;
     }
     // Update blocks nearby
-    if(getMapBlock(worldMap, locy-1, locx) == 3) {
+    if(getMapBlock(worldMap, locy-1, locx) == 3) { // destroy tall grass (toadd checks)
         destroyBlock(locy-1, locx);
+    }
+    if(oldblock == 19) { // if water source, destroy water generated below
+        for(let i = 0; i < worldMap.length - locy - 1; i++) {
+            if(getMapBlock(worldMap, locy+i+1, locx) == 20) {
+                destroyBlock(locy+i+1, locx);
+            } else { break };
+        }
     }
     // Light lvl change: 1) was/is now block a light source? if so, for all blocks within 8 away, recalc lvl and store
     updateBlockLightLvls(locy-7, 15, locx-7, 15);
     return true;
+}
+// Place block
+function placeBlock(locy, locx, blockid) {
+    worldMap[locy][locx] = blockid;
+    worldStates[locy][locx].dmg = 0;
+    worldStates[locy][locx].state = 0;
+    // Update light lvls
+    updateBlockLightLvls(locy-7, 15, locx-7, 15);
+    if(blockid == 19) { // if water source, generate water below
+        for(let i = 0; i < worldMap.length - locy - 1; i++) {
+            if(getMapBlock(worldMap, locy+i+1, locx) == 0) {
+                placeBlock(locy+i+1, locx, 20);
+            } else { break };
+        }
+    }
 }
 
 function getBlockLightLvl(locy, locx) {
@@ -485,13 +511,9 @@ function gameInput() {
         else if(getMapBlock(worldMap, pointerybl, pointerxbl) == 0 && BLOCKS[mychar.invGetSelected()[0]].placeable) {
             // Place block if enabled
             if(!mychar.justMinedBlock) {
-                worldMap[pointerybl][pointerxbl] = mychar.invGetSelected()[0];
-                worldStates[pointerybl][pointerxbl].dmg = 0;
-                worldStates[pointerybl][pointerxbl].state = 0;
+                placeBlock(pointerybl, pointerxbl, mychar.invGetSelected()[0]);
                 mychar.invReduceBlock(mychar.inv_selected);
                 mychar.justPlacedBlock = true;
-                // Update light lvls (toadd)
-                updateBlockLightLvls();
             }
         }
         else {
