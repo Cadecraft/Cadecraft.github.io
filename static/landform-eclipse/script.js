@@ -278,12 +278,22 @@ function destroyBlock(locy, locx) {
     if(getMapBlock(worldMap, locy-1, locx) == 3) { // destroy tall grass (toadd checks)
         destroyBlock(locy-1, locx);
     }
-    if(oldblock == 19) { // if water source, destroy water generated below
-        for(let i = 0; i < worldMap.length - locy - 1; i++) {
+    if(getMapBlock(worldMap, locy-1, locx) == 20 || getMapBlock(worldMap, locy-1, locx) == 19) { // if water exist above, allow down
+        for(let i = 0; i < worldMap.length - locy; i++) {
+            if(getMapBlock(worldMap, locy+i, locx) == 0 || getMapBlock(worldMap, locy+i, locx) == 19) {
+                placeBlock(locy+i, locx, 20);
+            } else { break };
+        }
+    }
+    if(oldblock == 19) { // if water source, remove, and make below water block a source // (old): destroy water generated below
+        if(getMapBlock(worldMap, locy+1, locx) == 20) {
+            placeBlock(locy+1, locx, 19);
+        }
+        /*for(let i = 0; i < worldMap.length - locy - 1; i++) {
             if(getMapBlock(worldMap, locy+i+1, locx) == 20) {
                 destroyBlock(locy+i+1, locx);
             } else { break };
-        }
+        }*/
     }
     // Light lvl change: 1) was/is now block a light source? if so, for all blocks within 8 away, recalc lvl and store
     updateBlockLightLvls(locy-7, 15, locx-7, 15);
@@ -298,9 +308,12 @@ function placeBlock(locy, locx, blockid) {
     updateBlockLightLvls(locy-7, 15, locx-7, 15);
     if(blockid == 19) { // if water source, generate water below
         for(let i = 0; i < worldMap.length - locy - 1; i++) {
-            if(getMapBlock(worldMap, locy+i+1, locx) == 0) {
+            if(getMapBlock(worldMap, locy+i+1, locx) == 0 || getMapBlock(worldMap, locy+i+1, locx) == 19) {
                 placeBlock(locy+i+1, locx, 20);
             } else { break };
+        }
+        if(getMapBlock(worldMap, locy-1, locx) == 20 || getMapBlock(worldMap, locy-1, locx) == 19) { // if water exist above, merge in
+            worldMap[locy][locx] = 20;
         }
     }
 }
