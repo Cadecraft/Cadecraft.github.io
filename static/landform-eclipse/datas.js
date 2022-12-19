@@ -294,4 +294,16 @@ const BLOCKS = {
         drops: [],
         destroyByWater: true
     },
+    21: {
+        iname: "Sand",
+        idescr: "Fine red sand from the desert, infused with iron oxide.",
+        irarity: 0,
+        img: 'images/blocks/Block_Sand2.png',
+        placeable: true,
+        collision: 'solid',
+        hardness: 1,
+        hp: 10,
+        drops: [21],
+        destroyByWater: false
+    },
 };

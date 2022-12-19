@@ -54,17 +54,24 @@ function wgenMain() {
             worldgenMap_biomes.push(worldgen_biomesOrder[biomeProgress]);
         }
         var lastHeight = 0;
+        var lastBiome = 4;
         for(let x = 0; x < worldgen_width; x++) {
             var thisbiome = worldgenMap_biomes[x];
+            var isNewBiome = false;
+            if(thisbiome != lastBiome) { isNewBiome = true; lastBiome = thisbiome; }
             var newHeight = lastHeight;
             var newFeature = "";
             var newWater = -1;
+            // Biome transition: height resets
+            if(isNewBiome) {
+                newHeight = 0;
+            }
             // Generate new heights
             if(thisbiome == 0) {
                 newHeight += Math.floor(Math.random()*3)-1; // Normal (highlands) biome
             }
             else if(thisbiome == 1) {
-                newHeight += Math.floor(Math.random()*5)-2; // Desert biome
+                newHeight += Math.floor(Math.random()*2.5)-(1); // Desert biome
             }
             else if(thisbiome == 12) {
                 newHeight += Math.floor(Math.random()*10)-5; // RARE mesa biome
@@ -91,6 +98,7 @@ function wgenMain() {
         for(let y = 0; y < worldgen_height; y++) {
             worldMap.push([]);
             for(let x = 0; x < worldgen_width; x++) {
+                var thisbiome = worldgenMap_biomes[x];
                 // air=0-9;grass=10;dirt=11-12;stone=13+
                 /*if(y >= worldgenMap_waters[x]+worldgen_horizonoffset) {
                     worldMap[y].push(19); // Water source
@@ -111,10 +119,15 @@ function wgenMain() {
                 }
                 else if(y==10+worldgen_horizonoffset+worldgenMap_heights[x]) {
                     if(worldgenMap_features[x] == "tree") { worldMap[y].push(1); }
-                    else { worldMap[y].push(2); } // Grass
+                    else { // Grass / any biome toppings
+                        if(thisbiome == 1) { worldMap[y].push(21); } // Desert - sand
+                        else { worldMap[y].push(2); }
+                    } 
                 }
                 else if(y < 13+worldgen_horizonoffset+worldgenMap_heights[x]+worldgenMap_heights2[x]) {
-                    worldMap[y].push(1); // Dirt
+                    // Dirt
+                    if(thisbiome == 1) { worldMap[y].push(21); } // Desert - sand
+                    else { worldMap[y].push(1); }
                 }
                 else if(y >= 13+worldgen_horizonoffset+worldgenMap_heights[x]+worldgenMap_heights2[x]) {
                     if(Math.random() < 0.2) worldMap[y].push(5); // Stone
