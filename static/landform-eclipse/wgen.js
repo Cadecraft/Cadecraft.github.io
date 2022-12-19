@@ -7,7 +7,7 @@ function wgenMain() {
     //console.log('-');
     console.log('  gen: defs');
     var worldgen_simple = false; // def: false (dbg: true)
-    const worldgen_width = 500; // 90, 150, 500 (normal)
+    const worldgen_width = 700; // 90, 150, 700 (normal)
     const worldgen_height = 90; // 50, 90
     const worldgen_horizonoffset = 22; // 22
     const worldgen_heightoffsetmax = 10; // 6, 10
@@ -15,10 +15,12 @@ function wgenMain() {
     const worldgen_rateTrees = 0.05; // 0.05
     const worldgen_totalBiomes = 6;
     const worldgen_biomesOrder = [4,1,0,2,3,5];
+    const worldgen_waterLevel = 3; // 3 // Higher value = water at a higher level
     var worldgenMap_biomes = [];
     var worldgenMap_heights = []; // Main horizon height
     var worldgenMap_heights2 = []; // Dirt offset
     var worldgenMap_features = []; // Features such as trees, etc.
+    var worldgenMap_waters = []; // Water levels (-1 = none)
     worldMap = [];
     // Worldgen type
     console.log('  gen: types');
@@ -56,9 +58,10 @@ function wgenMain() {
             var thisbiome = worldgenMap_biomes[x];
             var newHeight = lastHeight;
             var newFeature = "";
+            var newWater = -1;
             // Generate new heights
             if(thisbiome == 0) {
-                newHeight += Math.floor(Math.random()*3)-1; // Normal biome
+                newHeight += Math.floor(Math.random()*3)-1; // Normal (highlands) biome
             }
             else if(thisbiome == 1) {
                 newHeight += Math.floor(Math.random()*5)-2; // Desert biome
@@ -73,11 +76,15 @@ function wgenMain() {
             if(thisbiome == 0) {
                 if(Math.random() < worldgen_rateTrees && x < worldgen_width-6 && x > 5) { newFeature = "tree"; }
                 else if(Math.random() < worldgen_rateGrass) { newFeature = "tall grass"; }
+                if(newHeight > worldgen_heightoffsetmax - worldgen_waterLevel) { // Water spawn at low levels
+                    newWater = worldgen_heightoffsetmax - worldgen_waterLevel;
+                }
             }
             // Add
             worldgenMap_heights.push(newHeight);
             worldgenMap_heights2.push(newHeight2);
             worldgenMap_features.push(newFeature);
+            worldgenMap_waters.push(newWater);
             lastHeight = newHeight;
         }
         // Generate blocks
@@ -85,6 +92,9 @@ function wgenMain() {
             worldMap.push([]);
             for(let x = 0; x < worldgen_width; x++) {
                 // air=0-9;grass=10;dirt=11-12;stone=13+
+                /*if(y >= worldgenMap_waters[x]+worldgen_horizonoffset) {
+                    worldMap[y].push(19); // Water source
+                } else*/
                 if(y < 9+worldgen_horizonoffset+worldgenMap_heights[x]) {
                     worldMap[y].push(0); // Sky
                 }
@@ -112,8 +122,32 @@ function wgenMain() {
                 }
             }
         }
+        // Add waters
+        for(let x = 0; x < worldgen_width; x++) {
+            if(worldgenMap_waters[x] != -1 && (BLOCKS[ worldMap[worldgenMap_waters[x] + worldgen_horizonoffset + 10][x] ].destroyByWater) ) { // Water source here if existing block is destroyable by water
+                worldMap[ worldgenMap_waters[x] + worldgen_horizonoffset + 10][x] = 19;
+            }
+        }
         // Carve caves (toadd)
         // (toadd)
+        // Generate waters (after sources added)
+        for(let y = 0; y < worldgen_height; y++) {
+            for(let x = 0; x < worldgen_width; x++) {
+                if(worldMap[y][x] == 19) {
+                    for(let i = 0; i < worldgen_height - y - 1; i++) {
+                        if(BLOCKS[getMapBlock(worldMap, y+i+1, x)].destroyByWater) { // getMapBlock(worldMap, locy+i+1, locx) == 0 || getMapBlock(worldMap, locy+i+1, locx) == 19
+                            worldMap[y+i+1][x] = 20;
+                        } else {
+                            worldMap[y+i+1][x] = 1; // Below water should always be dirt
+                            break
+                        };
+                    }
+                }
+            }
+        }
+
+        // DBG
+        console.log(worldgenMap_waters);
     }
     //console.log('-');
     console.log('loading world... generation complete');

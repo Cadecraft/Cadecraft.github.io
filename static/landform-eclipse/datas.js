@@ -52,6 +52,7 @@ const BLOCKS = {
         hardness: -1,
         hp: -1, // Block health: -1 = unmineable
         drops: [], // Block IDs to drop
+        destroyByWater: true // Can be flooded if water source placed above
     },
     1: {
         iname: 'Dirt',
@@ -62,7 +63,8 @@ const BLOCKS = {
         collision: 'solid',
         hardness: 1,
         hp: 10,
-        drops: [1]
+        drops: [1],
+        destroyByWater: false
     },
     2: {
         iname: 'Grass',
@@ -73,7 +75,8 @@ const BLOCKS = {
         collision: 'solid',
         hardness: 1,
         hp: 10,
-        drops: [2]
+        drops: [2],
+        destroyByWater: false
     },
     3: {
         iname: 'Tall Grass',
@@ -84,7 +87,8 @@ const BLOCKS = {
         collision: 'none',
         hardness: 1,
         hp: 1,
-        drops: [3]
+        drops: [3],
+        destroyByWater: true
     },
     4: {
         iname: 'Stone',
@@ -95,7 +99,8 @@ const BLOCKS = {
         collision: 'solid',
         hardness: 2,
         hp: 20,
-        drops: [4]
+        drops: [4],
+        destroyByWater: false
     },
     5: {
         iname: 'Cobblestone',
@@ -106,7 +111,8 @@ const BLOCKS = {
         collision: 'solid',
         hardness: 2,
         hp: 20,
-        drops: [5]
+        drops: [5],
+        destroyByWater: false
     },
     6: {
         iname: 'Mossy Cobblestone',
@@ -117,7 +123,8 @@ const BLOCKS = {
         collision: 'solid',
         hardness: 2,
         hp: 20,
-        drops: [6]
+        drops: [6],
+        destroyByWater: false
     },
     7: {
         iname: 'Bedrock',
@@ -128,7 +135,8 @@ const BLOCKS = {
         collision: 'solid',
         hardness: -1,
         hp: -1,
-        drops: []
+        drops: [],
+        destroyByWater: false
     },
     8: {
         iname: 'Pick',
@@ -139,7 +147,8 @@ const BLOCKS = {
         collision: 'item',
         hardness: -1,
         hp: -1,
-        drops: []
+        drops: [],
+        destroyByWater: false
     },
     9: {
         iname: "Snow",
@@ -150,7 +159,8 @@ const BLOCKS = {
         collision: 'solid',
         hardness: 1,
         hp: 10,
-        drops: [9]
+        drops: [9],
+        destroyByWater: false
     },
     10: {
         iname: "Wood",
@@ -161,7 +171,8 @@ const BLOCKS = {
         collision: 'solid',
         hardness: 1,
         hp: 15,
-        drops: [10]
+        drops: [10],
+        destroyByWater: false
     },
     11: {
         iname: "Wood Wall",
@@ -172,7 +183,8 @@ const BLOCKS = {
         collision: 'none',
         hardness: 1,
         hp: 15,
-        drops: [11]
+        drops: [11],
+        destroyByWater: false
     },
     12: {
         iname: "Highland Leaves",
@@ -183,7 +195,8 @@ const BLOCKS = {
         collision: 'platform',
         hardness: 1,
         hp: 4,
-        drops: [12]
+        drops: [12],
+        destroyByWater: false
     },
     13: {
         iname: "Wall Torch",
@@ -194,7 +207,8 @@ const BLOCKS = {
         collision: 'none',
         hardness: 2,
         hp: 20,
-        drops: [13]
+        drops: [13],
+        destroyByWater: false
     },
     14: {
         iname: "Torch",
@@ -205,7 +219,8 @@ const BLOCKS = {
         collision: 'none',
         hardness: 1,
         hp: 4,
-        drops: [14]
+        drops: [14],
+        destroyByWater: true
     },
     15: {
         iname: "Blue Tile Roof",
@@ -216,7 +231,8 @@ const BLOCKS = {
         collision: 'solid',
         hardness: 1,
         hp: 15,
-        drops: [15]
+        drops: [15],
+        destroyByWater: false
     },
     16: {
         iname: "Blue Tile Roof Top",
@@ -227,7 +243,8 @@ const BLOCKS = {
         collision: 'solid',
         hardness: 1,
         hp: 15,
-        drops: [16]
+        drops: [16],
+        destroyByWater: false
     },
     17: {
         iname: "Blue Tile Roof Top (Left)",
@@ -238,7 +255,8 @@ const BLOCKS = {
         collision: 'solid',
         hardness: 1,
         hp: 15,
-        drops: [17]
+        drops: [17],
+        destroyByWater: false
     },
     18: {
         iname: "Blue Tile Roof Top (Right)",
@@ -249,7 +267,8 @@ const BLOCKS = {
         collision: 'solid',
         hardness: 1,
         hp: 15,
-        drops: [18]
+        drops: [18],
+        destroyByWater: false
     },
     19: {
         iname: "Water (source)",
@@ -260,7 +279,8 @@ const BLOCKS = {
         collision: 'water',
         hardness: 1,
         hp: 1,
-        drops: [19]
+        drops: [19],
+        destroyByWater: true
     },
     20: {
         iname: "Water",
@@ -271,6 +291,7 @@ const BLOCKS = {
         collision: 'water',
         hardness: -1,
         hp: -1,
-        drops: []
+        drops: [],
+        destroyByWater: true
     },
 };

@@ -29,11 +29,13 @@ TO ADD (also search: `toadd`~):
 > World chunking!
 > NPCs
 > Enemies
+> Tree shape diversity (acacia)
 > Inv management
 > Render chunk (only loop through the blocks visible (i starts after 0))
 > Circular lighting (remove corners)
 > Water source generation (on destroy done, on place)
 > Water physics
+> Water: erase plants
 
 RECENT CHANGES
 > None
@@ -116,7 +118,7 @@ function mapRegen(inGenerateWorld) {
 mapRegen(generateWorld);
 
 // Load game defs: player character (mychar)
-var mychar = new Player(200, 10); // 50, 10; 200, 10
+var mychar = new Player(280, 10); // 50, 200 (if world width is 500), 280 (world width is 700)
 
 // Load game defs: music/audios
 var gameMusics = [];
@@ -280,7 +282,7 @@ function destroyBlock(locy, locx) {
     }
     if(getMapBlock(worldMap, locy-1, locx) == 20 || getMapBlock(worldMap, locy-1, locx) == 19) { // if water exist above, allow down
         for(let i = 0; i < worldMap.length - locy; i++) {
-            if(getMapBlock(worldMap, locy+i, locx) == 0 || getMapBlock(worldMap, locy+i, locx) == 19) {
+            if(BLOCKS[getMapBlock(worldMap, locy+i, locx)].destroyByWater) { // getMapBlock(worldMap, locy+i, locx) == 0 || getMapBlock(worldMap, locy+i, locx) == 19
                 placeBlock(locy+i, locx, 20);
             } else { break };
         }
@@ -308,7 +310,7 @@ function placeBlock(locy, locx, blockid) {
     updateBlockLightLvls(locy-7, 15, locx-7, 15);
     if(blockid == 19) { // if water source, generate water below
         for(let i = 0; i < worldMap.length - locy - 1; i++) {
-            if(getMapBlock(worldMap, locy+i+1, locx) == 0 || getMapBlock(worldMap, locy+i+1, locx) == 19) {
+            if(BLOCKS[getMapBlock(worldMap, locy+i+1, locx)].destroyByWater) { // getMapBlock(worldMap, locy+i+1, locx) == 0 || getMapBlock(worldMap, locy+i+1, locx) == 19
                 placeBlock(locy+i+1, locx, 20);
             } else { break };
         }
