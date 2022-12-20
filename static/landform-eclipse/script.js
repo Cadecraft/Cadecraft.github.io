@@ -10,7 +10,7 @@ TO ADD (also search: `toadd`~):
 > Tightness of deceleration
 > Characters! (+ animations) (import from liwol)
 > Background blocks!
-> Background on screen
+> Background on screen: mountains, desert, etc.
 > Mining distance limit
 > Title menu
 > Platform collision (tree leaves) (figure out from liwol)

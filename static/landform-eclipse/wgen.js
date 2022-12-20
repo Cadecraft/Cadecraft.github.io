@@ -129,6 +129,9 @@ function wgenMain() {
                     if(thisbiome == 1) { worldMap[y].push(21); } // Desert - sand
                     else { worldMap[y].push(1); }
                 }
+                else if(y == worldgen_height - 1) {
+                    worldMap[y].push(7); // Lowest layer: bedrock
+                }
                 else if(y >= 13+worldgen_horizonoffset+worldgenMap_heights[x]+worldgenMap_heights2[x]) {
                     if(Math.random() < 0.2) worldMap[y].push(5); // Stone
                     else worldMap[y].push(4);
