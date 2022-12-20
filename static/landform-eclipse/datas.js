@@ -306,4 +306,16 @@ const BLOCKS = {
         drops: [21],
         destroyByWater: false
     },
+    22: {
+        iname: "Top Sand",
+        idescr: "Fine red sand from the desert, infused with iron oxide. Its surface is smoothened by the wind.",
+        irarity: 0,
+        img: 'images/blocks/Block_Sand2_Top.png', // Block_Sand2_Top.png
+        placeable: true,
+        collision: 'solid',
+        hardness: 1,
+        hp: 10,
+        drops: [22],
+        destroyByWater: false
+    }
 };

@@ -37,6 +37,8 @@ TO ADD (also search: `toadd`~):
 > Water physics
 > Water: erase plants
 > BG blocks ? (/cave bg)
+> Refactor worldMap and its functions (getMapBlock, etc.) into WorldMap class (obj called 'wmap') ?
+> Worldgen smoothen cliffs
 
 RECENT CHANGES
 > None

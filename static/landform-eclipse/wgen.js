@@ -71,7 +71,7 @@ function wgenMain() {
                 newHeight += Math.floor(Math.random()*3)-1; // Normal (highlands) biome
             }
             else if(thisbiome == 1) {
-                newHeight += Math.floor(Math.random()*2.5)-(1); // Desert biome
+                newHeight += Math.floor(Math.random()*2.65)-(1); // Desert biome
             }
             else if(thisbiome == 12) {
                 newHeight += Math.floor(Math.random()*10)-5; // RARE mesa biome
@@ -120,7 +120,7 @@ function wgenMain() {
                 else if(y==10+worldgen_horizonoffset+worldgenMap_heights[x]) {
                     if(worldgenMap_features[x] == "tree") { worldMap[y].push(1); }
                     else { // Grass / any biome toppings
-                        if(thisbiome == 1) { worldMap[y].push(21); } // Desert - sand
+                        if(thisbiome == 1) { worldMap[y].push(22); } // Desert - sand
                         else { worldMap[y].push(2); }
                     } 
                 }
