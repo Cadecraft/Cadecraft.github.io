@@ -23,28 +23,37 @@ function hideall() {
     document.getElementById('b_music').removeAttribute('disabled');
     document.getElementById('b_extensions').removeAttribute('disabled');
 }
+function showpg(pgname) {
+    document.getElementById('pg_'+pgname).style.display = 'inline';
+    document.getElementById('b_'+pgname).setAttribute('disabled', '');
+}
 function to_home() {
     hideall();
-    document.getElementById('pg_home').style.display = 'inline';
-    document.getElementById('b_home').setAttribute('disabled', '');
+    showpg('home');
+    //document.getElementById('pg_home').style.display = 'inline';
+    //document.getElementById('b_home').setAttribute('disabled', '');
 }
 function to_webgames() {
     hideall();
-    document.getElementById('pg_webgames').style.display = 'inline';
-    document.getElementById('b_webgames').setAttribute('disabled', '');
+    showpg('webgames');
+    //document.getElementById('pg_webgames').style.display = 'inline';
+    //document.getElementById('b_webgames').setAttribute('disabled', '');
 }
 function to_ungames() {
     hideall();
-    document.getElementById('pg_ungames').style.display = 'inline';
-    document.getElementById('b_ungames').setAttribute('disabled', '');
+    showpg('ungames');
+    //document.getElementById('pg_ungames').style.display = 'inline';
+    //document.getElementById('b_ungames').setAttribute('disabled', '');
 }
 function to_music() {
     hideall();
-    document.getElementById('pg_music').style.display = 'inline';
-    document.getElementById('b_music').setAttribute('disabled', '');
+    showpg('music');
+    //document.getElementById('pg_music').style.display = 'inline';
+    //document.getElementById('b_music').setAttribute('disabled', '');
 }
 function to_extensions() {
     hideall();
-    document.getElementById('pg_extensions').style.display = 'inline';
-    document.getElementById('b_extensions').setAttribute('disabled', '');
+    showpg('extensions');
+    //document.getElementById('pg_extensions').style.display = 'inline';
+    //document.getElementById('b_extensions').setAttribute('disabled', '');
 }
