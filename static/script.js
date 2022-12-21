@@ -30,30 +30,20 @@ function showpg(pgname) {
 function to_home() {
     hideall();
     showpg('home');
-    //document.getElementById('pg_home').style.display = 'inline';
-    //document.getElementById('b_home').setAttribute('disabled', '');
 }
 function to_webgames() {
     hideall();
     showpg('webgames');
-    //document.getElementById('pg_webgames').style.display = 'inline';
-    //document.getElementById('b_webgames').setAttribute('disabled', '');
 }
 function to_ungames() {
     hideall();
     showpg('ungames');
-    //document.getElementById('pg_ungames').style.display = 'inline';
-    //document.getElementById('b_ungames').setAttribute('disabled', '');
 }
 function to_music() {
     hideall();
     showpg('music');
-    //document.getElementById('pg_music').style.display = 'inline';
-    //document.getElementById('b_music').setAttribute('disabled', '');
 }
 function to_extensions() {
     hideall();
     showpg('extensions');
-    //document.getElementById('pg_extensions').style.display = 'inline';
-    //document.getElementById('b_extensions').setAttribute('disabled', '');
 }
