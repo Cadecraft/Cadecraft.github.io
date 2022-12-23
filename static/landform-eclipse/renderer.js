@@ -118,8 +118,8 @@ function render(indbgm = false) {
         var thisentity = entities[i];
         // Render
         var toDrawImg = allimgs[thisentity.getTextureFilename()];
-        var edrawx = (thisentity.locx+offsetx)*iwidth - toDrawImg.naturalWidth;
-        var edrawy = (thisentity.locy+offsety)*iwidth - toDrawImg.naturalHeight;
+        var edrawx = (thisentity.locx+offsetx)*iwidth// - toDrawImg.naturalWidth; // - toDrawImg.naturalWidth
+        var edrawy = (thisentity.locy+offsety)*iwidth// - toDrawImg.naturalHeight;
         ctx.drawImage(toDrawImg, 0, 0, toDrawImg.naturalWidth, toDrawImg.naturalHeight, Math.floor(edrawx), Math.floor(edrawy), Math.floor(toDrawImg.naturalWidth*globalScale), Math.floor(toDrawImg.naturalHeight*globalScale));
         //ctx.drawImage(toDrawImg, edrawx, edrawy);
     }

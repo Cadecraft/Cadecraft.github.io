@@ -151,4 +151,10 @@ class Entity {
             this.vely = strengthMult*-1*this.phys_jumpvel
         }
     }
+    // Get map block
+    getMapBlock(map, locy, locx) {
+        if(locy >= 0 && locy < map.length && locx >= 0 && locx < map[0].length) {
+            return map[locy][locx];
+        } else { return -1; }
+    }
 }

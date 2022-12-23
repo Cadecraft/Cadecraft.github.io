@@ -488,6 +488,9 @@ function gameLoop() {
     // Apply char physics
     mychar.applyPhysics(worldMap);
     // Apply entity physics
+    for(let i = 0; i < entities.length; i++) {
+        entities[i].applyPhysics(worldMap);
+    }
     // Apply projectiles velocity
     // Check collision (projectiles and items) if not dead
     
