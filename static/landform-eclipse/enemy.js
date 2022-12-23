@@ -37,21 +37,98 @@ class Entity {
         this.hp = this.hpmax;
         this.currentTextureId = 0;
         this.currentTextureFrame = 0;
+        this.targetLocx = this.locx;
+        this.targetLocy = this.locy;
     }
     resetValsEntity() { // Will be overridden
         // Entity defs
-        this.name = "Default Entity";
-        this.descr = "A default entity (should not exist in-game).";
-        this.drops = [14];
-        this.hpmax = 100;
-        this.friendly = false;
-        this.textures = [
+        this.name = "Default Entity"; // Name
+        this.descr = "A default entity (should not exist in-game)."; // Descr
+        this.drops = [14]; // Drop items
+        this.hpmax = 100; // Max HP
+        this.friendly = false; // !friendly = attacks player
+        this.textures = [ // do not append frame numbers, 'right', or '.png'
             "images/entities/enemy_crab_idle"
         ];
+        this.moveStyle = 1; // Determines movement type:
+        /* moveStyle | movement type
+        0            l/r blind
+        1            l/r with jump when wall found
+        2            l/r with constant jump
+        3            advanced pathfinding (unfinished: do not use) (toadd)
+        */
     }
-    // Attack function
+    // Attack function (override)
     attack() { // Will be overridden
         // attack
+    }
+    // Movement function
+    moveTo(inlocx, inlocy) {
+        // Check that location exists
+        if(inlocx < 0 || inlocy < 0 || inlocx > worldMap[0].length || inlocy > worldMap.length) {
+            console.log('Err: entity '+this.name+' cannot moveTo ('+inlocx+', '+inlocy+'), which is off the map');
+            return false;
+        }
+        if(this.moveStyle < 0 || this.moveStyle > 2) {
+            console.log('Err: entity '+this.name+' moveStyle of '+this.moveStyle+' is invalid; requires 0-2')
+            return false;
+        }
+        // Move differently based on moveStyle
+        switch(this.moveStyle) {
+        case 0:
+            // move l/r blind
+            if(inlocx < this.locx - 0.5) {
+                this.addVel(this.phys_accel * -1, 0); this.facingRight = false;
+            }
+            if(inlocx > this.locx + 0.5) {
+                this.addVel(this.phys_accel * 1, 0); this.facingRight = true;
+            }
+            break;
+        case 1:
+            // move l/r with jump when wall found
+            if(inlocx < this.locx - 0.5) {
+                this.addVel(this.phys_accel * -1, 0); this.facingRight = false;
+            }
+            if(inlocx > this.locx + 0.5) {
+                this.addVel(this.phys_accel * 1, 0); this.facingRight = true;
+            }
+            // (toadd)
+            this.jump(1);
+            break;
+        case 2:
+            // move l/r with constant jump
+            if(inlocx < this.locx - 0.5) {
+                this.addVel(this.phys_accel * -1, 0); this.facingRight = false;
+            }
+            if(inlocx > this.locx + 0.5) {
+                this.addVel(this.phys_accel * 1, 0); this.facingRight = true;
+            }
+            this.jump(1);
+            break;
+        }
+    }
+    // Move to target
+    moveToTarget() {
+        this.moveTo(this.targetLocx, this.targetLocy);
+    }
+    // Update target function
+    updateTarget() {
+        // Depending on if friendly:
+        if(this.friendly) {
+            // Friendly: random walk
+        }
+        else {
+            // Hostile: sees player?
+            if(true) { // (toadd) calc dist to player (or raycast) and decide based on that
+                // Sees player
+                this.targetLocx = mychar.locx;
+                this.targetLocy = mychar.locy;
+            } else {
+                // Does not see player
+                this.targetLocx = Math.floor(Math.random() * worldMap[0].length);
+                this.targetLocy = 1; //Math.random() * worldMap.length;
+            }
+        }
     }
     // Get entity texture filename based on animation state, direction
     getTextureFilename() {
@@ -147,9 +224,8 @@ class Entity {
     }
     // Jump
     jump(strengthMult) {
-        if(!this.isFalling) {
-            this.vely = strengthMult*-1*this.phys_jumpvel
-        }
+        if(this.isFalling) { return; } // cannot jump if falling
+        this.vely = strengthMult*-1*this.phys_jumpvel;
     }
     // Get map block
     getMapBlock(map, locy, locx) {

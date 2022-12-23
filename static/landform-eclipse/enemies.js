@@ -13,8 +13,11 @@ class Crab extends Entity {
         this.textures = [
             "images/entities/enemy_crab_idle"
         ];
+        this.moveStyle = 2;
+        // Overrides (optional)
+        this.phys_accel = 0.030; // originally 0.034
     }
-    // Attack overload
+    // Attack override
     attack() {
         // attack: pincers (melee)
     }

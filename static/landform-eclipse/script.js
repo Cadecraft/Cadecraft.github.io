@@ -28,7 +28,9 @@ TO ADD (also search: `toadd`~):
 > Lag on placing a block?
 > World chunking!
 > NPCs
-> Enemies
+> Entity health
+> Entity logic
+> Entity natural spawning
 > Tree shape diversity (acacia)
 > Inv management
 > Render chunk (only loop through the blocks visible (i starts after 0))
@@ -487,9 +489,11 @@ function gameLoop() {
     gameInput();
     // Apply char physics
     mychar.applyPhysics(worldMap);
-    // Apply entity physics
+    // Apply entity physics, update them
     for(let i = 0; i < entities.length; i++) {
         entities[i].applyPhysics(worldMap);
+        entities[i].updateTarget(); // (toadd) Set on timer instead
+        entities[i].moveToTarget();
     }
     // Apply projectiles velocity
     // Check collision (projectiles and items) if not dead

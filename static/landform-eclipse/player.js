@@ -202,8 +202,7 @@ class Player {
     }
     // Jump
     jump(strengthMult) {
-        if(!this.isFalling) {
-            this.vely = strengthMult*-1*this.phys_jumpvel
-        }
+        if(this.isFalling) { return; } // cannot jump if falling
+        this.vely = strengthMult*-1*this.phys_jumpvel;
     }
 }
