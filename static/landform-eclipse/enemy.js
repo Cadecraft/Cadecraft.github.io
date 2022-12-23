@@ -1,9 +1,16 @@
 // LANDFORM ECLIPSE script
 
-// Enemy script
-class Enemy {
+// Entity script
+class Entity {
     // Constructor/reset
-    constructor(locx, locy, lvl) {
+    constructor(inlocx, inlocy, inlvl=1) {
+        var locx = inlocx;
+        var locy = inlocy;
+        var lvl = inlvl;
+        // Confirm correct values
+        if(locx < 0) locx = 0;
+        if(locy < 0) locy = 0;
+        if(lvl <= 0) lvl = 0;
         // Reset values
         this.resetVals(locx, locy, lvl);
     }
@@ -14,6 +21,7 @@ class Enemy {
         this.velx = 0;
         this.vely = 0;
         this.isFalling = true;
+        this.facingRight = true;
         // Physics defs
         this.phys_decel = 0.023; // 0.023
         this.phys_accel = 0.034; // 0.034
@@ -23,21 +31,38 @@ class Enemy {
         this.phys_xshrinkbias = 0.15;
         this.phys_yheightbias = 0.3;
         this.phys_jumpvel = 0.33; // 0.33
-        // Enemy defs
+        // Entity defs
         this.lvl = lvl;
-        this.resetValsEnemy();
+        this.resetValsEntity();
         this.hp = this.hpmax;
+        this.currentTextureId = 0;
+        this.currentTextureFrame = 0;
     }
-    resetValsEnemy() { // Will be overridden
-        // Enemy defs
-        this.name = "Default Enemy";
-        this.descr = "A default enemy (should not exist in-game).";
+    resetValsEntity() { // Will be overridden
+        // Entity defs
+        this.name = "Default Entity";
+        this.descr = "A default entity (should not exist in-game).";
         this.drops = [14];
         this.hpmax = 100;
+        this.friendly = false;
+        this.textures = [
+            "images/entities/enemy_crab_idle"
+        ];
     }
     // Attack function
     attack() { // Will be overridden
         // attack
+    }
+    // Get entity texture filename based on animation state, direction
+    getTextureFilename() {
+        if(this.currentTextureId > this.textures.length || this.currentTextureId < 0) {
+            console.log('Err: entity texture id '+this.currentTextureId+' for '+this.name+' is invalid');
+            return "error.png";
+        }
+        var res = this.textures[this.currentTextureId]; // ex. images/entities/enemy_crab_idle
+        if(this.facingRight) { res += "right"; } // ex. images/entities/enemy_crab_idleright
+        res += "_" + this.currentTextureFrame + ".png"; // ex. images/entities/enemy_crab_idleright_0.png
+        return res;
     }
     // Apply physics/vel (FROM player.js)
     applyPhysics(map) {

@@ -113,6 +113,16 @@ function render(indbgm = false) {
         ctx.fillStyle = 'rgb(0, 100, 0)';
         ctx.fillRect(drawx, drawy-iwidth, Math.ceil(iwidth), Math.ceil(iwidth));
     } catch(err) { console.log('err: rendering PLAYER'); }
+    // Render entities
+    for(let i = 0; i < entities.length; i++) {
+        var thisentity = entities[i];
+        // Render
+        var toDrawImg = allimgs[thisentity.getTextureFilename()];
+        var edrawx = (thisentity.locx+offsetx)*iwidth - toDrawImg.naturalWidth;
+        var edrawy = (thisentity.locy+offsety)*iwidth - toDrawImg.naturalHeight;
+        ctx.drawImage(toDrawImg, 0, 0, toDrawImg.naturalWidth, toDrawImg.naturalHeight, Math.floor(edrawx), Math.floor(edrawy), Math.floor(toDrawImg.naturalWidth*globalScale), Math.floor(toDrawImg.naturalHeight*globalScale));
+        //ctx.drawImage(toDrawImg, edrawx, edrawy);
+    }
 
     // FX
     // (toadd~)

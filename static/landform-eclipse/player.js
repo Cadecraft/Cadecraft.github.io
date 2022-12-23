@@ -14,6 +14,7 @@ class Player {
         this.velx = 0;
         this.vely = 0;
         this.isFalling = true;
+        this.facingRight = true;
         // Cooldown defs
         this.cooldown_mining = 50;
         this.miningefficiency = 2; // Dmg to deal: def=1
@@ -41,12 +42,17 @@ class Player {
         this.dbg_highl_bl2 = [0,0];
     }
     // Inv funcs
+    // Add inamt blocks of inid type to inv; returns false if cannot add
     invAddBlock(inid, inamt=1) {
         // Check that block exists
         if(inid >= Object.keys(BLOCKS).length) {
-            console.log("Err: Block id "+inid+" does not exist");
-            return 1;
+            console.log("Err: Block id "+inid+" does not exist; ids 0-"+(Object.keys(BLOCKS).length-1)+" exist");
+            return false;
         };
+        if(inamt <= 0) {
+            console.log("Err: Amt of "+inamt+" cannot be added; requires 1+");
+            return false;
+        }
         // For each instance to add
         for(let i = 0; i < inamt; i++) {
             // Loop through inv and try to add
@@ -72,13 +78,14 @@ class Player {
                 added = true;
             }
         }
-        return 0;
+        return true;
     }
     invGetSelected() {
         // Get the item at selected index
-        if(this.inv_selected < this.inventory.length) {
-            return this.inventory[this.inv_selected];
-        } else { return [-1,0]; }
+        if(this.inv_selected >= this.inventory.length) {
+            return [-1,0];
+        }
+        return this.inventory[this.inv_selected];
     }
     invSetSelected(newinv_selected) {
         // Set the selected index
@@ -104,8 +111,16 @@ class Player {
             return map[locy][locx];
         } else { return -1; }
     }
+    // Get is in water
+    isInWater() {
+        var toCheck = [];
+        toCheck.push(this.getMapBlock(map, Math.floor(this.locy), Math.floor(this.locx)));
+        return false; // (toadd)
+    }
     // Apply physics/vel
     applyPhysics(map) {
+        // Get is in water
+
         // Gravity
         this.vely += this.phys_grav;
         if(this.vely > this.phys_velymax) { this.vely = this.phys_velymax; }

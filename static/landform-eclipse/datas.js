@@ -8,6 +8,10 @@ const editDate = '2022/11/27';
 const createdDate = '2022/9/5';
 
 // Other images info
+const IMGS_ENTITY = [
+    'images/entities/enemy_crab_idle_0.png',
+    'images/entities/enemy_crab_idleright_0.png'
+]
 const IMGS_OTHER = [
     'images/overlays/Dmg_0.png',
     'images/overlays/Dmg_1.png',

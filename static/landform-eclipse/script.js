@@ -87,7 +87,7 @@ var worldMap = [
 ];
 var worldStates = [];
 var world_eventState = "normal";
-var enemies = [];
+var entities = [];
 
 // Load game defs: load/generate map and world states
 function mapRegen(inGenerateWorld) {
@@ -170,6 +170,22 @@ for(let i = BLOCKS_startsat; i < Object.keys(BLOCKS).length+BLOCKS_startsat; i++
         allimgs[BLOCKS[i].img] = document.getElementById(BLOCKS[i].img);
     } catch(err) {
         console.log('err: loading images: block id='+i);
+    }
+}
+for(let i = 0; i < IMGS_ENTITY.length; i++) {
+    // Get src url
+    var imgsrc = IMGS_ENTITY[i];
+    if(imgsrc == 'none') { continue; }
+    imgsrc = 'static/landform-eclipse/' + imgsrc;
+    // Load img
+    try {
+        var imgelement = document.createElement('img');
+        imgelement.src = imgsrc;
+        imgelement.id = IMGS_ENTITY[i];
+        document.getElementById('imgfiles').append(imgelement);
+        allimgs[IMGS_ENTITY[i]] = document.getElementById(IMGS_ENTITY[i]);
+    } catch(err) {
+        console.log('err: loading images: img_other id='+i);
     }
 }
 for(let i = 0; i < IMGS_OTHER.length; i++) {
@@ -360,6 +376,13 @@ function updateBlockLightLvls(y_start=0, y_len=-1, x_start=0, x_len=-1) {
 function setWorldEventState(newstate) {
     world_eventState = newstate;
     updateBlockLightLvls();
+}
+
+// Spawn entity (inclass should be a reference to the entity)
+function spawnEntity(InClass, inlocx, inlocy, inlvl) {
+    //if(InClass ) // check whether InClass extends Entity (toadd)
+    var newenemy = new InClass(inlocx, inlocy, inlvl);
+    entities.push(newenemy);
 }
 
 // INPUT
