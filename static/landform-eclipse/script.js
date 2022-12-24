@@ -37,10 +37,11 @@ TO ADD (also search: `toadd`~):
 > Circular lighting (remove corners)
 > Water source generation (on destroy done, on place)
 > Water physics
-> Water: erase plants
+> Place blocks on top to destroy grass
 > BG blocks ? (/cave bg)
 > Refactor worldMap and its functions (getMapBlock, etc.) into WorldMap class (obj called 'wmap') ?
 > Worldgen smoothen cliffs
+> Entity physics efficiency?
 
 RECENT CHANGES
 > None

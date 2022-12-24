@@ -3,14 +3,16 @@
 // Generally consts which do not change
 
 // Sys defs (REM init sequence pt1)
-const recentVersion = '0.0.5';
-const editDate = '2022/11/27';
+const recentVersion = '0.0.6';
+const editDate = '2022/12/24';
 const createdDate = '2022/9/5';
 
 // Other images info
 const IMGS_ENTITY = [
     'images/entities/enemy_crab_idle_0.png',
-    'images/entities/enemy_crab_idleright_0.png'
+    'images/entities/enemy_crab_idleright_0.png',
+    'images/entities/enemy_strider_idle_0.png',
+    'images/entities/enemy_strider_idleright_0.png'
 ]
 const IMGS_OTHER = [
     'images/overlays/Dmg_0.png',

@@ -33,8 +33,14 @@ class Entity {
         this.phys_jumpvel = 0.33; // 0.33
         // Entity defs
         this.lvl = lvl;
+        this.updateTargetTimer = 0;
+        this.updateTargetIntervalDefault = 2000; // ms
+        this.updateTargetIntervalRandom = 500; // variation of the interval
+        this.playerDetectionRadius = 10; // blocks
         this.resetValsEntity();
         this.hp = this.hpmax;
+        this.updateTargetInterval = this.updateTargetIntervalDefault;
+        this.updateTargetTimer = this.updateTargetInterval; // instantly trigger navigation check
         this.currentTextureId = 0;
         this.currentTextureFrame = 0;
         this.targetLocx = this.locx;
@@ -113,21 +119,25 @@ class Entity {
     }
     // Update target function
     updateTarget() {
-        // Depending on if friendly:
-        if(this.friendly) {
-            // Friendly: random walk
+        // Check if choose specific target (depending on if friendly and dist to target):
+        var distToPlayer = Math.sqrt((mychar.locx - this.locx)**2 + (mychar.locy - this.locy)**2); // change to raycast? (toadd)(?)
+        if(!this.friendly && distToPlayer < this.playerDetectionRadius) {
+            // Hostile and sees player
+            this.targetLocx = mychar.locx;
+            this.targetLocy = mychar.locy;
+            return;
         }
         else {
-            // Hostile: sees player?
-            if(true) { // (toadd) calc dist to player (or raycast) and decide based on that
-                // Sees player
-                this.targetLocx = mychar.locx;
-                this.targetLocy = mychar.locy;
-            } else {
-                // Does not see player
-                this.targetLocx = Math.floor(Math.random() * worldMap[0].length);
-                this.targetLocy = 1; //Math.random() * worldMap.length;
-            }
+            // Friendly or does not see player: random walk
+        }
+        // Did not choose specific target: random walk (if timer)
+        this.updateTargetTimer += gameInterval;
+        if(this.updateTargetTimer >= this.updateTargetInterval) {
+            // Timer: update target
+            this.updateTargetTimer = 0;
+            this.updateTargetInterval = this.updateTargetIntervalDefault + (Math.random()*(this.updateTargetIntervalRandom*2)-this.updateTargetIntervalRandom);
+            this.targetLocx = Math.floor(Math.random() * worldMap[0].length);
+            this.targetLocy = 1; //Math.random() * worldMap.length;
         }
     }
     // Get entity texture filename based on animation state, direction
