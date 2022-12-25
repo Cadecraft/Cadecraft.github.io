@@ -8,6 +8,8 @@ TO ADD (also search: `toadd`~):
 > Respawn on fall too far
 > Reduce air control
 > Tightness of deceleration
+> Worldgen: structure gen
+> Worldgen: more biomes
 > Characters! (+ animations) (import from liwol)
 > Background blocks!
 > Background on screen: mountains, desert, etc.
@@ -23,6 +25,7 @@ TO ADD (also search: `toadd`~):
 > Specialized music per region (ex. don't play desert music in highlands)
 > Biomes
 > Cookies to save progress (ask for consent)
+> TOS?
 > Laser beam
 > Water physics
 > Lag on placing a block?
@@ -31,6 +34,7 @@ TO ADD (also search: `toadd`~):
 > Entity health
 > Entity logic
 > Entity natural spawning
+> Entity attacking
 > Tree shape diversity (acacia)
 > Inv management
 > Render chunk (only loop through the blocks visible (i starts after 0))
@@ -41,8 +45,11 @@ TO ADD (also search: `toadd`~):
 > BG blocks ? (/cave bg)
 > Refactor worldMap and its functions (getMapBlock, etc.) into WorldMap class (obj called 'wmap') ?
 > Worldgen smoothen cliffs
-> Entity physics efficiency?
-> Entity piggy back jump off each other
+> Entity physics efficiency ?
+> Entity piggy back jump off each other ?
+> Title screen: show bar w/ trebuchet ms like in promo_Landform.psd
+> More soundtracks (Mirage in Mirai)
+> Bosses
 
 RECENT CHANGES
 > None
@@ -300,10 +307,11 @@ function destroyBlock(locy, locx) {
         mychar.justMinedBlock = true;
     }
     // Update blocks nearby
-    if(getMapBlock(worldMap, locy-1, locx) == 3) { // destroy tall grass (toadd checks)
+    var blockAbove = getMapBlock(worldMap, locy-1, locx);
+    if(blockAbove == 3 || blockAbove == 23 || blockAbove == 24) { // destroy tall grass/plants (toadd checks)
         destroyBlock(locy-1, locx);
     }
-    if(getMapBlock(worldMap, locy-1, locx) == 20 || getMapBlock(worldMap, locy-1, locx) == 19) { // if water exist above, allow down
+    if(blockAbove == 20 || blockAbove == 19) { // if water exist above, allow down
         for(let i = 0; i < worldMap.length - locy; i++) {
             if(BLOCKS[getMapBlock(worldMap, locy+i, locx)].destroyByWater) { // getMapBlock(worldMap, locy+i, locx) == 0 || getMapBlock(worldMap, locy+i, locx) == 19
                 placeBlock(locy+i, locx, 20);

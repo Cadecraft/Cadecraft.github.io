@@ -323,5 +323,41 @@ const BLOCKS = {
         hp: 10,
         drops: [22],
         destroyByWater: false
+    },
+    23: {
+        iname: "Dune Cacti",
+        idescr: "A thin, spindly cacti. It does not need much water to live in these parched dunes.",
+        irarity: 1,
+        img: 'images/blocks/Block_Plant_DuneCacti.png',
+        placeable: true,
+        collision: 'none',
+        hardness: 1,
+        hp: 1,
+        drops: [23],
+        destroyByWater: true
+    },
+    24: {
+        iname: "Dune Lily",
+        idescr: "A strange artifact of this world's watery past.",
+        irarity: 1,
+        img: 'images/blocks/Block_Plant_DuneLily.png',
+        placeable: true,
+        collision: 'none',
+        hardness: 1,
+        hp: 1,
+        drops: [24],
+        destroyByWater: true
+    },
+    25: {
+        iname: "Sandclay",
+        idescr: "Hardened, packed clay found in the desert.",
+        irarity: 0,
+        img: 'images/blocks/Block_SandclayBlock.png',
+        placeable: true,
+        collision: 'solid',
+        hardness: 2,
+        hp: 15,
+        drops: [25],
+        destroyByWater: false
     }
 };
