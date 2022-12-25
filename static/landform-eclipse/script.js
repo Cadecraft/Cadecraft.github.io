@@ -42,6 +42,7 @@ TO ADD (also search: `toadd`~):
 > Refactor worldMap and its functions (getMapBlock, etc.) into WorldMap class (obj called 'wmap') ?
 > Worldgen smoothen cliffs
 > Entity physics efficiency?
+> Entity piggy back jump off each other
 
 RECENT CHANGES
 > None
