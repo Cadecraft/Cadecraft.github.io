@@ -5,7 +5,7 @@ TO ADD (also search: `toadd`~):
 > Velocity correction veleq for time (?)
 > Acceleration
 > Settling down onto ground effect (falling y loc)--snap y location closer to the ground (floor/ceil)
-> Respawn on fall too far
+> RESPAWN on fall too far
 > Reduce air control
 > Tightness of deceleration
 > Worldgen: structure gen
@@ -13,6 +13,7 @@ TO ADD (also search: `toadd`~):
 > Characters! (+ animations) (import from liwol)
 > Background blocks!
 > Background on screen: mountains, desert, etc.
+> Background on screen: clouds
 > Mining distance limit
 > Title menu
 > Platform collision (tree leaves) (figure out from liwol)
