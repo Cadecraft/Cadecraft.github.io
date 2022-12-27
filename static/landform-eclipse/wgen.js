@@ -55,16 +55,17 @@ function wgenMain() {
         }
         var lastHeight = 0;
         var lastBiome = 4;
+        var blocksSinceNewBiome = 0;
         for(let x = 0; x < worldgen_width; x++) {
             var thisbiome = worldgenMap_biomes[x];
-            var isNewBiome = false;
-            if(thisbiome != lastBiome) { isNewBiome = true; lastBiome = thisbiome; }
+            if(thisbiome != lastBiome) { lastBiome = thisbiome; blocksSinceNewBiome = 0; }
+            blocksSinceNewBiome++;
             var newHeight = lastHeight;
             var newFeature = "";
             var newWater = -1;
-            // Biome transition: height resets
-            if(isNewBiome) {
-                newHeight = 0;
+            // Biome transition: height resets to 0 over time
+            if(blocksSinceNewBiome <= 4) {
+                newHeight = Math.floor(lastHeight/1.5); // /1.5 -- seeking asymptote of 0
             }
             // Generate new heights
             if(thisbiome == 0) {
@@ -95,6 +96,7 @@ function wgenMain() {
             worldgenMap_heights2.push(newHeight2);
             worldgenMap_features.push(newFeature);
             worldgenMap_waters.push(newWater);
+            // Updates
             lastHeight = newHeight;
         }
         // Generate blocks
