@@ -87,14 +87,19 @@ class Player {
         }
         return this.inventory[this.inv_selected];
     }
-    invSetSelected(newinv_selected) {
+    invSetSelected(newinv_selected, toprint = true) {
         // Set the selected index
         this.inv_selected = newinv_selected;
         if(this.inv_selected > 9) this.inv_selected = (this.inv_selected % 9) - 1;
         else if(this.inv_selected < 0) this.inv_selected = 10+this.inv_selected;
+        // Print
+        if(toprint && this.invGetSelected()[0] != -1) {
+            ui_addMessage(BLOCKS[this.invGetSelected()[0]].iname, 2000, 0, 0, true);
+        }
     }
-    invIncrementSelected(amt) {
-        this.invSetSelected(this.inv_selected + amt);
+    invIncrementSelected(amt, toprint = true) {
+        // Change the selected index
+        this.invSetSelected(this.inv_selected + amt, toprint);
     }
     invReduceBlock(inindex) {
         // Decrease amount in the stack

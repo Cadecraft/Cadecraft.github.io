@@ -151,6 +151,16 @@ class Entity {
         res += "_" + this.currentTextureFrame + ".png"; // ex. images/entities/enemy_crab_idleright_0.png
         return res;
     }
+    // Check is alive
+    isAlive() {
+        if(this.hp <= 0) {
+            return false; // hp below zero: dead
+        } else if(this.locy > worldMap.length) {
+            return false; // fallen off map: dead
+        }
+        // not dead
+        return true;
+    }
     // Apply physics/vel (FROM player.js)
     applyPhysics(map) {
         // Gravity

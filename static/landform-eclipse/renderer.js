@@ -158,7 +158,21 @@ function render(indbgm = false) {
         }
     }
     ctx.globalAlpha = 1.0;
+    // Render ui_messages
+    ctx.font = '12px Tahoma';
+    ui_updateMessages();
+    for(let i = 0; i < ui_messages.length; i++) {
+        var thismsg = ui_messages[ui_messages.length - i - 1];
+        ctx.globalAlpha = Math.min(thismsg.duration/1000.0, 1)*0.8;
+        // Render (toadd)
+        ctx.fillStyle = 'black';
+        ctx.fillRect(20, 20+44+(i)*24, 150, 20);
+        ctx.fillStyle = 'white';
+        ctx.fillText(thismsg.msg, 23, 35+44+(i)*24);
+    }
+    ctx.globalAlpha = 1.0;
     // Render dbg messages
+    ctx.font = '14px Tahoma';
     if(dbgm) {
         ctx.fillStyle = 'black';
         ctx.font = '14px Courier New';

@@ -49,8 +49,11 @@ TO ADD (also search: `toadd`~):
 > Entity physics efficiency ?
 > Entity piggy back jump off each other ?
 > Title screen: show bar w/ trebuchet ms like in promo_Landform.psd
-> More soundtracks (Mirage in Mirai)
+> More soundtracks (Tierra del Fuego, Datura)
 > Bosses
+> 2. messages on switch block or pick up block (ui_messages)
+> 3. UI panel (left side has block options, right has info/purchase)
+> 4. Player weapons/tools/items should use NEGATIVE numbers for IDs, create separate data object
 
 RECENT CHANGES
 > None
@@ -100,6 +103,13 @@ var worldMap = [
 var worldStates = [];
 var world_eventState = "normal";
 var entities = [];
+var ui_messages = [/*{
+    loc: 0, // Location (0=top left)
+    color: 0, // Color (0=white)
+    msg: "Game started...", // Message
+    duration: 2000 // Duration in ms (fades out last 1000ms)
+}*/];
+const ui_maxMessages = 6;
 
 // Load game defs: load/generate map and world states
 function mapRegen(inGenerateWorld) {
@@ -274,6 +284,37 @@ function download(filename, text) {
     document.body.removeChild(element);
 }
 
+// UI FUNCTIONS
+//
+//
+
+function ui_addMessage(inmsg, induration = 2000, inloc = 0, incolor = 0, clearall = false) {
+    if(clearall) { ui_messages = []; }
+    ui_messages.push({
+        loc: inloc, // Location (0=top left)
+        color: incolor, // Color (0=white)
+        msg: inmsg, // Message
+        duration: induration // Duration in ms (fades out last 1000ms)
+    });
+    // If greater than the max, remove first one to clear space
+    if(ui_messages.length > ui_maxMessages) {
+        ui_messages.splice(0, 1);
+    }
+}
+function ui_updateMessages() {
+    // Update durations and remove if necessary
+    var ui_messageIdsToRemove = [];
+    for(let i = 0; i < ui_messages.length; i++) {
+        ui_messages[i].duration -= gameInterval;
+        if(ui_messages[i].duration < 0) {
+            ui_messageIdsToRemove.push(i);
+        }
+    }
+    for(let i = 0; i < ui_messageIdsToRemove.length; i++) {
+        ui_messages.splice(ui_messageIdsToRemove[i]-i, 1);
+    }
+}
+
 // WORLD FUNCTIONS
 //
 //
@@ -304,8 +345,11 @@ function destroyBlock(locy, locx) {
     worldStates[locy][locx].dmg = 0;
     worldStates[locy][locx].state = 0;
     for(let i = 0; i < BLOCKS[oldblock].drops.length; i++) {
+        // Player gets block
         mychar.invAddBlock(BLOCKS[oldblock].drops[i]);
         mychar.justMinedBlock = true;
+        // Message
+        ui_addMessage("+1 "+BLOCKS[BLOCKS[oldblock].drops[i]].iname);
     }
     // Update blocks nearby
     var blockAbove = getMapBlock(worldMap, locy-1, locx);
@@ -500,11 +544,19 @@ function gameLoop() {
     gameInput();
     // Apply char physics
     mychar.applyPhysics(worldMap);
-    // Apply entity physics, update them
+    // Apply entity physics, update them, remove dead
+    var entityIdsToRemove = [];
     for(let i = 0; i < entities.length; i++) {
-        entities[i].applyPhysics(worldMap);
-        entities[i].updateTarget(); // (toadd) Set on timer instead
+        if(!entities[i].isAlive()) { // Is dead
+            entityIdsToRemove.push(i);
+            continue;
+        }
+        entities[i].updateTarget();
         entities[i].moveToTarget();
+        entities[i].applyPhysics(worldMap);
+    }
+    for(let i = 0; i < entityIdsToRemove.length; i++) {
+        entities.splice(entityIdsToRemove[i]-i, 1);
     }
     // Apply projectiles velocity
     // Check collision (projectiles and items) if not dead
@@ -526,7 +578,7 @@ function gameInput() {
     if(keys['arrowleft']) { inputs.push('invl'); keys['arrowleft']=false; } // All keys are lowercase
     if(keys['arrowright']) { inputs.push('invr'); keys['arrowright']=false; }
     for(let i = 0; i < 10; i++) {
-        if(keys[''+i]) { inputs.push('inv'+i); }
+        if(keys[''+i]) { inputs.push('inv'+i); keys[''+i]=false; }
     }
 
     // Use controls
