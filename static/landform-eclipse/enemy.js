@@ -151,12 +151,24 @@ class Entity {
         res += "_" + this.currentTextureFrame + ".png"; // ex. images/entities/enemy_crab_idleright_0.png
         return res;
     }
+    // Take dmg (negative heals)
+    takeDmg(inamt) {
+        if(inamt > 0) {
+            // Heal
+            this.hp += (-1) * inamt;
+            if(this.hp > this.hpmax) { this.hp = this.hpmax; }
+            // Show heal number floating? (todo) (ex. "+15")
+        } else {
+            // Damage
+            this.hp -= inamt;
+            if(this.hp < 0) { this.hp = 0; } // Is now dead
+            // Show dmg number floating? (todo) (ex. "15")
+        }
+    }
     // Check is alive
     isAlive() {
         if(this.hp <= 0) {
             return false; // hp below zero: dead
-        } else if(this.locy > worldMap.length) {
-            return false; // fallen off map: dead
         }
         // not dead
         return true;
@@ -229,6 +241,12 @@ class Entity {
         } else if(this.velx < -0) {
             this.velx += this.phys_decel;
             if(this.velx > 0) { this.velx = 0; }
+        }
+
+        // Has fallen off map?
+        if(this.locy > worldMap.length) {
+            // If fallen, take continuous damage
+            this.takeDmg(10);
         }
     }
     // Add vel

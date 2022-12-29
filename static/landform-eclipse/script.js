@@ -51,7 +51,8 @@ TO ADD (also search: `toadd`~):
 > Title screen: show bar w/ trebuchet ms like in promo_Landform.psd
 > More soundtracks (Tierra del Fuego, Datura)
 > Bosses
-> 2. messages on switch block or pick up block (ui_messages)
+> 1. Only render entity if in view ! (culling)
+> 2. Dmg messages
 > 3. UI panel (left side has block options, right has info/purchase)
 > 4. Player weapons/tools/items should use NEGATIVE numbers for IDs, create separate data object
 

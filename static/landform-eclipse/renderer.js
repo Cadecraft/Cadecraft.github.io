@@ -102,6 +102,7 @@ function render(indbgm = false) {
             }
         }
     }
+    ctx.globalAlpha = 1.0;
 
     // CHARACTERS
     // Render player
@@ -117,11 +118,26 @@ function render(indbgm = false) {
     for(let i = 0; i < entities.length; i++) {
         var thisentity = entities[i];
         // Render
-        var toDrawImg = allimgs[thisentity.getTextureFilename()];
         var edrawx = (thisentity.locx+offsetx)*iwidth// - toDrawImg.naturalWidth; // - toDrawImg.naturalWidth
         var edrawy = (thisentity.locy+offsety)*iwidth// - toDrawImg.naturalHeight;
+        if(!(edrawx > iwidth*-1 && edrawx < window.innerWidth && edrawy > iwidth*-1 && edrawy < window.innerHeight)) {
+            continue; // Entity not visible
+        }
+        var toDrawImg = allimgs[thisentity.getTextureFilename()];
         ctx.drawImage(toDrawImg, 0, 0, toDrawImg.naturalWidth, toDrawImg.naturalHeight, Math.floor(edrawx), Math.floor(edrawy), Math.floor(toDrawImg.naturalWidth*globalScale), Math.floor(toDrawImg.naturalHeight*globalScale));
-        //ctx.drawImage(toDrawImg, edrawx, edrawy);
+        // hp bar + stats (if has taken dmg)
+        if(thisentity.hp < thisentity.hpmax) {
+            const hpbar_width = 60;
+            const hpbar_height = 6;
+            ctx.globalAlpha = 0.7;
+            ctx.fillStyle = 'rgb(0, 0, 0)';
+            ctx.fillRect(edrawx - 6, edrawy - 20, hpbar_width * (1), hpbar_height);
+            ctx.fillStyle = 'rgb(200, 0, 0)';
+            ctx.fillRect(edrawx - 6, edrawy - 20, hpbar_width * (thisentity.hp / thisentity.hpmax), hpbar_height);
+            ctx.fillStyle = 'rgb(255, 255, 255)';
+            ctx.font = '11px Tahoma';
+            ctx.fillText("["+thisentity.lvl+"] "+thisentity.name, edrawx - 6, edrawy - 27);
+        }
     }
 
     // FX
