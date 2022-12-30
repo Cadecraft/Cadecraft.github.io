@@ -51,10 +51,11 @@ TO ADD (also search: `toadd`~):
 > Title screen: show bar w/ trebuchet ms like in promo_Landform.psd
 > More soundtracks (Tierra del Fuego, Datura)
 > Bosses
-> 1. Only render entity if in view ! (culling)
+> 1. ~~Only render entity if in view ! (culling)~~
 > 2. Dmg messages
 > 3. UI panel (left side has block options, right has info/purchase)
 > 4. Player weapons/tools/items should use NEGATIVE numbers for IDs, create separate data object
+> 5. Natural entity spawning
 
 RECENT CHANGES
 > None
@@ -504,68 +505,6 @@ document.addEventListener('keyup',
     }, false
 );
 
-// GAME FUNCTIONS
-//
-//
-
-// Game interval settings
-const gameInterval = 17;
-var lastDate = Date.now();
-setInterval(gameLoop, gameInterval);
-
-// On first start game
-function gameStart() {
-    // Generate world map
-    // Set player inv, defaults, etc.
-}
-gameStart(); // call
-
-// Timers
-var timers = {
-    "timer_mining": 0
-};
-
-// Game loop
-function gameLoop() {
-    // Determine fps
-    if(dbgm) {
-        var msElapsed = Date.now() - lastDate;
-    lastDate = Date.now();
-    dbg_fps = 1/(msElapsed/1000); // inverse of (seconds per frame)
-    dbg_fps_avg = ((dbg_fps)+(dbg_fps_avg)*dbg_totalframes)/(dbg_totalframes+1)
-    dbg_totalframes++;
-    }
-    // Reduce timers
-    for(let i = 0; i < Object.keys(timers).length; i++) {
-        timers[Object.keys(timers)[i]] -= 17;
-    }
-    // Determine velocity equalization based on time passed (?) (toadd?)
-    // Handle input if not dead
-    updatePointerwr()
-    gameInput();
-    // Apply char physics
-    mychar.applyPhysics(worldMap);
-    // Apply entity physics, update them, remove dead
-    var entityIdsToRemove = [];
-    for(let i = 0; i < entities.length; i++) {
-        if(!entities[i].isAlive()) { // Is dead
-            entityIdsToRemove.push(i);
-            continue;
-        }
-        entities[i].updateTarget();
-        entities[i].moveToTarget();
-        entities[i].applyPhysics(worldMap);
-    }
-    for(let i = 0; i < entityIdsToRemove.length; i++) {
-        entities.splice(entityIdsToRemove[i]-i, 1);
-    }
-    // Apply projectiles velocity
-    // Check collision (projectiles and items) if not dead
-    
-    // Render
-    render(dbgm);
-}
-
 // Game input
 function gameInput() {
     var inputs = [];
@@ -647,3 +586,66 @@ function gameInput() {
         download('landform_world.ccdata', JSON.stringify(worldMap));
     }
 }
+
+// GAME FUNCTIONS
+//
+//
+
+// Game interval settings
+const gameInterval = 17;
+var lastDate = Date.now();
+setInterval(gameLoop, gameInterval);
+
+// On first start game
+function gameStart() {
+    // Generate world map
+    // Set player inv, defaults, etc.
+}
+gameStart(); // call
+
+// Timers
+var timers = {
+    "timer_mining": 0
+};
+
+// Game loop
+function gameLoop() {
+    // Determine fps
+    if(dbgm) {
+        var msElapsed = Date.now() - lastDate;
+    lastDate = Date.now();
+    dbg_fps = 1/(msElapsed/1000); // inverse of (seconds per frame)
+    dbg_fps_avg = ((dbg_fps)+(dbg_fps_avg)*dbg_totalframes)/(dbg_totalframes+1)
+    dbg_totalframes++;
+    }
+    // Reduce timers
+    for(let i = 0; i < Object.keys(timers).length; i++) {
+        timers[Object.keys(timers)[i]] -= 17;
+    }
+    // Determine velocity equalization based on time passed (?) (toadd?)
+    // Handle input if not dead
+    updatePointerwr()
+    gameInput();
+    // Apply char physics
+    mychar.applyPhysics(worldMap);
+    // Apply entity physics, update them, remove dead
+    var entityIdsToRemove = [];
+    for(let i = 0; i < entities.length; i++) {
+        if(!entities[i].isAlive()) { // Is dead
+            entityIdsToRemove.push(i);
+            continue;
+        }
+        entities[i].updateTarget();
+        entities[i].moveToTarget();
+        entities[i].applyPhysics(worldMap);
+    }
+    for(let i = 0; i < entityIdsToRemove.length; i++) {
+        entities.splice(entityIdsToRemove[i]-i, 1);
+    }
+    // Apply projectiles velocity
+    // Check collision (projectiles and items) if not dead
+    
+    // Render
+    render(dbgm);
+}
+
