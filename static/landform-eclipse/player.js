@@ -78,7 +78,11 @@ class Player {
                 added = true;
             }
         }
+        this.invUpdateMenu();
         return true;
+    }
+    invUpdateMenu() {
+        ui_invMenus[0].setContentsArr(this.inventory);
     }
     invGetSelected() {
         // Get the item at selected index
@@ -109,6 +113,8 @@ class Player {
                 this.inventory[inindex][0] = -1;
             }
         }
+        this.invUpdateMenu();
+        return true;
     }
     // Get map block
     getMapBlock(map, locy, locx) {

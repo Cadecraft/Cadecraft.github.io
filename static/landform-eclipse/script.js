@@ -112,6 +112,7 @@ var ui_messages = [/*{
     duration: 2000 // Duration in ms (fades out last 1000ms)
 }*/];
 const ui_maxMessages = 6;
+var ui_invMenus = [];
 
 // Load game defs: load/generate map and world states
 function mapRegen(inGenerateWorld) {
@@ -146,6 +147,11 @@ mapRegen(generateWorld);
 
 // Load game defs: player character (mychar)
 var mychar = new Player(280, 10); // 50, 200 (if world width is 500), 280 (world width is 700)
+
+// Load game defs: UI menus
+ui_invMenus.push(
+    new InvMenu("Player Inventory", 20, 20+44+24, mychar.inv_menuwidth, 0, 0, 0, mychar.inventory, false) // Player inv: top left
+);
 
 // Load game defs: music/audios
 var gameMusics = [];
@@ -291,7 +297,7 @@ function download(filename, text) {
 //
 
 function ui_addMessage(inmsg, induration = 2000, inloc = 0, incolor = 0, clearall = false) {
-    if(clearall) { ui_messages = []; }
+    if(clearall || ui_invMenus[0].getVisible()) { ui_messages = []; } // If clearall or if inv menu is open (prevent overlap)
     ui_messages.push({
         loc: inloc, // Location (0=top left)
         color: incolor, // Color (0=white)

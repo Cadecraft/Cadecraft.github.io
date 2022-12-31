@@ -156,21 +156,21 @@ function render(indbgm = false) {
         ctx.drawImage(allimgs[boxFile], 0, 0, 20, 20, 20+i*44, 20, 40, 40);
         ctx.globalAlpha = 1.0;
         // Contents
-        if(mychar.inventory.length > i) {
-            // Block img
-            if(mychar.inventory[i][0] >= Object.keys(BLOCKS).length) { continue }; // Error: do not render block
-            if(BLOCKS[mychar.inventory[i][0]].img != 'none') {
-                //var imgloaded2 = document.getElementById(BLOCKS[mychar.inventory[i][0]].img);
-                ctx.drawImage(allimgs[BLOCKS[mychar.inventory[i][0]].img], 0, 0, 16, 16, 24+i*44, 24, blockWidth*2, blockWidth*2);
-            }
-            // Amount
-            if(mychar.inventory[i][1] > 1) {
-                var invamt = mychar.inventory[i][1];
-                ctx.fillStyle = 'white';
-                ctx.font = '14px Tahoma';
-                ctx.globalAlpha = 0.8;
-                ctx.fillText(''+invamt, 24+i*44, 57);
-            }
+        if(mychar.inventory.length <= i) { continue; } // Player inv is not populated with blocks this far
+        // Contents: block img
+        var thisblockdata = mychar.inventory[i];
+        if(thisblockdata[0] >= Object.keys(BLOCKS).length) { continue; } // Error: block ID does not exist
+        if(BLOCKS[thisblockdata[0]].img != 'none') {
+            //var imgloaded2 = document.getElementById(BLOCKS[thisblockdata[0]].img);
+            ctx.drawImage(allimgs[BLOCKS[thisblockdata[0]].img], 0, 0, 16, 16, 24+i*44, 24, blockWidth*2, blockWidth*2);
+        }
+        // Contents: amount
+        if(thisblockdata[1] > 1) {
+            var invamt = thisblockdata[1];
+            ctx.fillStyle = 'white';
+            ctx.font = '14px Tahoma';
+            ctx.globalAlpha = 0.8;
+            ctx.fillText(''+invamt, 24+i*44, 57);
         }
     }
     ctx.globalAlpha = 1.0;
@@ -185,6 +185,46 @@ function render(indbgm = false) {
         ctx.fillRect(20, 20+44+(i)*24, 150, 20);
         ctx.fillStyle = 'white';
         ctx.fillText(thismsg.msg, 23, 35+44+(i)*24);
+    }
+    ctx.globalAlpha = 1.0;
+    // Render inv menus (if visible)
+    for(let i = 0; i < ui_invMenus.length; i++) {
+        var thismenu = ui_invMenus[i];
+        if(!thismenu.visible) { continue; } // Invisible: do not render
+        // Bg
+        ctx.fillStyle = 'black';
+        ctx.globalAlpha = thismenu.bgOpacity; // 0.2, 0.8
+        ctx.fillRect(thismenu.menuLocx, thismenu.menuLocy, thismenu.menuWidthPixels, thismenu.menuHeightPixels);
+        // Each block (render in the same style as inv bar)
+        var thismenuContents = thismenu.getContentsArr2d();
+        if(thismenuContents.length <= 0) { continue; } // No items
+        for(let y = 0; y < thismenuContents.length; y++) {
+            for(let x = 0; x < thismenuContents[y].length; x++) {
+                // Box
+                var boxFile = 'images/ui/Invbox2.png';
+                if(y*thismenu.contentsWidth+x == thismenu.contentsSelected) {
+                    ctx.globalAlpha = 1.0;
+                    boxFile = 'images/ui/Invbox2_Select.png';
+                } else { ctx.globalAlpha = 0.5; }
+                ctx.drawImage(allimgs[boxFile], 0, 0, 20, 20, thismenu.menuLocx+thismenu.menuMarginx+x*44, thismenu.menuLocy+thismenu.menuMarginy+y*44, 40, 40);
+                ctx.globalAlpha = 1.0;
+                // Contents
+                // Contents: block img
+                var thisblockdata = thismenuContents[y][x];
+                if(thisblockdata[0] >= Object.keys(BLOCKS).length) { continue; } // Error: block ID does not exist
+                if(BLOCKS[thisblockdata[0]].img != 'none') {
+                    ctx.drawImage(allimgs[BLOCKS[thisblockdata[0]].img], 0, 0, 16, 16, thismenu.menuLocx+thismenu.menuMarginx+4+x*44, thismenu.menuLocy+thismenu.menuMarginy+4+y*44, blockWidth*2, blockWidth*2);
+                }
+                // Contents: amount
+                if(thisblockdata[1] > 1) {
+                    var invamt = thisblockdata[1];
+                    ctx.fillStyle = 'white';
+                    ctx.font = '14px Tahoma';
+                    ctx.globalAlpha = 0.8;
+                    ctx.fillText(''+invamt, thismenu.menuLocx+thismenu.menuMarginx+4+x*44, thismenu.menuLocy+thismenu.menuMarginy+4+33+y*44);
+                }
+            }
+        }
     }
     ctx.globalAlpha = 1.0;
     // Render dbg messages
