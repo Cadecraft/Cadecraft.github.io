@@ -153,7 +153,7 @@ function render(indbgm = false) {
             ctx.globalAlpha = 1.0;
             boxFile = 'images/ui/Invbox2_Select.png';
         } else { ctx.globalAlpha = 0.5; }
-        ctx.drawImage(allimgs[boxFile], 0, 0, 20, 20, 20+i*44, 20, 40, 40);
+        ctx.drawImage(allimgs[boxFile], 0, 0, 20, 20, 20+i*ui_invItemWidth, 20, 40, 40);
         ctx.globalAlpha = 1.0;
         // Contents
         if(mychar.inventory.length <= i) { continue; } // Player inv is not populated with blocks this far
@@ -162,7 +162,7 @@ function render(indbgm = false) {
         if(thisblockdata[0] >= Object.keys(BLOCKS).length) { continue; } // Error: block ID does not exist
         if(BLOCKS[thisblockdata[0]].img != 'none') {
             //var imgloaded2 = document.getElementById(BLOCKS[thisblockdata[0]].img);
-            ctx.drawImage(allimgs[BLOCKS[thisblockdata[0]].img], 0, 0, 16, 16, 24+i*44, 24, blockWidth*2, blockWidth*2);
+            ctx.drawImage(allimgs[BLOCKS[thisblockdata[0]].img], 0, 0, 16, 16, 24+i*ui_invItemWidth, 24, blockWidth*2, blockWidth*2);
         }
         // Contents: amount
         if(thisblockdata[1] > 1) {
@@ -170,7 +170,7 @@ function render(indbgm = false) {
             ctx.fillStyle = 'white';
             ctx.font = '14px Tahoma';
             ctx.globalAlpha = 0.8;
-            ctx.fillText(''+invamt, 24+i*44, 57);
+            ctx.fillText(''+invamt, 24+i*ui_invItemWidth, 57);
         }
     }
     ctx.globalAlpha = 1.0;
@@ -182,9 +182,9 @@ function render(indbgm = false) {
         ctx.globalAlpha = Math.min(thismsg.duration/1000.0, 1)*0.8;
         // Render (toadd)
         ctx.fillStyle = 'black';
-        ctx.fillRect(20, 20+44+(i)*24, 150, 20);
+        ctx.fillRect(20, 20+ui_invItemWidth+(i)*24, 150, 20);
         ctx.fillStyle = 'white';
-        ctx.fillText(thismsg.msg, 23, 35+44+(i)*24);
+        ctx.fillText(thismsg.msg, 23, 35+ui_invItemWidth+(i)*24);
     }
     ctx.globalAlpha = 1.0;
     // Render inv menus (if visible)
@@ -206,14 +206,14 @@ function render(indbgm = false) {
                     ctx.globalAlpha = 1.0;
                     boxFile = 'images/ui/Invbox2_Select.png';
                 } else { ctx.globalAlpha = 0.5; }
-                ctx.drawImage(allimgs[boxFile], 0, 0, 20, 20, thismenu.menuLocx+thismenu.menuMarginx+x*44, thismenu.menuLocy+thismenu.menuMarginy+y*44, 40, 40);
+                ctx.drawImage(allimgs[boxFile], 0, 0, 20, 20, thismenu.menuLocx+thismenu.menuMarginx+x*ui_invItemWidth, thismenu.menuLocy+thismenu.menuMarginy+y*ui_invItemWidth, 40, 40);
                 ctx.globalAlpha = 1.0;
                 // Contents
                 // Contents: block img
                 var thisblockdata = thismenuContents[y][x];
                 if(thisblockdata[0] >= Object.keys(BLOCKS).length) { continue; } // Error: block ID does not exist
                 if(BLOCKS[thisblockdata[0]].img != 'none') {
-                    ctx.drawImage(allimgs[BLOCKS[thisblockdata[0]].img], 0, 0, 16, 16, thismenu.menuLocx+thismenu.menuMarginx+4+x*44, thismenu.menuLocy+thismenu.menuMarginy+4+y*44, blockWidth*2, blockWidth*2);
+                    ctx.drawImage(allimgs[BLOCKS[thisblockdata[0]].img], 0, 0, 16, 16, thismenu.menuLocx+thismenu.menuMarginx+4+x*ui_invItemWidth, thismenu.menuLocy+thismenu.menuMarginy+4+y*ui_invItemWidth, blockWidth*2, blockWidth*2);
                 }
                 // Contents: amount
                 if(thisblockdata[1] > 1) {
@@ -221,7 +221,7 @@ function render(indbgm = false) {
                     ctx.fillStyle = 'white';
                     ctx.font = '14px Tahoma';
                     ctx.globalAlpha = 0.8;
-                    ctx.fillText(''+invamt, thismenu.menuLocx+thismenu.menuMarginx+4+x*44, thismenu.menuLocy+thismenu.menuMarginy+4+33+y*44);
+                    ctx.fillText(''+invamt, thismenu.menuLocx+thismenu.menuMarginx+4+x*ui_invItemWidth, thismenu.menuLocy+thismenu.menuMarginy+4+33+y*ui_invItemWidth);
                 }
             }
         }

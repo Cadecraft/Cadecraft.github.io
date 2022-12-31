@@ -113,6 +113,7 @@ var ui_messages = [/*{
 }*/];
 const ui_maxMessages = 6;
 var ui_invMenus = [];
+const ui_invItemWidth = 44; // Constant
 
 // Load game defs: load/generate map and world states
 function mapRegen(inGenerateWorld) {
@@ -573,6 +574,7 @@ function gameInput() {
             var clickWasProcessed = ui_invMenus[i].processClick(pointerx, pointery);
             if(clickWasProcessed) {
                 clickedOnMenu = true;
+                mousedown = false;
                 break;
             }
         }

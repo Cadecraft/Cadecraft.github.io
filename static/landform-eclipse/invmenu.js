@@ -1,12 +1,12 @@
 class InvMenu {
-    // Constructor: menu name str, width of contents menu in blocks, array of contents [type, amt, optional_cost]
-    constructor(inMenuName, inMenuLocx, inMenuLocy, inContentsWidth, inMenuMarginx = 24, inMenuMarginy = 24, inBgOpacity = 0.8, inContentsArr = [], inVisible = false) {
+    // Constructor: menu name str, width of contents menu in blocks, array of contents [type, amt, optional_cost], is visible by default, should update player inv
+    constructor(inMenuName, inMenuLocx, inMenuLocy, inContentsWidth, inMenuMarginx = 24, inMenuMarginy = 24, inBgOpacity = 0.8, inContentsArr = [], inVisible = false, inBoundToPlayer = false) {
         // Defs: menu
         this.menuName = inMenuName;
         // Defs: contents
-        this.contentsWidth = inContentsWidth;
+        this.contentsWidth = inContentsWidth; // Width of contents menu in blocks
         this.contentsArr = JSON.parse(JSON.stringify(inContentsArr)); // Copy
-        this.contentsSelected = -1;
+        this.contentsSelected = -1; // -1 = nothing selected
         // Defs: rendering
         this.visible = inVisible;
         this.bgOpacity = inBgOpacity;
@@ -16,12 +16,13 @@ class InvMenu {
         this.menuMarginy = inMenuMarginy;
         this.menuWidthPixels = 0
         this.menuHeightPixels = 0;
+        this.boundToPlayer = true; // If bound to player, update player inv
         this.updateMenuDimensions();
     }
     // Update menu width and height
     updateMenuDimensions() {
-        this.menuWidthPixels = this.menuMarginx+this.contentsWidth*44+this.menuMarginx; // Left pad + content slots width + right pad
-        this.menuHeightPixels = this.menuMarginy+this.getContentsArr2d().length*40+this.menuMarginy; // Top pad + content slots height + right pad
+        this.menuWidthPixels = this.menuMarginx+this.contentsWidth*ui_invItemWidth+this.menuMarginx; // Left pad + content slots width + right pad
+        this.menuHeightPixels = this.menuMarginy+this.getContentsArr2d().length*ui_invItemWidth+this.menuMarginy; // Top pad + content slots height + right pad
     }
     // Organize 1d contents into a 2d array format (for display)
     getContentsArr2d() {
@@ -35,6 +36,10 @@ class InvMenu {
     // Set whether visible (bool)
     setVisible(inVisible) {
         this.visible = inVisible;
+        // If now invisible, reset selected
+        if(!this.visible) {
+            this.contentsSelected = -1;
+        }
     }
     // Toggle whether visible
     toggleVisible() {
@@ -71,14 +76,46 @@ class InvMenu {
             return false;
         }
         // Determine whether clicked on block (toadd)
-        var localLocxBlock = 0;
-        var localLocyBlock = 0;
+        var localLocxBlock = Math.floor((localLocx - this.menuMarginx)/ui_invItemWidth);
+        var localLocyBlock = Math.floor((localLocy - this.menuMarginy)/ui_invItemWidth);
+        var clickedOnContentsIndex = localLocyBlock * this.contentsWidth + localLocxBlock;
+        if(clickedOnContentsIndex >= 0 && clickedOnContentsIndex < this.contentsArr.length) {
+            this.clickContentsItem(clickedOnContentsIndex);
+        }
         // Determine whether clicked on button
         // Return true because click was processed
         return true;
     }
-    // Click contents item (toadd): Process a click on a specific index of contents
-    clickContentsItem(incontentsindex) {
-
+    // Click contents item: Process a click on a specific index of contents
+    clickContentsItem(inContentsIndex) {
+        // Check valid
+        if(inContentsIndex < 0 || inContentsIndex >= this.contentsArr.length) {
+            return false; // Invalid
+        }
+        // Select or move/swap (toadd)
+        if(this.contentsSelected == -1) {
+            // Nothing currently selected: select new item
+            this.contentsSelected = inContentsIndex;
+        }
+        else if(this.contentsSelected == inContentsIndex) {
+            // Same item currently selected: deselect it
+            this.contentsSelected = -1;
+        }
+        else if(this.contentsArr[this.contentsSelected][0] == -1) {
+            // Void currently selected: select new item
+            this.contentsSelected = inContentsIndex;
+        }
+        else {
+            // Something else currently selected: swap items then deselect anything
+            var oldItemSelected = this.contentsArr[this.contentsSelected];
+            this.contentsArr[this.contentsSelected] = this.contentsArr[inContentsIndex];
+            this.contentsArr[inContentsIndex] = oldItemSelected;
+            this.contentsSelected = -1;
+        }
+        // Updates
+        if(this.boundToPlayer) {
+            mychar.inventory = JSON.parse(JSON.stringify(this.contentsArr));
+        }
+        return true;
     }
 }
