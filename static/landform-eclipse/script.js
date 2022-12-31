@@ -523,6 +523,7 @@ function gameInput() {
     if(keys['v'] && keys['e']) { inputs.push('save'); keys['v']=false; keys['e']=false; }
     if(keys['arrowleft']) { inputs.push('invl'); keys['arrowleft']=false; } // All keys are lowercase
     if(keys['arrowright']) { inputs.push('invr'); keys['arrowright']=false; }
+    if(keys['i']) { inputs.push('invmenu'); keys['i']=false; } // Inv menu: open with i, or tab? (toadd)
     for(let i = 0; i < 10; i++) {
         if(keys[''+i]) { inputs.push('inv'+i); keys[''+i]=false; }
     }
@@ -559,10 +560,28 @@ function gameInput() {
         // Select inventory: right 1 (increment)
         mychar.invIncrementSelected(1);
     }
+    if(inputs.includes('invmenu')) {
+        // Open/close inventory menu
+        ui_invMenus[0].toggleVisible();
+    }
     if(mousedown) {
         // Click
-        // Based on item type in player inv
-        if(mychar.invGetSelected()[0] == -100) {
+        // Send click to menus
+        var clickedOnMenu = false;
+        for(let i = 0; i < ui_invMenus.length; i++) {
+            if(!ui_invMenus[i].getVisible()) { continue; }
+            var clickWasProcessed = ui_invMenus[i].processClick(pointerx, pointery);
+            if(clickWasProcessed) {
+                clickedOnMenu = true;
+                break;
+            }
+        }
+        // If clicked on menu, do not click in world
+        if(clickedOnMenu) {
+            // Do nothing in world
+        }
+        // Click in world: based on item type in player inv
+        else if(mychar.invGetSelected()[0] == -100) {
             // Use item (toadd~)
         }
         else if(getMapBlock(worldMap, pointerybl, pointerxbl) == 0 && BLOCKS[mychar.invGetSelected()[0]].placeable) {
@@ -584,7 +603,7 @@ function gameInput() {
             }
         }
         // Random other click stuff
-        if(!hasMusicStarted) randomMusics();
+        if(!hasMusicStarted) randomMusics(); // Sounds can only play when the user has clicked
     }
     else { mychar.justPlacedBlock = false; mychar.justMinedBlock = false; }
     if(dbgm && inputs.includes('save')) {

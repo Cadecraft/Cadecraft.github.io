@@ -20,7 +20,7 @@ class InvMenu {
     }
     // Update menu width and height
     updateMenuDimensions() {
-        this.menuWidthPixels = this.menuMarginx+this.contentsWidth*40+this.menuMarginx; // Left pad + content slots width + right pad
+        this.menuWidthPixels = this.menuMarginx+this.contentsWidth*44+this.menuMarginx; // Left pad + content slots width + right pad
         this.menuHeightPixels = this.menuMarginy+this.getContentsArr2d().length*40+this.menuMarginy; // Top pad + content slots height + right pad
     }
     // Organize 1d contents into a 2d array format (for display)
@@ -35,6 +35,10 @@ class InvMenu {
     // Set whether visible (bool)
     setVisible(inVisible) {
         this.visible = inVisible;
+    }
+    // Toggle whether visible
+    toggleVisible() {
+        this.setVisible(!this.visible);
     }
     // Get whether visible (bool)
     getVisible() {
@@ -52,7 +56,7 @@ class InvMenu {
         }
         return res;
     }
-    // Process click (toadd): if click is within x and y bounds of menu, determine which item clicked
+    // Process click (toadd): if click is within x and y bounds of menu, determine which item clicked (returns whether click was processed)
     processClick(locx, locy) {
         // Determine x and y location from the top left of menu
         var localLocx = locx - this.menuLocx;
@@ -60,17 +64,18 @@ class InvMenu {
         if(!this.visible) {
             // Invisible, so user cannot click
             console.log('Err: processClick failed; InvMenu "'+this.menuName+'" is invisible');
-            return;
+            return false;
         }
         if(localLocx < 0 || localLocy < 0 || localLocx > this.menuWidthPixels || localLocy > this.menuHeightPixels) {
             // Outside of menu area, so user cannot click
-            console.log('Err: processClick failed; click was outside of InvMenu "'+this.menuName+'" area');
-            return;
+            return false;
         }
         // Determine whether clicked on block (toadd)
         var localLocxBlock = 0;
         var localLocyBlock = 0;
         // Determine whether clicked on button
+        // Return true because click was processed
+        return true;
     }
     // Click contents item (toadd): Process a click on a specific index of contents
     clickContentsItem(incontentsindex) {
