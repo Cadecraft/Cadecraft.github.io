@@ -344,7 +344,7 @@ const BLOCKS = {
         irarity: 1,
         img: 'images/blocks/Block_Plant_DuneLily.png',
         placeable: true,
-        collision: 'none',
+        collision: 'platform',
         hardness: 1,
         hp: 1,
         drops: [24],
