@@ -77,6 +77,9 @@ function wgenMain() {
             else if(thisbiome == 12) {
                 newHeight += Math.floor(Math.random()*10)-5; // RARE mesa biome
             }
+            else if(thisbiome == 2) {
+                if(Math.random() < 0.3) { newHeight += Math.floor(Math.random()*3)-1; } // Plains biome is flatter
+            }
             if(newHeight > worldgen_heightoffsetmax) newHeight = worldgen_heightoffsetmax;
             if(newHeight < -1*worldgen_heightoffsetmax) newHeight = -1*worldgen_heightoffsetmax;
             var newHeight2 = Math.floor(Math.random()*2);
@@ -90,6 +93,9 @@ function wgenMain() {
             } else if(thisbiome == 1) { // Desert biome
                 if(Math.random() < worldgen_rateTrees && x < worldgen_width-6 && x > 5) { newFeature = "dune lily"; }
                 else if(Math.random() < worldgen_rateGrass) { newFeature = "dune cacti"; }
+            } else if(thisbiome == 2) { // Plains biome
+                if(Math.random() < worldgen_rateTrees && x < worldgen_width-6 && x > 5) { newFeature  = "hay bale"; }
+                else if(Math.random() < worldgen_rateGrass + 0.2) { newFeature = "tall plains grass"; }
             }
             // Add
             worldgenMap_heights.push(newHeight);
@@ -126,10 +132,12 @@ function wgenMain() {
                         let lilyHeight = Math.floor(Math.random()*3);
                         for(let i = 0; i < lilyHeight; i++) { worldMap[y-i-1][x] = 24; }
                     }
+                    else if(worldgenMap_features[x] == "tall plains grass") { worldMap[y].push(27); }
+                    else if(worldgenMap_features[x] == "hay bale") { worldMap[y].push(28); }
                     else { worldMap[y].push(0); }
                 }
                 else if(y==10+worldgen_horizonoffset+worldgenMap_heights[x]) {
-                    if(worldgenMap_features[x] == "tree") { worldMap[y].push(1); }
+                    if(worldgenMap_features[x] == "tree") { worldMap[y].push(1); } // Dirt below tree
                     else { // Grass / any biome toppings
                         if(thisbiome == 1) { // Desert - top sand or sandclay
                             if(Math.random() < 0.1) {
@@ -138,6 +146,7 @@ function wgenMain() {
                                 worldMap[y].push(22);
                             }
                         }
+                        else if(thisbiome == 2) { worldMap[y].push(26); } // Plains - plains grass
                         else { worldMap[y].push(2); }
                     } 
                 }

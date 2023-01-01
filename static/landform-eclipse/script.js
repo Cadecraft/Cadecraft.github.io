@@ -28,6 +28,7 @@ TO ADD (also search: `toadd`~):
 > Cookies to save progress (ask for consent)
 > TOS?
 > Laser beam
+> Day night / eclipse cycle
 > Water physics
 > Lag on placing a block?
 > World chunking!
@@ -41,6 +42,7 @@ TO ADD (also search: `toadd`~):
 > Water source generation (on destroy done, on place)
 > Water physics
 > Place blocks on top to destroy grass
+> Prevent grass/contains "groundPlant" key from being placed midair
 > BG blocks ? (/cave bg)
 > Refactor worldMap and its functions (getMapBlock, etc.) into WorldMap class (obj called 'wmap') ?
 > Worldgen smoothen cliffs
@@ -50,7 +52,7 @@ TO ADD (also search: `toadd`~):
 > More soundtracks (Tierra del Fuego, Datura)
 > Bosses
 > Inv: merge inv hotbar with the rest of inv menu?
-> Inv: allow combining items?
+> Inv: allow combining/merging items of same type (and calc stack excess)
 > 1. Entity natural spawning
 > 2. Dmg messages
 > 3. UI panel for NPC prchasing
@@ -359,7 +361,7 @@ function destroyBlock(locy, locx) {
     }
     // Update blocks nearby
     var blockAbove = getMapBlock(worldMap, locy-1, locx);
-    if(blockAbove == 3 || blockAbove == 23 || blockAbove == 24) { // destroy tall grass/plants (toadd checks)
+    if(Object.keys(BLOCKS[blockAbove]).includes('groundPlant') /*blockAbove == 3 || blockAbove == 23 || blockAbove == 24*/) { // destroy tall grass/plants (toadd checks)
         destroyBlock(locy-1, locx);
     }
     if(blockAbove == 20 || blockAbove == 19) { // if water exist above, allow down

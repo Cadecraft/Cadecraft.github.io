@@ -96,7 +96,8 @@ const BLOCKS = {
         hardness: 1,
         hp: 1,
         drops: [3],
-        destroyByWater: true
+        destroyByWater: true,
+        groundPlant: true // If this key exists, cannot exist in midair
     },
     4: {
         iname: 'Stone',
@@ -336,7 +337,8 @@ const BLOCKS = {
         hardness: 1,
         hp: 1,
         drops: [23],
-        destroyByWater: true
+        destroyByWater: true,
+        groundPlant: true
     },
     24: {
         iname: "Dune Lily",
@@ -348,7 +350,8 @@ const BLOCKS = {
         hardness: 1,
         hp: 1,
         drops: [24],
-        destroyByWater: true
+        destroyByWater: true,
+        groundPlant: true
     },
     25: {
         iname: "Sandclay",
@@ -361,5 +364,43 @@ const BLOCKS = {
         hp: 15,
         drops: [25],
         destroyByWater: false
+    },
+    26: {
+        iname: 'Plains Grass',
+        idescr: 'The grass here is dark, dry, and rough.',
+        irarity: 0,
+        img: 'images/blocks/Block_Grass_Plains.png',
+        placeable: true,
+        collision: 'solid',
+        hardness: 1,
+        hp: 10,
+        drops: [26],
+        destroyByWater: false
+    },
+    27: {
+        iname: 'Tall Plains Grass',
+        idescr: 'A clump of tall grass on the plains.',
+        irarity: 0,
+        img: 'images/blocks/Block_Plant_Grass_Plains.png',
+        placeable: true,
+        collision: 'none',
+        hardness: 1,
+        hp: 1,
+        drops: [27],
+        destroyByWater: true,
+        groundPlant: true
+    },
+    28: {
+        iname: 'Hay Bale',
+        idescr: 'Stringy hay is used to feed the animals on the plains.',
+        irarity: 0,
+        img: 'images/blocks/Block_HayBale.png',
+        placeable: true,
+        collision: 'platform',
+        hardness: 1,
+        hp: 6,
+        drops: [28],
+        destroyByWater: true,
+        groundPlant: true
     }
 };
