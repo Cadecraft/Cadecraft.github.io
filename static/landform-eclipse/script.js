@@ -24,7 +24,6 @@ TO ADD (also search: `toadd`~):
 > Sound effects (mining, breaking, walking, etc.)
 > Pickaxe leveling/upgrading (and reset to default efficiency being 1) (Maybe use STACK AMT as level?)
 > Specialized music per region (ex. don't play desert music in highlands)
-> Biomes
 > Cookies to save progress (ask for consent)
 > TOS?
 > Laser beam
@@ -51,6 +50,9 @@ TO ADD (also search: `toadd`~):
 > Title screen: show bar w/ trebuchet ms like in promo_Landform.psd
 > More soundtracks (Tierra del Fuego, Datura)
 > Bosses
+> Bg: per biome
+> Bg: readability/visibility of grass
+> Bg: looping, but only render what's on screen
 > Inv: merge inv hotbar with the rest of inv menu?
 > Inv: allow combining/merging items of same type (and calc stack excess)
 > 1. Entity natural spawning

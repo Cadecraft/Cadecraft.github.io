@@ -24,7 +24,9 @@ const IMGS_OTHER = [
     'images/ui/Cursor.png',
     'images/ui/Invbox.png',
     'images/ui/Invbox2.png',
-    'images/ui/Invbox2_Select.png'
+    'images/ui/Invbox2_Select.png',
+    'images/bg/bg_main_highlands.png',
+    'images/bg/bg_main_highlands_dark_fade.png'
 ]
 
 // Audios info
@@ -37,6 +39,11 @@ const MUSICS = [
     'sounds/S_16_Tteokguk.mp3' // Tteokguk
 ]
 const MUSICS_VOL = 0.25;
+
+// Misc info
+const BGS_BYBIOME = [
+    'images/bg/bg_main_highlands_dark_fade.png'
+]
 
 // Blocks info
 const BLOCKS_startsat = -1;

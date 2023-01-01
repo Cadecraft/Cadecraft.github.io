@@ -32,10 +32,24 @@ function render(indbgm = false) {
     ctx.fillStyle = skyColor; //'#60a3b5';
     ctx.fillRect(0, 0, c.width, c.height);
     // Background
-    // Fake bg
-    ctx.fillStyle = horizonColor;
     var parallaxMedianY = (-8*mychar.locy) + (c.height/2);
-    ctx.fillRect(0, parallaxMedianY, c.width, c.height-parallaxMedianY);
+    var thisbiome = 0; // based on currently in biome (toadd: biome detection)
+    if(thisbiome > BGS_BYBIOME) {
+        // Fake bg
+        ctx.globalAlpha = 1.0;
+        ctx.fillStyle = horizonColor;
+        ctx.fillRect(0, parallaxMedianY, c.width, c.height-parallaxMedianY);
+    } else {
+        // Img scrolling bg
+        ctx.globalAlpha = 1; // 1, 0.7
+        var thisimg = allimgs[BGS_BYBIOME[thisbiome]];
+        for(let i = 0; i < 10; i++) {
+            var drawx = i*thisimg.naturalWidth*4;
+            if(drawx > window.innerWidth) { break; } // Off screen
+            ctx.drawImage(thisimg, 0, 0, thisimg.naturalWidth, thisimg.naturalHeight, drawx, parallaxMedianY, thisimg.naturalWidth * 4, thisimg.naturalHeight * 4);
+        }
+    }
+    ctx.globalAlpha = 1.0;
 
     // WORLD
     // Render blocks
