@@ -98,7 +98,7 @@ class InvMenu {
             this.contentsSelected = inContentsIndex;
         }
         else if(this.contentsSelected == inContentsIndex) {
-            // Same item currently selected: deselect it
+            // Same item currently selected: deselect it (This must go before voic check to allow desel void)
             this.contentsSelected = -1;
         }
         else if(this.contentsArr[this.contentsSelected][0] == -1) {
@@ -111,6 +111,10 @@ class InvMenu {
             this.contentsArr[this.contentsSelected] = this.contentsArr[inContentsIndex];
             this.contentsArr[inContentsIndex] = oldItemSelected;
             this.contentsSelected = -1;
+        }
+        // Msg if new item selected
+        if(this.contentsSelected != -1 && this.contentsArr[this.contentsSelected][0] != -1 && this.boundToPlayer) {
+            ui_addMessage(BLOCKS[this.contentsArr[this.contentsSelected][0]].iname, 2000, 0, 0, true);
         }
         // Updates
         if(this.boundToPlayer) {

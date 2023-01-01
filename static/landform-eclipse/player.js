@@ -36,6 +36,11 @@ class Player {
         this.inv_selected = 0;
         this.inv_maxstack = 64;
         this.inv_menuwidth = 10;
+        this.inv_defaultLength = 40;
+        var origInvlen = this.inventory.length; // Because of defaults like pick
+        for(let i = 0; i < (this.inv_defaultLength-origInvlen); i++) {
+            this.inventory.push([-1,0]); // Default void slot
+        }
         // Dbg defs
         this.dbg_highl_enable = false; // false
         this.dbg_highl_bl1 = [0,0];
@@ -79,6 +84,8 @@ class Player {
             }
         }
         this.invUpdateMenu();
+        // Message
+        ui_addMessage("+"+inamt+" "+BLOCKS[inid].iname);
         return true;
     }
     invUpdateMenu() {

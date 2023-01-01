@@ -34,10 +34,8 @@ TO ADD (also search: `toadd`~):
 > NPCs
 > Entity health
 > Entity logic
-> Entity natural spawning
 > Entity attacking
 > Tree shape diversity (acacia)
-> Inv management
 > Render chunk (only loop through the blocks visible (i starts after 0))
 > Circular lighting (remove corners)
 > Water source generation (on destroy done, on place)
@@ -51,11 +49,12 @@ TO ADD (also search: `toadd`~):
 > Title screen: show bar w/ trebuchet ms like in promo_Landform.psd
 > More soundtracks (Tierra del Fuego, Datura)
 > Bosses
-> 1. ~~Only render entity if in view ! (culling)~~
+> Inv: merge inv hotbar with the rest of inv menu?
+> Inv: allow combining items?
+> 1. Entity natural spawning
 > 2. Dmg messages
-> 3. UI panel (left side has block options, right has info/purchase)
+> 3. UI panel for NPC prchasing
 > 4. Player weapons/tools/items should use NEGATIVE numbers for IDs, create separate data object
-> 5. Natural entity spawning
 
 RECENT CHANGES
 > None
@@ -151,7 +150,7 @@ var mychar = new Player(280, 10); // 50, 200 (if world width is 500), 280 (world
 
 // Load game defs: UI menus
 ui_invMenus.push(
-    new InvMenu("Player Inventory", 20, 20+44+24, mychar.inv_menuwidth, 0, 0, 0, mychar.inventory, false) // Player inv: top left
+    new InvMenu("Player Inventory", 20, 20+ui_invItemWidth+24, mychar.inv_menuwidth, 0, 0, 0, mychar.inventory, false) // Player inv: top left
 );
 
 // Load game defs: music/audios
@@ -357,8 +356,6 @@ function destroyBlock(locy, locx) {
         // Player gets block
         mychar.invAddBlock(BLOCKS[oldblock].drops[i]);
         mychar.justMinedBlock = true;
-        // Message
-        ui_addMessage("+1 "+BLOCKS[BLOCKS[oldblock].drops[i]].iname);
     }
     // Update blocks nearby
     var blockAbove = getMapBlock(worldMap, locy-1, locx);
