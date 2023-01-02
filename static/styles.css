@@ -6,19 +6,11 @@
     src: url('cadecraft.github.io/static/fonts/starbase-disconnect.woff2') format(woff2),
     url('cadecraft.github.io/static/fonts/starbase-disconnect.woff') format(woff);
 }
+/* Body */
 body {
     background-color:rgb(21, 25, 31);
 }
-input[type=text] {
-    background-color:rgb(54, 56, 59);
-    color:white;
-    border:none;
-    border-radius:4px;
-    width:70%;
-    margin:8px 8px;
-    padding:6px 6px;
-    box-shadow:0px 0px 5px black;
-}
+/* Text */
 h1 {
     color:white;
     font-family:Arial;
@@ -28,6 +20,8 @@ h2 {
     color:rgb(191, 196, 204);
     font-family:Arial;
     font-style:normal;
+    font-size:13px;
+    margin-left:8px;
 }
 h3 {
     color:rgb(90, 92, 95);
@@ -59,18 +53,10 @@ text {
     font-style:normal;
     font-size:16px;
 }
-hr {
-    border-color: rgb(90, 92, 95);
+.emph1 {
+    color:#177ab4;
 }
-div {
-    background-color:rgb(11, 14, 17);
-    margin:8px;
-    color:rgb(191, 196, 204);
-    font-family:monospace;
-    font-style:normal;
-    font-size:14px;
-    border-radius:4px;
-}
+/* Buttons */
 .button1 {
     background-color:#12649e;
     color:white;
@@ -122,8 +108,15 @@ div {
     background-color:rgb(94, 94, 94);
     border-radius:12px;
 }
-.emph1 {
-    color:#177ab4;
+/* Divs */
+div {
+    background-color:rgb(11, 14, 17);
+    margin:8px;
+    color:rgb(191, 196, 204);
+    font-family:monospace;
+    font-style:normal;
+    font-size:14px;
+    border-radius:4px;
 }
 .newsdiv {
     width:20%;
@@ -142,6 +135,11 @@ div {
     transform: scale(1.05, 1.05);
     transition: height 0.5s, background-color 0.5s, box-shadow 0.5s, transform 0.2s;
 }
+.maindiv {
+    margin-top:8px;
+    padding:3px;
+}
+/* Img */
 .hoverimg {
     transform: scale(1.0, 1.0);
     opacity: 1.0;
@@ -158,20 +156,7 @@ div {
     opacity: 1.0; /* 0.6 */
     transition: transform 0.2s, opacity 0.2s;
 }
-.column {
-    float: left;
-    width: 50%;
-    padding: 10px;
-    height: 300px; /* Only for demonstrations */
-}
-.noscrollbar::-webkit-scrollbar{
-    width: 0%;
-}
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
+/* Links */
 a:link {
     color: #177ab4;
     background-color: transparent;
@@ -191,4 +176,32 @@ a:active {
     color: #0e4783;
     background-color: transparent;
     text-decoration: underline;
+}
+/* Misc. */
+input[type=text] {
+    background-color:rgb(54, 56, 59);
+    color:white;
+    border:none;
+    border-radius:4px;
+    width:70%;
+    margin:8px 8px;
+    padding:6px 6px;
+    box-shadow:0px 0px 5px black;
+}
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    height: 300px; /* Only for demonstrations */
+}
+.noscrollbar::-webkit-scrollbar{
+    width: 0%;
+}
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+hr {
+    border-color: rgb(90, 92, 95);
 }

@@ -21,11 +21,11 @@
 <body class="noscrollbar" style="text-align:center;">
     <!-- Important info upper bar -->
     <div style="display:inline; margin:0;">
-        <h2 style="font-size:13px; margin-left:8px; color:rgb(230, 157, 0); display:none;">
+        <h2 style="color:rgb(230, 157, 0); display:none;">
             Note: I just moved my website here! Please bookmark this address so you don't forget.
             <!-- If you cannot find a download link, please head to <a href="https://cadendotlee.wixsite.com/awesomecadecraft">my old page</a>. -->
         </h2>
-        <h2 id="jswarning" style="font-size:13px; margin-left:8px; color:rgb(230, 157, 0);">
+        <h2 id="jswarning" style="color:rgb(230, 157, 0);">
             WARNING: This page requires JavaScript to be enabled.
             Please head to <a href="https://enable-javascript.com">enable-javascript.com</a> to learn how.
         </h2>
@@ -34,7 +34,7 @@
     <div style="width: 850px; margin:0 auto; text-align:left; background-color:rgb(0,0,0,0);">
         <!-- Header (all pages) (sticky) -->
         <!-- margin-top:8px; padding:3px; position:sticky; top:8px; box-shadow: rgb(21, 25, 31) 0px -8px 0px; z-index:5; -->
-        <div style="margin-top:8px; padding:3px; position:sticky; top:8px; box-shadow: rgb(21, 25, 31) 0px -8px 0px; z-index:5;
+        <div class="maindiv" style="position:sticky; top:8px; box-shadow: rgb(21, 25, 31) 0px -8px 0px; z-index:5;
         background-image:url('/static/images/ss_LandE.png'); background-blend-mode:multiply; background-color:rgb(170, 170, 170); background-size:200px;">
             <div>
                 <img src="/static/images/logo_cadecraft_pfp.png"
@@ -54,9 +54,9 @@
         <!-- HOME PAGE -->
         <div id="pg_home" style="display:inline; margin:0;">
             <!-- Welcome -->
-            <div style="margin-top:8px; padding:3px;">
+            <div class="maindiv">
                 <h3 style="font-size:16px;">Welcome to my site!</h3>
-                <h2 style="font-size:13px; margin-left:8px;">
+                <h2>
                     I make <a href="#" onclick="to_webgames();return false;">browser games</a>,
                     <a href="#" onclick="to_webgames();return false;">downloadable games</a> for windows,
                     chrome <a href="#" onclick="to_extensions();return false;">utility or game extensions</a>, and more.
@@ -68,7 +68,7 @@
             </div>
             <hr>
             <!-- News -->
-            <div style="margin-top:8px; padding:3px;">
+            <div class="maindiv">
                 <h3 style="font-size:16px; margin-bottom:0px;">News</h3>
                 <!-- <div class="newsdiv">
                     <h2 style="font-size:11px; margin-left:8px; color:white;">
@@ -76,19 +76,19 @@
                     </h2>
                 </div> -->
                 <div class="newsdiv" style="background-image:url('/static/images/ss_voltaire.png'); background-size:160px;">
-                    <h2 style="font-size:11px; margin-left:8px; color:white;">
+                    <h2 style="font-size:11px; color:white;">
                         Voltaire Browser v0.0.9.8<br>A fully functional unblocked browser app for Chromebooks.
                         <br><br><button href="#" class="button1" style="width:90%" onclick="to_extensions();return false;">Download</button>
                     </h2>
                 </div>
                 <div class="newsdiv" style="background-image:url('/static/images/ss_tetr_v2.png'); background-size:160px;">
-                    <h2 style="font-size:11px; margin-left:8px; color:white;">
+                    <h2 style="font-size:11px; color:white;">
                         Tetrome v1.1.5:<br>the best ADVANCED stacker popup game extension for Chrome!
                         <br><br><button href="#" class="button1" style="width:90%" onclick="to_extensions();return false;">Add to Chrome</button>
                     </h2>
                 </div>
                 <div class="newsdiv" style="background-image:url('/static/images/ss_fw5.png'); background-size:160px;">
-                    <h2 style="font-size:11px; margin-left:8px; color:white;">
+                    <h2 style="font-size:11px; color:white;">
                         FishWars 5 v0.2.0<br>The final update of the long-awaited FishWars 5, my largest game so far. Play now for free.
                         <br><br><button href="#" class="button1" style="width:90%" onclick="to_webgames();return false;">Download</button>
                     </h2>
@@ -99,9 +99,9 @@
             </div>
             <hr>
             <!-- YouTube Videos -->
-            <div style="margin-top:8px; padding:3px;">
+            <div class="maindiv">
                 <h3 style="font-size:16px;">Videos</h3>
-                <h2 style="font-size:13px; margin-left:8px;">
+                <h2>
                     My YouTube Channel, <a href="https://youtube.com/c/AwesomeCadecraft">Awesome Cadecraft</a>, has gaming, music, tutorials, memes, game trailers, and more.
                     <br>Here is some of my content.
                 </h2>
@@ -115,7 +115,7 @@
                 <iframe width="350" height="200" src="https://www.youtube.com/embed/p2dG5w1GUlk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             <!-- Gallery -->
-            <div style="margin-top:8px; padding:3px;">
+            <div class="maindiv">
                 <h3 style="font-size:16px;">Gallery</h3>
                 <img class="hoverimg" src="/static/images/ss_fw5.png"
                 width="auto" height="300px;" style="margin-left:8px; display:block;">
@@ -130,36 +130,34 @@
         <!-- WEB GAMES PAGE -->
         <div id="pg_webgames" style="display:none; margin:0;">
             <!-- About: Download -->
-            <div style="margin-top:8px; padding:3px;">
+            <div class="maindiv">
                 <h3 style="font-size:16px;">Download Games</h3>
-                <h2 style="font-size:13px; margin-left:8px;">
+                <h2>
                     I use Unreal Engine and Blender to create <span class="emph1">quality single-player experiences</span>, available to download and play for <span class="emph1">free</span>.
                     <br>Most of these only work on <span class="emph1">Windows 64bit</span>.
                     <br><br>Only the <span class="emph1">best games</span> are included here; for the full list, head to <a href="https://cadendotlee.wixsite.com/awesomecadecraft">my old page</a>.
                 </h2>
             </div>
             <!-- Instructions -->
-            <div style="margin-top:8px; padding:3px;">
+            <div class="maindiv">
                 <img src="/static/images/ic-help.png" title="Check this link for help." width="40px" height="40px" style="float:right;">
                 <!-- <h2 style="font-size:13px; margin-left:8px; color:rgb(230, 157, 0);">
                     If you need help installing these games,
                     read <a href="https://docs.google.com/document/d/1pm1yuOUb-cwBO9291susNkMhR29zejBct0BfKX5dGYM/edit?usp=sharing">this guide document</a> or <a href="https://discord.gg/wahdQHBs4Z">join the Discord server</a>.
                     <br>Remember that they only work on Windows 64bit.
                 </h2> -->
-                <h2 style="font-size:13px; margin-left:8px; color:rgb(230, 157, 0);">
+                <h2 style="color:rgb(230, 157, 0);">
                     If you need help installing these games,
                     read <a href="https://cadecraft.github.io/static/texts/Install_Cadecraft_Games.pdf">this guide document</a> or <a href="https://discord.gg/wahdQHBs4Z">join the Discord server</a>.
                     <br>Remember that they only work on Windows 64bit.
                 </h2>
             </div>
             <!-- FW5 -->
-            <div style="margin-top:8px; padding:3px;
-            background-image:url('/static/images/ss_fw5.png');
-            background-size:900px;">
+            <div class="maindiv" style="background-image:url('/static/images/ss_fw5.png'); background-size:900px;">
                 <h3
                 style="font-size:16px; color:rgb(255, 255, 255)">FishWars 5: Aftermath</h3>
                 <div class="row" style="background-color:rgb(11, 14, 17, 0.8); padding:3px;">
-                    <h2 style="font-size:11px; margin-left:8px;">
+                    <h2 style="font-size:11px;">
                         In this exciting and epic first-person shooter, it is up to you to save the FishStar System as you journey across the vast and adventure-filled landscape of Fishworld Alpha.
                         With countless quests, enemies, and upgrades, you will enjoy multiple hours of quality gameplay.
                         Note: 0.2.0 was the last planned, but in the future I may return to this game.</h2>
@@ -178,22 +176,21 @@
             </div>
             <hr>
             <!-- About: Web -->
-            <div style="margin-top:8px; padding:3px;">
+            <div class="maindiv">
                 <h3 style="font-size:16px;">Web Games</h3>
-                <h2 style="font-size:13px; margin-left:8px;">
+                <h2>
                     I am currently working on several games that you can play right in your <span class="emph1">browser!</span>.
                     <!-- <br><a href="https://tardigrade-chat.herokuapp.com/">Tardigrade Chat</a> - a simple chat website.
                     <br><a href="https://lithiumwars.herokuapp.com/">Lithium Wars Online</a> (coming soon) - a chaotic 2d open-world multiplayer pvp platformer game. -->
                 </h2>
             </div>
             <!-- Landform Eclipse -->
-            <div style="margin-top:8px; padding:3px;
-            background-image:url('/static/images/ss_Landform_plainsbg.png');
+            <div class="maindiv" style="background-image:url('/static/images/ss_Landform_plainsbg.png');
             background-size:700px; background-color:gray; background-blend-mode:multiply;">
                 <h3
                 style="font-size:16px; color:rgb(255,255,255);">Landform Eclipse</h3>
                 <div class="row" style="background-color:rgb(11, 14, 17, 0.8); padding:3px;">
-                    <h2 style="font-size:11px; margin-left:8px;">
+                    <h2 style="font-size:11px;">
                         A 2d open-world exploration web game
                         <br><br>Discover the ruins of an
                         ancient civilization here, in the Eastern Highlands, or venture towards the plains
@@ -214,13 +211,12 @@
                 </h3>
             </div>
             <!-- Lithium Wars -->
-            <div style="margin-top:8px; padding:3px;
-            background-image:url('/static/images/SS_LiWOl2.png');
+            <div class="maindiv" style="background-image:url('/static/images/SS_LiWOl2.png');
             background-size:450px; background-color:gray; background-blend-mode:multiply;">
                 <h3
                 style="font-size:16px; color:rgb(255, 255, 255);">Lithium Wars Online</h3>
                 <div class="row" style="background-color:rgb(11, 14, 17, 0.8); padding:3px;">
-                    <h2 style="font-size:11px; margin-left:8px;">
+                    <h2 style="font-size:11px;">
                         A chaotic 2d open-world multiplayer pvp platformer game that you can play right in your browser!
                         Over time, you will find Lithium chunks and weapons across the map that can increase your power.
                         Once you are strong enough, you can fight other players and compete for the leaderboard.
@@ -242,9 +238,9 @@
         <!-- PROJECTS PAGE -->
         <div id="pg_ungames" style="display:none; margin:0;">
             <!-- About -->
-            <div style="margin-top:8px; padding:3px;">
+            <div class="maindiv">
                 <h3 style="font-size:16px;">Projects</h3>
-                <h2 style="font-size:13px; margin-left:8px;">
+                <h2>
                     I've made several coding projects, including <span class="emph1">websites</span> and <span class="emph1">github repositories</span>, as well as authored several <span class="emph1">novels, essays, and short stories</span>.
                     <br>These span a wide range of content and purposes, both personal and public.
                     <br><br>Find more content at my GitHub account, <a href="https://github.com/Cadecraft">Cadecraft</a>.
@@ -252,9 +248,9 @@
             </div>
             <!-- Github projects -->
             <!-- Written works (books) -->
-            <div style="margin-top:8px; padding:3px;">
+            <div class="maindiv">
                 <h3 style="font-size:16px;">Written works</h3>
-                <h2 style="font-size:13px; margin-left:8px;">
+                <h2>
                     Access PDFs or text files of my <span class="emph1">novels, essays, and short stories</span> here. This will be expanding as I complete more works.
                     <br>Generally, the more recent ones are of higher caliber. Consider joining my Discord server (above) and asking me for the PDF versions,
                     which include images and full formatting. (some of these are <span class="emph1">unfinished</span>)
@@ -279,22 +275,21 @@
                 </h2>
             </div>
             <!-- Tivect -->
-            <div style="margin-top:8px; padding:3px;">
+            <div class="maindiv">
                 <h3 style="font-size:16px;">Tivect</h3>
-                <h2 style="font-size:13px; margin-left:8px;">
+                <h2>
                     I have been part of the team over at <a href="https://tivect.com/">Tivect</a>,
                     an online web game, since late 2022. I am a web developer and Project Manager, as well as (unofficial) lore writer.
                     <a href="https://game.tivect.com/">Come check out the game!</a>
                 </h2>
             </div>
             <!-- Tardigrade Chat -->
-            <div style="margin-top:8px; padding:3px;
-            background-image:url('https://i.guim.co.uk/img/media/39669fd0fa5c0193955cba565e89aa1f29cec180/0_1063_3511_2105/master/3511.jpg?width=465&quality=45&auto=format&fit=max&dpr=2&s=71e4819d043defd64df9f5a795ea0512');
+            <div class="maindiv" style="background-image:url('https://i.guim.co.uk/img/media/39669fd0fa5c0193955cba565e89aa1f29cec180/0_1063_3511_2105/master/3511.jpg?width=465&quality=45&auto=format&fit=max&dpr=2&s=71e4819d043defd64df9f5a795ea0512');
             background-size:450px; background-color:gray; background-blend-mode:multiply;">
                 <h3
                 style="font-size:16px; color:rgb(255, 255, 255)">Tardigrade Chat</h3>
                 <div class="row" style="background-color:rgb(11, 14, 17, 0.8); padding:3px;">
-                    <h2 style="font-size:11px; margin-left:8px;">
+                    <h2 style="font-size:11px;">
                         A simple chat website.
                     </h2>
                     <div style="width:40%; float:left; background-color:rgb(11, 14, 17, 0); padding:3px;">
@@ -311,17 +306,17 @@
         <!-- MUSIC PAGE -->
         <div id="pg_music" style="display:none; margin:0;">
             <!-- About -->
-            <div style="margin-top:8px; padding:3px; height:210px;">
+            <div class="maindiv" style="height:210px;">
                 <iframe width="200" height="200" style="float:right;" src="https://www.youtube.com/embed/videoseries?list=PLbN2H2xs0W6tlWWImF9bK6xp-U0PCpN7a" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <h3 style="font-size:16px;">Music</h3>
-                <h2 style="font-size:13px; margin-left:8px;">
+                <h2>
                     Trance, orchestral, electronic, and other music made in FL Studio and Audiotool.
                     <br>See my best tracks on this page, or go to my <a href="https://www.youtube.com/playlist?list=PLbN2H2xs0W6tlWWImF9bK6xp-U0PCpN7a">YouTube channel playlist</a>, <a href="https://soundcloud.com/cadecraft/albums">SoundCloud</a> account or <br><a href="https://www.audiotool.com/user/cadecraft">Audiotool</a> account.
                     <!-- https://www.youtube.com/c/AwesomeCadecraft -->
                 </h2>
             </div>
             <!-- Favorites (YouTube playlist) -->
-            <div style="margin-top:8px; padding:3px;">
+            <div class="maindiv">
                 <h3 style="font-size:16px;">Favorite Tracks</h3>
                 <iframe width="200" height="200" style="display:inline; margin-left:50px;" src="https://www.youtube.com/embed/mRhet0tfL3I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <iframe width="200" height="200" style="display:inline; margin-left:50px;" src="https://www.youtube.com/embed/h_e0HDcMlWQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -332,11 +327,11 @@
                 <iframe width="200" height="200" style="display:inline; margin-left:50px;" src="https://www.youtube.com/embed/IPnAREDi20U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             <!-- Embeds -->
-            <div style="margin-top:8px; padding:3px;">
-                <h3 style="font-size:16px;">Albums/playlists (unfinished)</h3>
-                <h2 style="font-size:13px; margin-left:8px;">Discovery</h2>
+            <div class="maindiv">
+                <h3 style="font-size:16px;">Albums/playlists (old; unfinished)</h3>
+                <h2>Discovery</h2>
                 <iframe width="100%" height="450" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1329946363&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/cadecraft" title="Cadecraft" target="_blank" style="color: #cccccc; text-decoration: none;">Cadecraft</a> · <a href="https://soundcloud.com/cadecraft/sets/discovery" title="Discovery" target="_blank" style="color: #cccccc; text-decoration: none;">Discovery</a></div>
-                <h2 style="font-size:13px; margin-left:8px;">Favorite Tracks (SoundCloud)</h2>
+                <h2>Favorite Tracks (SoundCloud)</h2>
                 <iframe width="100%" height="450" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1339917184&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/cadecraft" title="Cadecraft" target="_blank" style="color: #cccccc; text-decoration: none;">Cadecraft</a> · <a href="https://soundcloud.com/cadecraft/sets/favorites" title="Cadecraft: Favorites" target="_blank" style="color: #cccccc; text-decoration: none;">Cadecraft: Favorites</a></div>
                 <!-- <h2 style="font-size:10px; margin-left:8px;">Provided by SoundCloud</h2> -->
             </div>
@@ -344,18 +339,18 @@
         <!-- EXTENSIONS PAGE -->
         <div id="pg_extensions" style="display:none; margin:0;">
             <!-- About -->
-            <div style="margin-top:8px; padding:3px;">
+            <div class="maindiv">
                 <h3 style="font-size:16px;">Chrome Extensions</h3>
-                <h2 style="font-size:13px; margin-left:8px;">
+                <h2>
                     Both <span class="emph1">tools and games</span> for chrome, available to download for <span class="emph1">free</span>.
                     <br>They are available to download as <span class="emph1">zipped folders</span>.
                     <br>To add them to your chrome/chromebook, follow the steps below.
                 </h2>
             </div>
             <!-- Instructions -->
-            <div style="margin-top:8px; padding:3px;">
+            <div class="maindiv">
                 <img src="/static/images/ic-help.png" title="Check this link for help." width="40px" height="40px" style="float:right;">
-                <h2 style="font-size:13px; margin-left:8px; color:rgb(230, 157, 0);">
+                <h2 style="color:rgb(230, 157, 0);">
                     My extensions are not yet on the Chrome Web Store.
                     <br>To install them on your chrome/chromebook, follow the steps on
                     <!-- <a href="https://docs.google.com/document/d/1JQmokOOMqgV5BFe61xBBSkH7UI06-6SHG1IeSalpvKo/edit?usp=sharing">this guide document</a> or <a href="https://discord.gg/wahdQHBs4Z">join the Discord server</a>. -->
@@ -363,12 +358,11 @@
                 </h2>
             </div>
             <!-- Tetrome -->
-            <div style="margin-top:8px; padding:3px;
-            background-image:url('/static/images/ss_tetr_v2.png');
+            <div class="maindiv" style="background-image:url('/static/images/ss_tetr_v2.png');
             background-size:200px; background-color:gray; background-blend-mode:multiply;">
                 <h3 style="font-size:16px; color:rgb(255, 255, 255)">Tetrome</h3>
                 <div class="row" style="background-color:rgb(11, 14, 17, 0.8); padding:3px;">
-                    <h2 style="font-size:11px; margin-left:8px;">
+                    <h2 style="font-size:11px;">
                         The best ADVANCED stacker popup game for chrome!
                         <br>Control/handling options, T-spins, hold, kicks, bag generation, advanced stats, and more.</h2>
                     <div style="width:40%; float:left; background-color:rgb(11, 14, 17, 0); padding:3px;">
@@ -387,12 +381,11 @@
                 </div>
             </div>
             <!-- Voltaire Browser -->
-            <div style="margin-top:8px; padding:3px;
-            background-image:url('/static/images/ss_voltaire.png');
+            <div class="maindiv" style="background-image:url('/static/images/ss_voltaire.png');
             background-size:200px;">
                 <h3 style="font-size:16px; color:rgb(255, 255, 255)">Voltaire Browser</h3>
                 <div class="row" style="background-color:rgb(11, 14, 17, 0.8); padding:3px;">
-                    <h2 style="font-size:11px; margin-left:8px;">
+                    <h2 style="font-size:11px;">
                         A fully functional unblocked browser app for Chromebooks by Cadecraft.
                         <br>Features: bookmarks, fast google search, quick links, tab management, and efficient loading.
                         <br><br>Latest update: v0.0.9.8 (UI improvements, UI bug fixes, and updated website/repo links)
@@ -413,18 +406,17 @@
                     <div style="display:inline; background-color:rgb(11, 14, 17, 0);">
                         <img class="hoverimg" src="/static/images/ss_vbrowser_features_v2.png"
                         width="40%" height="auto;" style="margin-left:8px; display:block;">
-                        <h2 style="font-size:11px; margin-left:8px;">Unparalleled features for a Chromebook browser (v0.0.9)</h2>
+                        <h2 style="font-size:11px;">Unparalleled features for a Chromebook browser (v0.0.9)</h2>
                         <!-- <iframe width="50%" height="auto" src="https://www.youtube.com/embed/J5L_j33ur5A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
                     </div>
                 </div>
             </div>
             <!-- CcPiano -->
-            <div style="margin-top:8px; padding:3px;
-            background-image:url('/static/images/ss_ccpiano2.png');
+            <div class="maindiv" style="background-image:url('/static/images/ss_ccpiano2.png');
             background-size:350px;">
                 <h3 style="font-size:16px; color:rgb(255, 255, 255)">CcPiano</h3>
                 <div class="row" style="background-color:rgb(11, 14, 17, 0.8); padding:3px;">
-                    <h2 style="font-size:11px; margin-left:8px;">
+                    <h2 style="font-size:11px;">
                         A simple piano popup extension for Chrome--play with your keyboard!
                     </h2>
                     <div style="width:40%; float:left; background-color:rgb(11, 14, 17, 0); padding:3px;">
@@ -440,12 +432,11 @@
                 </div>
             </div>
             <!-- EdpOverdrive -->
-            <div style="margin-top:8px; padding:3px;
-            background-image:url('/static/images/icon_edpoverdrive.png');
+            <div class="maindiv" style="background-image:url('/static/images/icon_edpoverdrive.png');
             background-size:200px;">
                 <h3 style="font-size:16px; color:rgb(255, 255, 255)">EdpOverdrive 10x</h3>
                 <div class="row" style="background-color:rgb(11, 14, 17, 0.8); padding:3px;">
-                    <h2 style="font-size:11px; margin-left:8px;">
+                    <h2 style="font-size:11px;">
                         Increase the speed of EdPuzzle assignment videos up to 10x.
                         <br>(Some manual setup required; the instructions are linked in extension)</h2>
                     <div style="width:40%; float:left; background-color:rgb(11, 14, 17, 0); padding:3px;">
@@ -462,7 +453,7 @@
 
         <!-- Footer (all pages) -->
         <hr>
-        <div style="margin-top:8px; padding:3px;">
+        <div class="maindiv">
             <h3 id = "footer-ver" style="font-size:13px;">Cadecraft ● 2021-2023</h3>
             <h3 style="font-size:13px;">
                 <a href="https://www.youtube.com/c/AwesomeCadecraft">YouTube</a>
