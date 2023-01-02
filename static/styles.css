@@ -20,6 +20,7 @@ h2 {
     color:rgb(191, 196, 204);
     font-family:Arial;
     font-style:normal;
+    font-weight:normal; /* Originally was bold */
     font-size:13px;
     margin-left:8px;
 }
@@ -55,6 +56,7 @@ text {
 }
 .emph1 {
     color:#177ab4;
+    font-weight:bold;
 }
 /* Buttons */
 .button1 {
@@ -161,6 +163,7 @@ a:link {
     color: #177ab4;
     background-color: transparent;
     text-decoration: underline;
+    font-weight:bold;
 }
 a:visited {
     color: #177ab4;
