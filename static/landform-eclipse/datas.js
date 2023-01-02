@@ -38,7 +38,8 @@ const MUSICS = [
     'sounds/S_05_Desert.mp3', // Desert
     'sounds/S_06_FullDive.mp3', // FULL DIVE
     'sounds/S_13_Backroad.mp3', // Backroad
-    'sounds/S_16_Tteokguk.mp3' // Tteokguk
+    'sounds/S_16_Tteokguk.mp3', // Tteokguk
+    'sounds/S_19_Plain.mp3' // Plain
 ]
 const MUSICS_VOL = 0.25;
 
