@@ -33,9 +33,9 @@ function render(indbgm = false) {
     ctx.fillRect(0, 0, c.width, c.height);
     // Background
     var parallaxMedianY = (-8*mychar.locy) + (c.height/2);
-    var thisbiome = 0; // based on currently in biome (toadd: biome detection)
-    if(thisbiome > BGS_BYBIOME) {
-        // Fake bg
+    var thisbiome = worldMap_biomes[Math.floor(Math.max(0, Math.min(worldMap_biomes.length, mychar.locx)))]; // based on currently in biome (toadd: biome detection)
+    if(thisbiome > BGS_BYBIOME.length-1) {
+        // Fake bg because img does not exist
         ctx.globalAlpha = 1.0;
         ctx.fillStyle = horizonColor;
         ctx.fillRect(0, parallaxMedianY, c.width, c.height-parallaxMedianY);

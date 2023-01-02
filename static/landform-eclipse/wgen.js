@@ -52,6 +52,7 @@ function wgenMain() {
         for(let x = 0; x < worldgen_width; x++) {
             var biomeProgress = Math.floor(x/worldgen_width * worldgen_totalBiomes);
             worldgenMap_biomes.push(worldgen_biomesOrder[biomeProgress]);
+            worldMap_biomes.push(worldgen_biomesOrder[biomeProgress]);
         }
         var lastHeight = 0;
         var lastBiome = 4;

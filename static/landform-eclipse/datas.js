@@ -26,7 +26,9 @@ const IMGS_OTHER = [
     'images/ui/Invbox2.png',
     'images/ui/Invbox2_Select.png',
     'images/bg/bg_main_highlands.png',
-    'images/bg/bg_main_highlands_dark_fade.png'
+    'images/bg/bg_main_highlands_dark_fade.png',
+    'images/bg/bg_main_desert_dark_fade.png',
+    'images/bg/bg_main_plains_dark_fade.png'
 ]
 
 // Audios info
@@ -42,7 +44,9 @@ const MUSICS_VOL = 0.25;
 
 // Misc info
 const BGS_BYBIOME = [
-    'images/bg/bg_main_highlands_dark_fade.png'
+    'images/bg/bg_main_highlands_dark_fade.png',
+    'images/bg/bg_main_desert_dark_fade.png',
+    'images/bg/bg_main_plains_dark_fade.png'
 ]
 
 // Blocks info

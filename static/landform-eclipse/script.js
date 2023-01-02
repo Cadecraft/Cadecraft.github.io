@@ -50,9 +50,8 @@ TO ADD (also search: `toadd`~):
 > Title screen: show bar w/ trebuchet ms like in promo_Landform.psd
 > More soundtracks (Tierra del Fuego, Datura)
 > Bosses
-> Bg: per biome
-> Bg: readability/visibility of grass
-> Bg: looping, but only render what's on screen
+> Bg: per biome (add more)
+> Bg: improve desert bg
 > Inv: merge inv hotbar with the rest of inv menu?
 > Inv: allow combining/merging items of same type (and calc stack excess)
 > 1. Entity natural spawning
@@ -105,6 +104,7 @@ var worldMap = [
     [1,1,1],
     [1,1,1]
 ];
+var worldMap_biomes = [];
 var worldStates = [];
 var world_eventState = "normal";
 var entities = [];
@@ -450,6 +450,13 @@ function spawnEntity(InClass, inlocx, inlocy, inlvl) {
     //if(InClass ) // check whether InClass extends Entity (toadd)
     var newenemy = new InClass(inlocx, inlocy, inlvl);
     entities.push(newenemy);
+}
+
+// Spawn entities pass (has a chance of spawning an entity across the world, if the limit is not reached yet)
+function spawnEntitiesPass() {
+    for(let x = 0; x < worldMap.length; x++) {
+        // Determine height and biomes
+    }
 }
 
 // INPUT
