@@ -52,6 +52,7 @@ TO ADD (also search: `toadd`~):
 > Bosses
 > Bg: per biome (add more)
 > Bg: improve desert bg
+> Bg: clouds
 > Inv: merge inv hotbar with the rest of inv menu?
 > Inv: allow combining/merging items of same type (and calc stack excess)
 > 1. Entity natural spawning
