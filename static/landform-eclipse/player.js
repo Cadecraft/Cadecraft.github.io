@@ -223,4 +223,21 @@ class Player {
         if(this.isFalling) { return; } // cannot jump if falling
         this.vely = strengthMult*-1*this.phys_jumpvel;
     }
+    // DBG: Inventory pack
+    dbg_invAddPack(packName) {
+        if(!dbgm) {
+            console.log('err: Player::dbg_invAddPack() is only accessible in dbg mode (dbgm)');
+            return;
+        }
+        if(packName == "building") {
+            this.invAddBlock(11, 64*2); // Wood wall x2
+            this.invAddBlock(10, 64); // Wood
+            this.invAddBlock(5, 64); // Cobblestone
+            this.invAddBlock(6, 64); // Mossy cobblestone
+            this.invAddBlock(15, 64/2); // Roofs
+            this.invAddBlock(16, 64/2);
+            this.invAddBlock(17, 64/2);
+            this.invAddBlock(18, 64/2);
+        }
+    }
 }

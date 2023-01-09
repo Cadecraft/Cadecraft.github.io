@@ -416,3 +416,17 @@ const BLOCKS = {
         groundPlant: true
     }
 };
+
+// Block maps for structure (-2 = repeat the column directly left n times; -3 = do not override block)
+const WGEN_STRUCTURES = {
+    "plains house": [
+        [17, 16, 16, -2, 16, -2, 16, 16, 18],
+        [-3,  5,  13, -2, 13, -2, 13, 5,  -3],
+        [-3,  11, 11, -2, 11, -2, 11, 11, -3],
+        [0,  11, 11, -2, 11, -2, 11, 11, 0],
+        [0,  11, 11, -2, 11, -2, 11, 11, 0],
+        [1,  5,  5,  -2, 5,  -2, 1,  5,  1],
+        [1,  5,  1,  -2, 1,  -2, 5,  1,  1],
+        [-3, -3, 5,  -2, 5,  -2, -3, -3, -3]
+    ]
+}

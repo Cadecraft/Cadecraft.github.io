@@ -20,6 +20,7 @@ function wgenMain() {
     var worldgenMap_heights = []; // Main horizon height
     var worldgenMap_heights2 = []; // Dirt offset
     var worldgenMap_features = []; // Features such as trees, etc.
+    var worldgenMap_structures = []; // Structures such as houses, etc. { type, locx, locy }
     var worldgenMap_waters = []; // Water levels (-1 = none)
     worldMap = [];
     // Worldgen type
@@ -98,6 +99,12 @@ function wgenMain() {
                 if(Math.random() < worldgen_rateTrees && x < worldgen_width-6 && x > 5) { newFeature  = "hay bale"; }
                 else if(Math.random() < worldgen_rateGrass + 0.2) { newFeature = "tall plains grass"; }
             }
+            // Generate new structures?
+            if(thisbiome == 2) { // Plains biome
+                if(Math.random() < 0.01) {
+                    worldgenMap_structures.push({ type: "plains house", locx: x, locy: newHeight });
+                }
+            }
             // Add
             worldgenMap_heights.push(newHeight);
             worldgenMap_heights2.push(newHeight2);
@@ -160,7 +167,8 @@ function wgenMain() {
                     worldMap[y].push(7); // Lowest layer: bedrock
                 }
                 else if(y >= 13+worldgen_horizonoffset+worldgenMap_heights[x]+worldgenMap_heights2[x]) {
-                    if(Math.random() < 0.2) worldMap[y].push(5); // Stone
+                    if(thisbiome == 0 && Math.random() < 0.1) { worldMap[y].push(6); } // Mossy
+                    else if(Math.random() < 0.2) worldMap[y].push(5); // Stone
                     else worldMap[y].push(4);
                 }
             }
@@ -173,6 +181,33 @@ function wgenMain() {
         }
         // Carve caves (toadd)
         // (toadd)
+        // Generate structures (toadd)
+        for(let i = 0; i < worldgenMap_structures.length; i++) {
+            // Structure info
+            var thisStructure = worldgenMap_structures[i];
+            if(!Object.keys(WGEN_STRUCTURES).includes(worldgenMap_structures[i].type)) {
+                console.log('Err: wgen: cannot generate structure "'+worldgenMap_structures[i].type+'"; does not exist in WGEN_STRUCTURES');
+                continue;
+            }
+            var thisStructureMap = WGEN_STRUCTURES[worldgenMap_structures[i].type];
+            for(let y = 0; y < thisStructureMap.length; y++) {
+                var nOffset = 0; // (todo) remove or fix the n looping?
+                for(let x = 0; x < thisStructureMap[y].length; x++) {
+                    // Add each block if on map
+                    var toAddY = thisStructure.locy + y + worldgen_horizonoffset + 10 - thisStructureMap.length + 3;
+                    var toAddX = thisStructure.locx + x;
+                    if(toAddY >= worldMap.length || toAddY < 0) { continue; } // Off the map
+                    if(toAddX >= worldMap[0].length || toAddX < 0) { continue; }
+                    var thisBlock = thisStructureMap[y][x - nOffset];
+                    if(thisBlock == -2) { // -2 = repeat the column directly left n times
+                        //nOffset ++;
+                        thisBlock = thisStructureMap[y][x-1];
+                    }
+                    if(thisBlock == -3) { continue; } // -3 = do not override (check after -2 decision)
+                    worldMap[toAddY][toAddX] = thisBlock;
+                }
+            }
+        }
         // Generate waters (after sources added)
         for(let y = 0; y < worldgen_height; y++) {
             for(let x = 0; x < worldgen_width; x++) {
