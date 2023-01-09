@@ -417,6 +417,17 @@ const BLOCKS = {
     }
 };
 
+// World gen consts
+const worldgen_width = 700; // 90, 150, 700 (normal)
+const worldgen_height = 90; // 50, 90
+const worldgen_horizonoffset = 22; // 22
+const worldgen_heightoffsetmax = 10; // 6, 10
+const worldgen_rateGrass = 0.4; // 0.4
+const worldgen_rateTrees = 0.05; // 0.05
+const worldgen_totalBiomes = 6;
+const worldgen_biomesOrder = [4,1,0,2,3,5];
+const worldgen_waterLevel = 3; // 3 // Higher value = water at a higher level
+
 // Block maps for structure (-2 = repeat the column directly left n times; -3 = do not override block)
 const WGEN_STRUCTURES = {
     "plains house": [

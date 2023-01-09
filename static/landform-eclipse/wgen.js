@@ -7,15 +7,6 @@ function wgenMain() {
     //console.log('-');
     console.log('  gen: defs');
     var worldgen_simple = false; // def: false (dbg: true)
-    const worldgen_width = 700; // 90, 150, 700 (normal)
-    const worldgen_height = 90; // 50, 90
-    const worldgen_horizonoffset = 22; // 22
-    const worldgen_heightoffsetmax = 10; // 6, 10
-    const worldgen_rateGrass = 0.4; // 0.4
-    const worldgen_rateTrees = 0.05; // 0.05
-    const worldgen_totalBiomes = 6;
-    const worldgen_biomesOrder = [4,1,0,2,3,5];
-    const worldgen_waterLevel = 3; // 3 // Higher value = water at a higher level
     var worldgenMap_biomes = [];
     var worldgenMap_heights = []; // Main horizon height
     var worldgenMap_heights2 = []; // Dirt offset
