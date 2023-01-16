@@ -16,7 +16,7 @@ TO ADD (also search: `toadd`~):
 > Background on screen: clouds
 > Mining distance limit
 > Title menu
-> Platform collision (tree leaves) (figure out from liwol)
+> Improve existing scuffed platform collision?
 > Plants erasing if block below is mined
 > Renderer efficiency
 > Prevent block placed inside player
@@ -41,7 +41,7 @@ TO ADD (also search: `toadd`~):
 > Water source generation (on destroy done, on place)
 > Water physics
 > Place blocks on top to destroy grass
-> Prevent grass/contains "groundPlant" key from being placed midair
+> Prevent grass/(contains "groundPlant" key) from being placed midair
 > BG blocks ? (/cave bg)
 > Refactor worldMap and its functions (getMapBlock, etc.) into WorldMap class (obj called 'wmap') ?
 > Worldgen smoothen cliffs
@@ -548,7 +548,8 @@ function gameInput() {
         mychar.addVel(mychar.phys_accel, 0);
     }
     if(inputs.includes('down')) {
-        // Crouch
+        // Crouch/drop
+        mychar.crouch();
     }
     if(inputs.includes('jump')) {
         // Jump

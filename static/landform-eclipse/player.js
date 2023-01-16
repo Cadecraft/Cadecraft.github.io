@@ -15,6 +15,7 @@ class Player {
         this.vely = 0;
         this.isFalling = true;
         this.facingRight = true;
+        this.crouched = false;
         // Cooldown defs
         this.cooldown_mining = 50;
         this.miningefficiency = 2; // Dmg to deal: def=1
@@ -168,7 +169,25 @@ class Player {
         if(this.vely > 0) { // Falling
             var wasFalling = this.isFalling;
             this.isFalling = true;
-            if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy+1.1), Math.floor(this.locx+this.phys_xshrinkbias))].collision == 'solid'/* || BLOCKS[this.getMapBlock(map, Math.floor(this.locy+1.1), Math.floor(this.locx+this.phys_xshrinkbias))].collision == 'platform'*/) { // map[Math.floor(this.locy+1)][Math.floor(this.locx+this.phys_xshrinkbias)] != 0
+            if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy+1.1), Math.floor(this.locx+this.phys_xshrinkbias))].collision == 'solid'
+            || ((BLOCKS[this.getMapBlock(map, Math.floor(this.locy+1.11), Math.floor(this.locx+this.phys_xshrinkbias))].collision == 'platform')
+            && this.locy >= Math.floor(this.locy+0.3) && !this.crouched)) {
+                // Landed
+                this.locy = Math.floor(this.locy+0.1)-0.01 // Math.floor(this.locy+0.1)-0.1 (or -0.03 or -0.01) (could cause float issues)
+                this.vely = 0;
+                this.isFalling = false;
+                this.uncrouch();
+            }
+            else if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy+1.1), Math.floor(this.locx+1-this.phys_xshrinkbias))].collision == 'solid'
+            || ((BLOCKS[this.getMapBlock(map, Math.floor(this.locy+1.11), Math.floor(this.locx+1-this.phys_xshrinkbias))].collision == 'platform')
+            && this.locy >= Math.floor(this.locy+0.3) && !this.crouched)) {
+                // Landed
+                this.locy = Math.floor(this.locy+0.1)-0.01 // Math.floor(this.locy+0.1)-0.1 (or -0.03 or -0.01) (could cause float issues)
+                this.vely = 0;
+                this.isFalling = false;
+                this.uncrouch();
+            }
+            /*if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy+1.1), Math.floor(this.locx+this.phys_xshrinkbias))].collision == 'solid') { // map[Math.floor(this.locy+1)][Math.floor(this.locx+this.phys_xshrinkbias)] != 0
                 //if(wasFalling) {
                     //this.locy -= this.vely;
                 //}
@@ -176,14 +195,14 @@ class Player {
                 this.vely = 0;
                 this.isFalling = false;
             }
-            else if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy+1.1), Math.floor(this.locx+1-this.phys_xshrinkbias))].collision == 'solid'/* || BLOCKS[this.getMapBlock(map, Math.floor(this.locy+1.1), Math.floor(this.locx+1-this.phys_xshrinkbias))].collision == 'platform'*/) { // map[Math.floor(this.locy+1)][Math.floor(this.locx+1-this.phys_xshrinkbias)] != 0
+            else if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy+1.1), Math.floor(this.locx+1-this.phys_xshrinkbias))].collision == 'solid') { // map[Math.floor(this.locy+1)][Math.floor(this.locx+1-this.phys_xshrinkbias)] != 0
                 //if(wasFalling) {
                     //this.locy -= this.vely;
                 //}
                 this.locy = Math.floor(this.locy+0.1)-0.1
                 this.vely = 0;
                 this.isFalling = false;
-            }
+            }*/
         }
         // Above
         else if(this.vely < 0) { // Rising
@@ -222,6 +241,17 @@ class Player {
     jump(strengthMult) {
         if(this.isFalling) { return; } // cannot jump if falling
         this.vely = strengthMult*-1*this.phys_jumpvel;
+    }
+    // Crouch (if block below is platform, drop through)
+    crouch() {
+        if(BLOCKS[this.getMapBlock(worldMap, Math.floor(this.locy+1.11), Math.floor(this.locx-this.phys_xshrinkbias))].collision == 'platform'
+        || BLOCKS[this.getMapBlock(worldMap, Math.floor(this.locy+1.11), Math.floor(this.locx+1-this.phys_xshrinkbias))].collision == 'platform') {
+            // Platform below; drop through
+            this.crouched = true;
+        }
+    }
+    uncrouch() {
+        this.crouched = false;
     }
     // DBG: Inventory pack
     dbg_invAddPack(packName) {
