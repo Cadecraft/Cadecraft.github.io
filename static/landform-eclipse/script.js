@@ -17,6 +17,7 @@ TO ADD (also search: `toadd`~):
 > Mining distance limit
 > Title menu
 > Improve existing scuffed platform collision?
+> Platform: snap slightly down into it (so no standing above tree leaves)
 > Plants erasing if block below is mined
 > Renderer efficiency
 > Prevent block placed inside player
@@ -97,6 +98,7 @@ var dbgm = false; // Debug mode: allows flight, etc.
 var dbg_fps = 0;
 var dbg_totalframes = 0;
 var dbg_fps_avg = 0;
+var dbg_fps_graph = [0];
 var globalScale = 2.0;
 var blockWidth = 16;
 var generateWorld = true; // def: true (dbg: true/false)
@@ -650,10 +652,14 @@ function gameLoop() {
     // Determine fps
     if(dbgm) {
         var msElapsed = Date.now() - lastDate;
-    lastDate = Date.now();
-    dbg_fps = 1/(msElapsed/1000); // inverse of (seconds per frame)
-    dbg_fps_avg = ((dbg_fps)+(dbg_fps_avg)*dbg_totalframes)/(dbg_totalframes+1)
-    dbg_totalframes++;
+        lastDate = Date.now();
+        dbg_fps = 1/(msElapsed/1000); // inverse of (seconds per frame)
+        dbg_fps_avg = ((dbg_fps)+(dbg_fps_avg)*dbg_totalframes)/(dbg_totalframes+1)
+        dbg_totalframes++;
+        dbg_fps_graph.unshift(dbg_fps);
+        if(dbg_fps_graph.length > 1000) {
+            dbg_fps_graph.pop();
+        }
     }
     // Reduce timers
     for(let i = 0; i < Object.keys(timers).length; i++) {

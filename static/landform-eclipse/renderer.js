@@ -242,8 +242,9 @@ function render(indbgm = false) {
         }
     }
     ctx.globalAlpha = 1.0;
-    // Render dbg messages
+    // Render dbg info
     if(dbgm) {
+        // Dbg messages
         ctx.fillStyle = 'black';
         ctx.font = '14px Courier New';
         ctx.globalAlpha = 1.0;
@@ -255,7 +256,19 @@ function render(indbgm = false) {
         dbgmren(ctx, 6, 'pointer_bl = type '+getMapBlock(worldMap, pointerybl, pointerxbl));
         dbgmren(ctx, 7, 'fps        = '+roundpretty(dbg_fps));
         dbgmren(ctx, 8, 'fps_avg    = '+roundpretty(dbg_fps_avg));
+        // Dbg fps graph (to the left)
+        ctx.fillStyle = 'black';
+        ctx.fillRect(window.innerWidth-600, 20, 2, 70);
+        for(let i = 0; i < Math.min(dbg_fps_graph.length, 500); i++) {
+            var thisfps = dbg_fps_graph[i];
+            if(thisfps < 56) { ctx.fillStyle = 'red'; }
+            else if(thisfps > 64) { ctx.fillStyle = 'green'; }
+            else { ctx.fillStyle = 'black'; }
+            ctx.globalAlpha = 1-(i/500);
+            ctx.fillRect(window.innerWidth-600 + i, 20 + (70-thisfps), 2, 2);
+        }
     }
+    ctx.globalAlpha = 1.0;
 }
 
 // Dbg message renderer
