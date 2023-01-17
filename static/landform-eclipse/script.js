@@ -29,7 +29,6 @@ TO ADD (also search: `toadd`~):
 > TOS?
 > Laser beam
 > Day night / eclipse cycle
-> Water physics
 > Lag on placing a block?
 > World chunking!
 > NPCs
@@ -47,6 +46,7 @@ TO ADD (also search: `toadd`~):
 > Refactor worldMap and its functions (getMapBlock, etc.) into WorldMap class (obj called 'wmap') ?
 > Worldgen smoothen cliffs
 > Entity physics efficiency ?
+> Render efficiency
 > Entity piggy back jump off each other ?
 > Title screen: show bar w/ trebuchet ms like in promo_Landform.psd
 > More soundtracks (Tierra del Fuego, Datura)

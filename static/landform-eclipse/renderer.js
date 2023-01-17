@@ -104,13 +104,12 @@ function render(indbgm = false) {
                 //}
             }
             // Dbg: is highlighted?
-            if(indbgm && ((mychar.dbg_highl_bl1[1] == x && mychar.dbg_highl_bl1[0] == y)
-                || (mychar.dbg_highl_bl2[1] == x && mychar.dbg_highl_bl2[0] == y))
-                && mychar.dbg_highl_enable) {
+            if(indbgm && ((mychar.dbg_highl_bl1[0] == x && mychar.dbg_highl_bl1[1] == y)
+                || (mychar.dbg_highl_bl2[0] == x && mychar.dbg_highl_bl2[1] == y))) {
                 // Highlight~
                 var drawx = (x+offsetx)*iwidth;
                 var drawy = (y+offsety)*iwidth;
-                ctx.fillStyle = 'rgb(0, 255, 255)';
+                ctx.fillStyle = 'rgb(255, 84, 147)'; // 'rgb(0, 255, 255)' , rgb(255, 84, 124)
                 ctx.globalAlpha = 0.5;
                 ctx.fillRect(Math.floor(drawx), Math.floor(drawy), Math.ceil(iwidth), Math.ceil(iwidth));
                 ctx.globalAlpha = 1.0;

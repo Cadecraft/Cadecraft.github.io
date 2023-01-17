@@ -16,6 +16,7 @@ class Player {
         this.isFalling = true;
         this.facingRight = true;
         this.crouched = false;
+        this.inWater = false;
         // Cooldown defs
         this.cooldown_mining = 50;
         this.miningefficiency = 2; // Dmg to deal: def=1
@@ -25,11 +26,12 @@ class Player {
         this.phys_decel = 0.023; // 0.023
         this.phys_accel = 0.034; // 0.034
         this.phys_grav = 0.023;
-        this.phys_velxmax = 0.145; // 0.14
-        this.phys_velymax = 0.6;
-        this.phys_xshrinkbias = 0.15;
-        this.phys_yheightbias = 0.3;
+        this.phys_velxmax = 0.145; // 0.145
+        this.phys_velymax = 0.6; // 0.6
+        this.phys_xshrinkbias = 0.15; // 0.15
+        this.phys_yheightbias = 0.3; // 0.3
         this.phys_jumpvel = 0.33; // 0.33
+        this.phys_waterslowfactor = 0.4; // 0.4
         // Inv defs
         this.inventory = [
             [8,1],[-1,0]
@@ -43,8 +45,7 @@ class Player {
             this.inventory.push([-1,0]); // Default void slot
         }
         // Dbg defs
-        this.dbg_highl_enable = false; // false
-        this.dbg_highl_bl1 = [0,0];
+        this.dbg_highl_bl1 = [0,0]; // Debug highlighting (x, y)
         this.dbg_highl_bl2 = [0,0];
     }
     // Inv funcs
@@ -131,22 +132,34 @@ class Player {
         } else { return -1; }
     }
     // Get is in water
-    isInWater() {
+    isInWater(map) {
         var toCheck = [];
-        toCheck.push(this.getMapBlock(map, Math.floor(this.locy), Math.floor(this.locx)));
+        toCheck.push(this.getMapBlock(map, Math.floor(this.locy-0.3), Math.floor(this.locx)));
+        toCheck.push(this.getMapBlock(map, Math.floor(this.locy+1-0.3), Math.floor(this.locx)));
+        toCheck.push(this.getMapBlock(map, Math.floor(this.locy-0.3), Math.floor(this.locx+1)));
+        toCheck.push(this.getMapBlock(map, Math.floor(this.locy+1-0.3), Math.floor(this.locx+1)));
+        //this.dbg_highl_bl1 = [Math.floor(this.locx+1), Math.floor(this.locy)];
+        //this.dbg_highl_bl2 = [Math.floor(this.locx+1), Math.floor(this.locy+1)];
+        for(let i = 0; i < toCheck.length; i++) {
+            if(toCheck[i] == 20 || toCheck[i] == 19) {
+                return true;
+            }
+        }
         return false; // (toadd)
     }
     // Apply physics/vel
     applyPhysics(map) {
         // Get is in water
+        this.inWater = this.isInWater(map);
 
         // Gravity
-        this.vely += this.phys_grav;
-        if(this.vely > this.phys_velymax) { this.vely = this.phys_velymax; }
-        if(this.vely < -1*this.phys_velymax) { this.vely = -1*this.phys_velymax; }
+        if(this.inWater) this.vely += this.phys_grav*this.phys_waterslowfactor;
+        else this.vely += this.phys_grav;
+        this.addVel(0, 0); // to confirm limits of velocity
 
         // Apply X
-        this.locx += this.velx;
+        if(this.inWater) this.locx += this.velx*this.phys_waterslowfactor;
+        else this.locx += this.velx;
         var direc = 1;
         //var direcadj = 0;
         if(this.velx < 0) { direc = 0;/* direcadj = 0;*/ }
@@ -163,7 +176,8 @@ class Player {
         }
 
         // Apply Y
-        this.locy += this.vely;
+        if(this.inWater) this.locy += this.vely*this.phys_waterslowfactor;
+        else this.locy += this.vely;
         // Check valid Y
         // Below
         if(this.vely > 0) { // Falling
@@ -231,16 +245,29 @@ class Player {
         // Add
         this.velx += velx;
         this.vely += vely;
-        // Check valid X and Y
+        // Check valid X
         if(this.velx > this.phys_velxmax) { this.velx = this.phys_velxmax; }
-        if(this.velx < -1*this.phys_velxmax) { this.velx = -1*this.phys_velxmax; }
-        if(this.vely > this.phys_velymax) { this.vely = this.phys_velymax; }
-        if(this.vely < -1*this.phys_velymax) { this.vely = -1*this.phys_velymax; }
+        else if(this.velx < -1*this.phys_velxmax) { this.velx = -1*this.phys_velxmax; }
+        // Check valid Y
+        if(this.inWater) { // Water has more restrictive Y
+            if(this.vely > this.phys_velymax*0.4) { this.vely = this.phys_velymax*0.4; }
+            else if(this.vely < -1*this.phys_velymax*0.3) { this.vely = -1*this.phys_velymax*0.3; }
+        } else {
+            if(this.vely > this.phys_velymax) { this.vely = this.phys_velymax; }
+            else if(this.vely < -1*this.phys_velymax) { this.vely = -1*this.phys_velymax; }
+        }
     }
     // Jump
     jump(strengthMult) {
-        if(this.isFalling) { return; } // cannot jump if falling
-        this.vely = strengthMult*-1*this.phys_jumpvel;
+        if(this.inWater) {
+            // Water swim
+            this.addVel(0, strengthMult*-1*this.phys_jumpvel*0.1);
+            return;
+        } else {
+            // Normal jump
+            if(this.isFalling) { return; } // cannot jump if falling
+            this.vely = strengthMult*-1*this.phys_jumpvel;
+        }
     }
     // Crouch (if block below is platform, drop through)
     crouch() {
@@ -253,6 +280,7 @@ class Player {
     uncrouch() {
         this.crouched = false;
     }
+
     // DBG: Inventory pack
     dbg_invAddPack(packName) {
         if(!dbgm) {
@@ -269,5 +297,14 @@ class Player {
             this.invAddBlock(17, 64/2);
             this.invAddBlock(18, 64/2);
         }
+    }
+    // DBG: Gas Gas Gas
+    dbg_initialD() {
+        if(!dbgm) {
+            console.log('err: Player::dbg_initialD() is only accessible in dbg mode (dbgm)');
+            return;
+        }
+        this.phys_accel = 0.3;
+        this.phys_velxmax = 0.5;
     }
 }
