@@ -13,7 +13,10 @@ function wgenMain() {
     var worldgenMap_features = []; // Features such as trees, etc.
     var worldgenMap_structures = []; // Structures such as houses, etc. { type, locx, locy }
     var worldgenMap_waters = []; // Water levels (-1 = none)
+    // Resets
     worldMap = [];
+    worldMap_biomes = [];
+    worldMap_heights = [];
     // Worldgen type
     console.log('  gen: types');
     if(worldgen_simple) {
@@ -98,6 +101,7 @@ function wgenMain() {
             }
             // Add
             worldgenMap_heights.push(newHeight);
+            worldMap_heights.push(newHeight + 9 + worldgen_horizonoffset);
             worldgenMap_heights2.push(newHeight2);
             worldgenMap_features.push(newFeature);
             worldgenMap_waters.push(newWater);

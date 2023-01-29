@@ -253,8 +253,9 @@ function render(indbgm = false) {
         dbgmren(ctx, 4, 'pointerxbl = '+roundpretty(pointerxbl));
         dbgmren(ctx, 5, 'pointerybl = '+roundpretty(pointerybl));
         dbgmren(ctx, 6, 'pointer_bl = type '+getMapBlock(worldMap, pointerybl, pointerxbl));
-        dbgmren(ctx, 7, 'fps        = '+roundpretty(dbg_fps));
-        dbgmren(ctx, 8, 'fps_avg    = '+roundpretty(dbg_fps_avg));
+        dbgmren(ctx, 7, 'biome      = '+worldMap_biomes[Math.min(worldMap_biomes.length, Math.max(Math.floor(mychar.locx), 0))])
+        dbgmren(ctx, 8, 'fps        = '+roundpretty(dbg_fps));
+        dbgmren(ctx, 9, 'fps_avg    = '+roundpretty(dbg_fps_avg));
         // Dbg fps graph (to the left)
         ctx.fillStyle = 'black';
         ctx.fillRect(window.innerWidth-600, 20, 2, 70);

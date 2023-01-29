@@ -1,6 +1,7 @@
 // LANDFORM ECLIPSE script
 
 // Inherited entity scripts (enemies)
+
 // Crab
 class Crab extends Entity {
     resetValsEntity() {
@@ -42,4 +43,10 @@ class Monkey extends Entity {
     attack() {
         // attack: claw leap (melee)
     }
+}
+
+// From string data
+const ENTITY_CLASSES_FROM_STRING = {
+    "Crab": Crab,
+    "Monkey": Monkey
 }

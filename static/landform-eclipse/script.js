@@ -107,7 +107,8 @@ var worldMap = [
     [1,1,1],
     [1,1,1]
 ];
-var worldMap_biomes = [];
+var worldMap_biomes = []; // Will be initialized
+var worldMap_heights = [];
 var worldStates = [];
 var world_eventState = "normal";
 var entities = [];
@@ -457,8 +458,25 @@ function spawnEntity(InClass, inlocx, inlocy, inlvl) {
 
 // Spawn entities pass (has a chance of spawning an entity across the world, if the limit is not reached yet)
 function spawnEntitiesPass() {
-    for(let x = 0; x < worldMap.length; x++) {
+    for(let x = 0; x < worldMap[0].length; x++) {
         // Determine height and biomes
+        var thisbiome = worldMap_biomes[x];
+        var thisheight = worldMap_heights[x];
+
+        // Based on biome, have chances:
+        if(thisbiome < ENTITY_SPAWN_RATES.length && thisbiome >= 0) { // err: ENTITY_SPAWN_RATES is not defined?
+            for(let i = 0; i < ENTITY_SPAWN_RATES[thisbiome].length; i++) {
+                var thisSpawnClassName = ENTITY_SPAWN_RATES[thisbiome][i].spawnClassName;
+                var thisSpawnClass = ENTITY_CLASSES_FROM_STRING[thisSpawnClassName];
+                var thisSpawnChance = ENTITY_SPAWN_RATES[thisbiome][i].spawnChance;
+                if(Math.random() < thisSpawnChance) {
+                    // Spawn
+                    spawnEntity(thisSpawnClass, x, thisheight - 3);
+                }
+            }
+        }
+        /* console.log('Crab spawned');
+        spawnEntity(Crab, x, thisheight - 3); */
     }
 }
 

@@ -31,7 +31,8 @@ class Player {
         this.phys_xshrinkbias = 0.15; // 0.15
         this.phys_yheightbias = 0.3; // 0.3
         this.phys_jumpvel = 0.33; // 0.33
-        this.phys_waterslowfactor = 0.4; // 0.4
+        this.phys_waterslowfactorY = 0.4; // 0.4
+        this.phys_waterslowfactorX = 0.6; // 0.6
         // Inv defs
         this.inventory = [
             [8,1],[-1,0]
@@ -153,12 +154,12 @@ class Player {
         this.inWater = this.isInWater(map);
 
         // Gravity
-        if(this.inWater) this.vely += this.phys_grav*this.phys_waterslowfactor;
+        if(this.inWater) this.vely += this.phys_grav*this.phys_waterslowfactorY;
         else this.vely += this.phys_grav;
         this.addVel(0, 0); // to confirm limits of velocity
 
         // Apply X
-        if(this.inWater) this.locx += this.velx*this.phys_waterslowfactor;
+        if(this.inWater) this.locx += this.velx*this.phys_waterslowfactorX;
         else this.locx += this.velx;
         var direc = 1;
         //var direcadj = 0;
@@ -176,7 +177,7 @@ class Player {
         }
 
         // Apply Y
-        if(this.inWater) this.locy += this.vely*this.phys_waterslowfactor;
+        if(this.inWater) this.locy += this.vely*this.phys_waterslowfactorY;
         else this.locy += this.vely;
         // Check valid Y
         // Below

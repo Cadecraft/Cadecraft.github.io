@@ -427,6 +427,7 @@ const worldgen_rateTrees = 0.05; // 0.05
 const worldgen_totalBiomes = 6;
 const worldgen_biomesOrder = [4,1,0,2,3,5];
 const worldgen_waterLevel = 3; // 3 // Higher value = water at a higher level
+//const worldgen_groundOffsetFromHorizon = 9;
 
 // Block maps for structure (-2 = repeat the column directly left n times; -3 = do not override block)
 const WGEN_STRUCTURES = {
@@ -440,4 +441,12 @@ const WGEN_STRUCTURES = {
         [1,  5,  1,  -2, 1,  -2, 5,  1,  1],
         [-3, -3, 5,  -2, 5,  -2, -3, -3, -3]
     ]
-}
+};
+
+// Entity spawn rates
+const ENTITY_SPAWN_RATES = [
+    [
+        { spawnClassName: "Crab", spawnChance: 0.02 },
+        { spawnClassName: "Monkey", spawnChance: 0.01 }
+    ]
+];
