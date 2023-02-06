@@ -414,7 +414,19 @@ const BLOCKS = {
         drops: [28],
         destroyByWater: true,
         groundPlant: true
-    }
+    },
+    29: {
+        iname: 'Stone Wall',
+        idescr: 'Smooth, cool slate from the highlands. It forms the backdrop of caverns',
+        irarity: 0,
+        img: 'images/blocks/Block_Stone_Wall.png',
+        placeable: true,
+        collision: 'none',
+        hardness: 2,
+        hp: 20,
+        drops: [4],
+        destroyByWater: false
+    },
 };
 
 // World gen consts
@@ -427,6 +439,8 @@ const worldgen_rateTrees = 0.05; // 0.05
 const worldgen_totalBiomes = 6;
 const worldgen_biomesOrder = [4,1,0,2,3,5];
 const worldgen_waterLevel = 3; // 3 // Higher value = water at a higher level
+const worldgen_caveChance = 0.0005;
+const worldgen_caveLerpIters = 80;
 //const worldgen_groundOffsetFromHorizon = 9;
 
 // Block maps for structure (-2 = repeat the column directly left n times; -3 = do not override block)

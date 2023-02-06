@@ -13,6 +13,7 @@ function wgenMain() {
     var worldgenMap_features = []; // Features such as trees, etc.
     var worldgenMap_structures = []; // Structures such as houses, etc. { type, locx, locy }
     var worldgenMap_waters = []; // Water levels (-1 = none)
+    var worldgenMap_caveSpawns = []; // Cave spawn locations (should store arrays of [x, y])
     // Resets
     worldMap = [];
     worldMap_biomes = [];
@@ -171,10 +172,34 @@ function wgenMain() {
         // Add waters
         for(let x = 0; x < worldgen_width; x++) {
             if(worldgenMap_waters[x] != -1 && (BLOCKS[ worldMap[worldgenMap_waters[x] + worldgen_horizonoffset + 10][x] ].destroyByWater) ) { // Water source here if existing block is destroyable by water
-                worldMap[ worldgenMap_waters[x] + worldgen_horizonoffset + 10][x] = 19;
+                worldMap[worldgenMap_waters[x] + worldgen_horizonoffset + 10][x] = 19;
             }
         }
-        // Carve caves (toadd)
+        // Carve caves
+        for(let x = 0; x < worldgen_width; x++) {
+            for(let y = 0; y < worldgen_height; y++) {
+                if(worldMap[y][x] == 4 || worldMap[y][x] == 5) {
+                    // Is stone: chance to carve cave
+                    if(Math.random() < worldgen_caveChance) {
+                        // Carve cave and add
+                        carveCaveAt(x, y);
+                        worldgenMap_caveSpawns.push([x, y]);
+                    }
+                }
+            }
+        }
+        // Cave decorations (toadd)
+        // Connect caves in worldgenMap_caveSpawns with direct lines (Snake/Worm Caves)
+        for(let i = 1; i < worldgenMap_caveSpawns.length; i++) {
+            var prevx = worldgenMap_caveSpawns[i-1][0];
+            var prevy = worldgenMap_caveSpawns[i-1][1];
+            var thisx = worldgenMap_caveSpawns[i][0];
+            var thisy = worldgenMap_caveSpawns[i][1];
+            for(let lerpAmt = 0; lerpAmt < worldgen_caveLerpIters; lerpAmt += 1) {
+                var alpha = lerpAmt/worldgen_caveLerpIters;
+                carveCaveAt(lerpCoords(prevx, thisx, alpha), lerpCoords(prevy, thisy, alpha));
+            }
+        }
         // (toadd)
         // Generate structures (toadd)
         for(let i = 0; i < worldgenMap_structures.length; i++) {
@@ -224,4 +249,26 @@ function wgenMain() {
     }
     //console.log('-');
     console.log('loading world... generation complete');
+}
+
+// Utilities
+// Carve cave
+function carveCaveAt(x, y) {
+    const bgBlock = 29; // 29 = cave wall
+    worldMap[y][x] = bgBlock;
+    for(let carvey = -2; carvey < 3; carvey++) {
+        for(let carvex = -2; carvex < 3; carvex++) {
+            if(Math.random() < 0.5) {
+                var carveyworld = y + carvey;
+                var carvexworld = x + carvex;
+                if(carveyworld < 0 || carveyworld >= worldgen_height || carvexworld < 0 || carvexworld >= worldgen_width) {
+                    continue; // not on map
+                }
+                worldMap[carveyworld][carvexworld] = bgBlock;
+            }
+        }
+    }
+}
+function lerpCoords(x1, x2, alpha) {
+    return Math.floor((x1*(1-alpha)) + (x2*alpha));
 }
