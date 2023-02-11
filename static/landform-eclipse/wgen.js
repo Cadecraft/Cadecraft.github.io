@@ -243,6 +243,10 @@ function wgenMain() {
                 }
             }
         }
+        // Ensure bedrock still exists at the bottom
+        for(let x = 0; x < worldgen_width; x++) {
+            worldMap[worldgen_height-1][x] = 7;
+        }
 
         // DBG
         console.log(worldgenMap_waters);

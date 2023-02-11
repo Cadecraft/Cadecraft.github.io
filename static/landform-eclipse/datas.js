@@ -424,7 +424,7 @@ const BLOCKS = {
         collision: 'none',
         hardness: 2,
         hp: 20,
-        drops: [4],
+        drops: [29], // or perhaps drop 4 (regular Stone)
         destroyByWater: false
     },
 };
