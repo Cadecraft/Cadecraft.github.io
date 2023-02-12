@@ -256,12 +256,14 @@ function render(indbgm = false) {
         dbgmren(ctx, 7, 'biome      = '+worldMap_biomes[Math.min(worldMap_biomes.length, Math.max(Math.floor(mychar.locx), 0))])
         dbgmren(ctx, 8, 'fps        = '+roundpretty(dbg_fps));
         dbgmren(ctx, 9, 'fps_avg    = '+roundpretty(dbg_fps_avg));
+        dbgmren(ctx, 10, 'veleq      = '+roundpretty(veleq));
         // Dbg fps graph (to the left)
         ctx.fillStyle = 'black';
         ctx.fillRect(window.innerWidth-600, 20, 2, 70);
         for(let i = 0; i < Math.min(dbg_fps_graph.length, 500); i++) {
             var thisfps = dbg_fps_graph[i];
-            if(thisfps < 56) { ctx.fillStyle = 'red'; }
+            if(thisfps < 1) { ctx.fillStyle = 'yellow'; }
+            else if(thisfps < 56) { ctx.fillStyle = 'red'; }
             else if(thisfps > 64) { ctx.fillStyle = 'green'; }
             else { ctx.fillStyle = 'black'; }
             ctx.globalAlpha = 1-(i/500);

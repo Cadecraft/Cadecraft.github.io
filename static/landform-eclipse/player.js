@@ -154,13 +154,13 @@ class Player {
         this.inWater = this.isInWater(map);
 
         // Gravity
-        if(this.inWater) this.vely += this.phys_grav*this.phys_waterslowfactorY;
-        else this.vely += this.phys_grav;
+        if(this.inWater) this.vely += this.phys_grav*this.phys_waterslowfactorY * veleq;
+        else this.vely += this.phys_grav * veleq;
         this.addVel(0, 0); // to confirm limits of velocity
 
         // Apply X
         if(this.inWater) this.locx += this.velx*this.phys_waterslowfactorX;
-        else this.locx += this.velx;
+        else this.locx += this.velx * veleq;
         var direc = 1;
         //var direcadj = 0;
         if(this.velx < 0) { direc = 0;/* direcadj = 0;*/ }
@@ -168,17 +168,17 @@ class Player {
         //this.dbg_highl_bl1 = [Math.floor(this.locy), Math.floor(this.locx)];
         //this.dbg_highl_bl2 = [Math.floor(this.locy+1), Math.floor(this.locx)];
         if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy), Math.floor(this.locx+direc))].collision == 'solid') { // map[Math.floor(this.locy)][Math.floor(this.locx+direc)+direcadj] != 0
-            this.locx -= this.velx;
+            this.locx -= this.velx * veleq;
             this.velx = 0;
         }
         else if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy+1), Math.floor(this.locx+direc))].collision == 'solid') { // map[Math.floor(this.locy+1)][Math.floor(this.locx+direc)+direcadj] != 0
-            this.locx -= this.velx;
+            this.locx -= this.velx * veleq;
             this.velx = 0;
         }
 
         // Apply Y
         if(this.inWater) this.locy += this.vely*this.phys_waterslowfactorY;
-        else this.locy += this.vely;
+        else this.locy += this.vely * veleq;
         // Check valid Y
         // Below
         if(this.vely > 0) { // Falling
@@ -234,18 +234,18 @@ class Player {
 
         // Deceleration
         if(this.velx > 0) {
-            this.velx -= this.phys_decel;
+            this.velx -= this.phys_decel * veleq;
             if(this.velx < 0) { this.velx = 0; }
         } else if(this.velx < -0) {
-            this.velx += this.phys_decel;
+            this.velx += this.phys_decel * veleq;
             if(this.velx > 0) { this.velx = 0; }
         }
     }
     // Add vel
     addVel(velx, vely) {
         // Add
-        this.velx += velx;
-        this.vely += vely;
+        this.velx += velx * veleq;
+        this.vely += vely * veleq;
         // Check valid X
         if(this.velx > this.phys_velxmax) { this.velx = this.phys_velxmax; }
         else if(this.velx < -1*this.phys_velxmax) { this.velx = -1*this.phys_velxmax; }

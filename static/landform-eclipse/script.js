@@ -111,6 +111,8 @@ var worldMap_biomes = []; // Will be initialized
 var worldMap_heights = [];
 var worldStates = [];
 var world_eventState = "normal";
+var veleq = 1;
+var display_skipFrames = true;
 var entities = [];
 var ui_messages = [/*{
     loc: 0, // Location (0=top left)
@@ -668,9 +670,9 @@ var timers = {
 // Game loop
 function gameLoop() {
     // Determine fps
+    var msElapsed = Date.now() - lastDate;
+    lastDate = Date.now();
     if(dbgm) {
-        var msElapsed = Date.now() - lastDate;
-        lastDate = Date.now();
         dbg_fps = 1/(msElapsed/1000); // inverse of (seconds per frame)
         dbg_fps_avg = ((dbg_fps)+(dbg_fps_avg)*dbg_totalframes)/(dbg_totalframes+1)
         dbg_totalframes++;
@@ -683,7 +685,13 @@ function gameLoop() {
     for(let i = 0; i < Object.keys(timers).length; i++) {
         timers[Object.keys(timers)[i]] -= 17;
     }
-    // Determine velocity equalization based on time passed (?) (toadd?)
+    // Frame rate compensation
+    var msRatio = (msElapsed / gameInterval);
+    // Determine velocity equalization based on time per frame (for consistent physics speed) (deprecated)
+    veleq = 1; // = msRatio;
+    // Determine whether to skip frame
+    var skipRenderingThisFrame = false;
+    if(display_skipFrames && msRatio > 1.5) skipRenderingThisFrame = true;
     // Handle input if not dead
     updatePointerwr()
     gameInput();
@@ -707,6 +715,13 @@ function gameLoop() {
     // Check collision (projectiles and items) if not dead
     
     // Render
-    render(dbgm);
+    if(!skipRenderingThisFrame) {
+        // Render
+        render(dbgm);
+    }
+    else if(dbgm && dbg_fps_graph.length > 0) {
+        // Skipped, and in debug mode, so display
+        dbg_fps_graph[0] = 0;
+    }
 }
 
