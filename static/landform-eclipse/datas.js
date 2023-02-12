@@ -439,8 +439,9 @@ const worldgen_rateTrees = 0.05; // 0.05
 const worldgen_totalBiomes = 6;
 const worldgen_biomesOrder = [4,1,0,2,3,5];
 const worldgen_waterLevel = 3; // 3 // Higher value = water at a higher level
-const worldgen_caveChance = 0.0005;
-const worldgen_caveLerpIters = 80;
+const worldgen_caveChance = 0.0005; // 0.005
+const worldgen_caveLerpIters = 80; // 80
+const worldgen_caveCarvePercent = 0.4; // 0.4
 //const worldgen_groundOffsetFromHorizon = 9;
 
 // Block maps for structure (-2 = repeat the column directly left n times; -3 = do not override block)
@@ -460,7 +461,9 @@ const WGEN_STRUCTURES = {
 // Entity spawn rates
 const ENTITY_SPAWN_RATES = [
     [
-        { spawnClassName: "Crab", spawnChance: 0.02 },
-        { spawnClassName: "Monkey", spawnChance: 0.01 }
+        { spawnClassName: "Crab", spawnChance: 0.01 },
+        { spawnClassName: "Monkey", spawnChance: 0.005 }
     ]
 ];
+const max_entities_natural = 100; // 100; Maximum number of entties naturally spawned
+const entities_spawn_interval_seconds = 20; // 20; Interval between spawn passes

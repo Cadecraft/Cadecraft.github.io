@@ -262,7 +262,7 @@ function carveCaveAt(x, y) {
     worldMap[y][x] = bgBlock;
     for(let carvey = -2; carvey < 3; carvey++) {
         for(let carvex = -2; carvex < 3; carvex++) {
-            if(Math.random() < 0.5) {
+            if(Math.random() < worldgen_caveCarvePercent) {
                 var carveyworld = y + carvey;
                 var carvexworld = x + carvex;
                 if(carveyworld < 0 || carveyworld >= worldgen_height || carvexworld < 0 || carvexworld >= worldgen_width) {

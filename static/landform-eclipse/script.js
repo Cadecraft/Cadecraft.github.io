@@ -457,9 +457,13 @@ function spawnEntity(InClass, inlocx, inlocy, inlvl) {
     var newenemy = new InClass(inlocx, inlocy, inlvl);
     entities.push(newenemy);
 }
-
 // Spawn entities pass (has a chance of spawning an entity across the world, if the limit is not reached yet)
 function spawnEntitiesPass() {
+    if(entities.length >= max_entities_natural) {
+        // Maximum number of naturally spawned entities reached
+        return;
+    }
+    // Loop across the map
     for(let x = 0; x < worldMap[0].length; x++) {
         // Determine height and biomes
         var thisbiome = worldMap_biomes[x];
@@ -477,10 +481,15 @@ function spawnEntitiesPass() {
                 }
             }
         }
+        // Dbg
         /* console.log('Crab spawned');
         spawnEntity(Crab, x, thisheight - 3); */
     }
 }
+// Entity spawn timer
+setInterval(function() {
+    spawnEntitiesPass();
+}, entities_spawn_interval_seconds * 1000);
 
 // INPUT
 //
