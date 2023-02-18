@@ -71,13 +71,14 @@ class InvMenu {
             console.log('Err: processClick failed; InvMenu "'+this.menuName+'" is invisible');
             return false;
         }
-        if(localLocx < 0 || localLocy < 0 || localLocx > this.menuWidthPixels || localLocy > this.menuHeightPixels) {
+        if(localLocx < 0 || localLocy < -1*this.menuLocy || localLocx > this.menuWidthPixels || localLocy > this.menuHeightPixels) {
             // Outside of menu area, so user cannot click
             return false;
         }
         // Determine whether clicked on block (toadd)
         var localLocxBlock = Math.floor((localLocx - this.menuMarginx)/ui_invItemWidth);
         var localLocyBlock = Math.floor((localLocy - this.menuMarginy)/ui_invItemWidth);
+        if(localLocyBlock < 0) localLocyBlock = 0; // allow clicking above for hotbar
         var clickedOnContentsIndex = localLocyBlock * this.contentsWidth + localLocxBlock;
         if(clickedOnContentsIndex >= 0 && clickedOnContentsIndex < this.contentsArr.length) {
             this.clickContentsItem(clickedOnContentsIndex);

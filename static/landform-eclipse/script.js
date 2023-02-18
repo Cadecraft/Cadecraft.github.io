@@ -11,6 +11,7 @@ TO ADD (also search: `toadd`~):
 > Worldgen: structure gen
 > Worldgen: more biomes
 > Characters! (+ animations) (import from liwol)
+  - New characters: Iona, Horatio
 > Background blocks!
 > Background on screen: mountains, desert, etc.
 > Background on screen: clouds
@@ -18,9 +19,8 @@ TO ADD (also search: `toadd`~):
 > Title menu
 > Improve existing scuffed platform collision?
 > Platform: snap slightly down into it (so no standing above tree leaves)
-> Plants erasing if block below is mined
 > Renderer efficiency
-> Prevent block placed inside player
+> Prevent block placed inside player (next)
 > Music vol settings
 > Sound effects (mining, breaking, walking, etc.)
 > Pickaxe leveling/upgrading (and reset to default efficiency being 1) (Maybe use STACK AMT as level?)
@@ -32,6 +32,7 @@ TO ADD (also search: `toadd`~):
 > Lag on placing a block?
 > World chunking!
 > NPCs
+  - Shell Trader (plus turtle enemy)
 > Entity health
 > Entity logic
 > Entity attacking
@@ -56,7 +57,6 @@ TO ADD (also search: `toadd`~):
 > Bg: clouds
 > Inv: merge inv hotbar with the rest of inv menu?
 > Inv: allow combining/merging items of same type (and calc stack excess)
-> 1. Entity natural spawning
 > 2. Dmg messages
 > 3. UI panel for NPC prchasing
 > 4. Player weapons/tools/items should use NEGATIVE numbers for IDs, create separate data object
