@@ -158,6 +158,16 @@ function render(indbgm = false) {
     // (toadd~)
 
     // UI
+    // Render ui dmg messages
+    ctx.font = '14px Tahoma';
+    ui_updateDmgMessages();
+    for(let i = 0; i < ui_dmgMessages.length; i++) {
+        var thismsg = ui_dmgMessages[i];
+        ctx.globalAlpha = Math.min(thismsg.duration/700, 1);
+        // Render
+        ctx.fillStyle = thismsg.color;
+        ctx.fillText(thismsg.msg, (thismsg.locx+offsetx)*iwidth, (thismsg.locy+offsety)*iwidth);
+    }
     // Render inv bar
     var inv_boxwidth = 1;
     for(let i = 0; i < mychar.inv_menuwidth; i++) {
@@ -188,13 +198,13 @@ function render(indbgm = false) {
         }
     }
     ctx.globalAlpha = 1.0;
-    // Render ui_messages
+    // Render ui messages
     ctx.font = '12px Tahoma';
     ui_updateMessages();
     for(let i = 0; i < ui_messages.length; i++) {
         var thismsg = ui_messages[ui_messages.length - i - 1];
         ctx.globalAlpha = Math.min(thismsg.duration/1000.0, 1)*0.8;
-        // Render (toadd)
+        // Render
         ctx.fillStyle = 'black';
         ctx.fillRect(20, 20+ui_invItemWidth+(i)*24, 150, 20);
         ctx.fillStyle = 'white';

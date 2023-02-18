@@ -30,7 +30,8 @@ TO ADD (also search: `toadd`~):
 > Laser beam
 > Day night / eclipse cycle
 > Lag on placing a block?
-> World chunking!
+> World chunking
+> NO LIGHT IN CAVES
 > NPCs
   - Shell Trader (plus turtle enemy)
 > Entity health
@@ -46,6 +47,7 @@ TO ADD (also search: `toadd`~):
 > BG blocks ? (/cave bg)
 > Refactor worldMap and its functions (getMapBlock, etc.) into WorldMap class (obj called 'wmap') ?
 > Worldgen smoothen cliffs
+> Dmg messages turn green when all enemies are dead??
 > Entity physics efficiency ?
 > Render efficiency
 > Entity piggy back jump off each other ?
@@ -123,6 +125,13 @@ var ui_messages = [/*{
 const ui_maxMessages = 6;
 var ui_invMenus = [];
 const ui_invItemWidth = 44; // Constant
+var ui_dmgMessages = [/*{
+    locx: 0,
+    locy: 0,
+    color: "#ffffff",
+    msg: "2",
+    duration: 1000 // Duration in ms (fades out the last 700ms)
+}*/];
 
 // Load game defs: load/generate map and world states
 function mapRegen(inGenerateWorld) {
@@ -321,15 +330,38 @@ function ui_addMessage(inmsg, induration = 2000, inloc = 0, incolor = 0, clearal
 }
 function ui_updateMessages() {
     // Update durations and remove if necessary
-    var ui_messageIdsToRemove = [];
+    var messageIdsToRemove = [];
     for(let i = 0; i < ui_messages.length; i++) {
         ui_messages[i].duration -= gameInterval;
         if(ui_messages[i].duration < 0) {
-            ui_messageIdsToRemove.push(i);
+            messageIdsToRemove.push(i);
         }
     }
-    for(let i = 0; i < ui_messageIdsToRemove.length; i++) {
-        ui_messages.splice(ui_messageIdsToRemove[i]-i, 1);
+    for(let i = 0; i < messageIdsToRemove.length; i++) {
+        ui_messages.splice(messageIdsToRemove[i]-i, 1);
+    }
+}
+function ui_addDmgMessage(inmsg, inlocx, inlocy, incolor="ffffff", induration=1000) {
+    ui_dmgMessages.push({
+        locx: inlocx,
+        locy: inlocy,
+        color: incolor,
+        msg: inmsg,
+        duration: induration // Duration in ms (fades out the last 700ms)
+    });
+}
+function ui_updateDmgMessages() {
+    // Update durations and remove if necessary
+    var dmgMessageIdsToRemove = [];
+    for(let i = 0; i < ui_dmgMessages.length; i++) {
+        ui_dmgMessages[i].duration -= gameInterval;
+        ui_dmgMessages[i].locy -= gameInterval * 0.006 * ((ui_dmgMessages[i].duration-400)/1000);
+        if(ui_dmgMessages[i].duration < 0) {
+            dmgMessageIdsToRemove.push(i);
+        }
+    }
+    for(let i = 0; i < dmgMessageIdsToRemove.length; i++) {
+        ui_dmgMessages.splice(dmgMessageIdsToRemove[i]-i, 1);
     }
 }
 

@@ -13,7 +13,7 @@ const IMGS_ENTITY = [
     'images/entities/enemy_crab_idleright_0.png',
     'images/entities/enemy_strider_idle_0.png',
     'images/entities/enemy_strider_idleright_0.png'
-]
+];
 const IMGS_OTHER = [
     'images/overlays/Dmg_0.png',
     'images/overlays/Dmg_1.png',
@@ -29,7 +29,7 @@ const IMGS_OTHER = [
     'images/bg/bg_main_highlands_dark_fade.png',
     'images/bg/bg_main_desert_dark_fade.png',
     'images/bg/bg_main_plains_dark_fade.png'
-]
+];
 
 // Audios info
 const MUSICS = [
@@ -40,7 +40,7 @@ const MUSICS = [
     'sounds/S_13_Backroad.mp3', // Backroad
     'sounds/S_16_Tteokguk.mp3', // Tteokguk
     'sounds/S_19_Plain.mp3' // Plain
-]
+];
 const MUSICS_VOL = 0.25;
 
 // Misc info
@@ -48,7 +48,7 @@ const BGS_BYBIOME = [
     'images/bg/bg_main_highlands_dark_fade.png',
     'images/bg/bg_main_desert_dark_fade.png',
     'images/bg/bg_main_plains_dark_fade.png'
-]
+];
 
 // Blocks info
 const BLOCKS_startsat = -1;
