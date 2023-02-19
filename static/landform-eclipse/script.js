@@ -116,6 +116,7 @@ var world_eventState = "normal";
 var veleq = 1;
 var display_skipFrames = true;
 var entities = [];
+var projectiles = [];
 var ui_messages = [/*{
     loc: 0, // Location (0=top left)
     color: 0, // Color (0=white)
@@ -341,7 +342,7 @@ function ui_updateMessages() {
         ui_messages.splice(messageIdsToRemove[i]-i, 1);
     }
 }
-function ui_addDmgMessage(inmsg, inlocx, inlocy, incolor="ffffff", induration=1000) {
+function ui_addDmgMessage(inmsg, inlocx, inlocy, incolor="#ffffff", induration=1000) {
     ui_dmgMessages.push({
         locx: inlocx,
         locy: inlocy,
@@ -593,6 +594,7 @@ function gameInput() {
     if(keys['d']) { inputs.push('right'); }
     if(keys['s']) { inputs.push('down'); }
     if(keys[' '] || keys['w']) { inputs.push('jump'); }
+    if(keys['p']) { inputs.push('shoot'); keys['p']=false; } // todo: replace with click to shoot if weapon held
     if(keys['v'] && keys['e']) { inputs.push('save'); keys['v']=false; keys['e']=false; }
     if(keys['arrowleft']) { inputs.push('invl'); keys['arrowleft']=false; } // All keys are lowercase
     if(keys['arrowright']) { inputs.push('invr'); keys['arrowright']=false; }
@@ -637,6 +639,16 @@ function gameInput() {
     if(inputs.includes('invmenu')) {
         // Open/close inventory menu
         ui_invMenus[0].toggleVisible();
+    }
+    if(inputs.includes('shoot')) {
+        // Shoot projectile
+        // todo: replace with click to shoot if weapon held
+        // Determine direction to mouse (will be normalized by projectile)
+        var directionx = pointerxwr - mychar.locx;
+        var directiony = pointerywr - mychar.locy;
+        // Create projectile (todo: based on weapon)
+        var newProjectile = new Projectile(mychar.locx, mychar.locy, directionx, directiony, "normal", 1, true);
+        projectiles.push(newProjectile);
     }
     if(mousedown) {
         // Click
@@ -752,8 +764,20 @@ function gameLoop() {
     for(let i = 0; i < entityIdsToRemove.length; i++) {
         entities.splice(entityIdsToRemove[i]-i, 1);
     }
-    // Apply projectiles velocity
-    // Check collision (projectiles and items) if not dead
+    // Apply projectiles velocity, update them, remove destroyed
+    var projectileIdsToRemove = [];
+    for(let i = 0; i < projectiles.length; i++) {
+        projectiles[i].applyPhysics();
+        var destroyed = projectiles[i].update(worldMap);
+        if(destroyed) {
+            projectileIdsToRemove.push(i);
+            continue;
+        }
+    }
+    for(let i = 0; i < projectileIdsToRemove.length; i++) {
+        projectiles.splice(projectileIdsToRemove[i]-i, 1);
+    }
+    // Check collision (items) if not dead
     
     // Render
     if(!skipRenderingThisFrame) {

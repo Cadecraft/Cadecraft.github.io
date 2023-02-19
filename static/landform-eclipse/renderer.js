@@ -132,11 +132,10 @@ function render(indbgm = false) {
     for(let i = 0; i < entities.length; i++) {
         var thisentity = entities[i];
         // Render
-        var edrawx = (thisentity.locx+offsetx)*iwidth// - toDrawImg.naturalWidth; // - toDrawImg.naturalWidth
-        var edrawy = (thisentity.locy+offsety)*iwidth// - toDrawImg.naturalHeight;
-        if(!(edrawx > iwidth*-1 && edrawx < window.innerWidth && edrawy > iwidth*-1 && edrawy < window.innerHeight)) {
-            continue; // Entity not visible
-        }
+        var edrawx = (thisentity.locx+offsetx)*iwidth; // - toDrawImg.naturalWidth; // - toDrawImg.naturalWidth
+        var edrawy = (thisentity.locy+offsety)*iwidth; // - toDrawImg.naturalHeight;
+        //if(!(edrawx > iwidth*-1 && edrawx < window.innerWidth && edrawy > iwidth*-1 && edrawy < window.innerHeight)) { // todo: delete line
+        if(!isPointVisible(edrawx, edrawy, iwidth)) continue; // Entity not visible
         var toDrawImg = allimgs[thisentity.getTextureFilename()];
         ctx.drawImage(toDrawImg, 0, 0, toDrawImg.naturalWidth, toDrawImg.naturalHeight, Math.floor(edrawx), Math.floor(edrawy), Math.floor(toDrawImg.naturalWidth*globalScale), Math.floor(toDrawImg.naturalHeight*globalScale));
         // hp bar + stats (if has taken dmg)
@@ -152,6 +151,19 @@ function render(indbgm = false) {
             ctx.font = '11px Tahoma';
             ctx.fillText("["+thisentity.lvl+"] "+thisentity.name, edrawx - 6, edrawy - 27);
         }
+    }
+
+    // ITEMS
+    // Render projectiles
+    for(let i = 0; i < projectiles.length; i++) {
+        var thisprojectile = projectiles[i];
+        // Render
+        ctx.globalAlpha = 0.8;
+        var pdrawx = (thisprojectile.locx+offsetx)*iwidth;
+        var pdrawy = (thisprojectile.locy+offsety)*iwidth;
+        if(!isPointVisible(pdrawx, pdrawy, iwidth)) continue; // Projectile is not visible
+        ctx.fillStyle = PROJECTILE_TYPES[thisprojectile.type].color;
+        ctx.fillRect(pdrawx, pdrawy, 5*globalScale, 5*globalScale);
     }
 
     // FX
@@ -281,6 +293,12 @@ function render(indbgm = false) {
         }
     }
     ctx.globalAlpha = 1.0;
+}
+
+// Utilities
+// Is point visible (point is in screen location)
+function isPointVisible(locx, locy, iwidth) {
+    return (locx > iwidth*-1 && locx < window.innerWidth && locy > iwidth*-1 && locy < window.innerHeight);
 }
 
 // Dbg message renderer

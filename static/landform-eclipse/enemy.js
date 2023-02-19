@@ -157,13 +157,14 @@ class Entity {
             // Heal
             this.hp += (-1) * inamt;
             if(this.hp > this.hpmax) { this.hp = this.hpmax; }
-            // Show heal number floating (todo) (ex. "+15")
-            ui_addDmgMessage("+" + ((-1) * inamt), this.locx+0.7, this.locy, "#2cfc03");
+            // Show heal number floating (ex. "+15")
+            console.log('Entity HEALED');
+            ui_addDmgMessage("+" + ((-1) * inamt), this.locx+0.7, this.locy, "#2cfc03"); // #2cfc03
         } else {
             // Damage
             this.hp -= inamt;
             if(this.hp < 0) { this.hp = 0; } // Is now dead
-            // Show dmg number floating (todo) (ex. "15")
+            // Show dmg number floating (ex. "15")
             ui_addDmgMessage("" + (inamt), this.locx+0.5, this.locy);
         }
     }

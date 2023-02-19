@@ -467,3 +467,14 @@ const ENTITY_SPAWN_RATES = [
 ];
 const max_entities_natural = 100; // 100; Maximum number of entties naturally spawned
 const entities_spawn_interval_seconds = 20; // 20; Interval between spawn passes
+
+// Projectiles data
+const PROJECTILE_TYPES = {
+    "normal": {
+        velinitial: 0.5,
+        color: "#ff456a",
+        gravity: 0.005,
+        canPierce: false,
+        baseDmg: 5
+    }
+};
