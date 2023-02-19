@@ -50,16 +50,23 @@ TO ADD (also search: `toadd`~):
 > Dmg messages turn green when all enemies are dead??
 > Entity physics efficiency ?
 > Render efficiency
+> Projectile: check for collision halfway between applying velocity to prevent teleporting through
+> DROPPED ITEMS (include stacks)
+> DROPS: Entity drops
+> Artifacts
+> Show player holding items
 > Entity piggy back jump off each other ?
 > Title screen: show bar w/ trebuchet ms like in promo_Landform.psd
 > More soundtracks (Tierra del Fuego, Datura)
 > Bosses
+> Enemy hit knockback, gore ?
 > Bg: per biome (add more)
 > Bg: improve desert bg
 > Bg: clouds
 > Inv: merge inv hotbar with the rest of inv menu?
 > Inv: allow combining/merging items of same type (and calc stack excess)
-> 2. Dmg messages
+> Inv: throwing out item as drop
+> 1. Weapon items for player (start inv with default)
 > 3. UI panel for NPC prchasing
 > 4. Player weapons/tools/items should use NEGATIVE numbers for IDs, create separate data object
 
@@ -594,7 +601,6 @@ function gameInput() {
     if(keys['d']) { inputs.push('right'); }
     if(keys['s']) { inputs.push('down'); }
     if(keys[' '] || keys['w']) { inputs.push('jump'); }
-    if(keys['p']) { inputs.push('shoot'); keys['p']=false; } // todo: replace with click to shoot if weapon held
     if(keys['v'] && keys['e']) { inputs.push('save'); keys['v']=false; keys['e']=false; }
     if(keys['arrowleft']) { inputs.push('invl'); keys['arrowleft']=false; } // All keys are lowercase
     if(keys['arrowright']) { inputs.push('invr'); keys['arrowright']=false; }
@@ -640,16 +646,6 @@ function gameInput() {
         // Open/close inventory menu
         ui_invMenus[0].toggleVisible();
     }
-    if(inputs.includes('shoot')) {
-        // Shoot projectile
-        // todo: replace with click to shoot if weapon held
-        // Determine direction to mouse (will be normalized by projectile)
-        var directionx = pointerxwr - mychar.locx;
-        var directiony = pointerywr - mychar.locy;
-        // Create projectile (todo: based on weapon)
-        var newProjectile = new Projectile(mychar.locx, mychar.locy, directionx, directiony, "normal", 1, true);
-        projectiles.push(newProjectile);
-    }
     if(mousedown) {
         // Click
         // Send click to menus
@@ -668,8 +664,41 @@ function gameInput() {
             // Do nothing in world
         }
         // Click in world: based on item type in player inv
-        else if(mychar.invGetSelected()[0] == -100) {
-            // Use item (toadd~)
+        else if("isitem" in BLOCKS[mychar.invGetSelected()[0]]) {
+            var thisItemSlot = mychar.invGetSelected();
+            // Is item: use
+            if(BLOCKS[thisItemSlot[0]].itemtype == "pick") {
+                // Pick: Dig block
+                if(timers["timer_mining"] <= 0 && !mychar.justPlacedBlock) {
+                    // Try to dig block
+                    var blockDamaged = tryDamageBlock(mychar.miningefficiency);
+                    if(blockDamaged) {
+                        timers["timer_mining"] = mychar.cooldown_mining;
+                    }
+                }
+            } else if(BLOCKS[thisItemSlot[0]].itemtype == "gun") {
+                // Gun: shoot projectile
+                if(timers["timer_shooting"] <= 0) {
+                    // Determine direction to mouse (will be normalized by projectile)
+                    var directionx = pointerxwr - mychar.locx;
+                    var directiony = pointerywr - mychar.locy;
+                    // Create projectile
+                    // todo: make projectile based on weapon data
+                    var newProjectile = new Projectile(
+                        mychar.locx, mychar.locy,
+                        directionx, directiony,
+                        mychar.calculateStats().critRate,
+                        thisItemSlot[2].projectiletype,
+                        thisItemSlot[2].dmgmult,
+                        true
+                    );
+                    projectiles.push(newProjectile);
+                    // Update cooldown
+                    timers["timer_shooting"] = mychar.cooldown_shooting;
+                }
+            } else {
+                // Use item other (toadd~)
+            }
         }
         else if(getMapBlock(worldMap, pointerybl, pointerxbl) == 0 && BLOCKS[mychar.invGetSelected()[0]].placeable) {
             // Place block if enabled
@@ -680,14 +709,7 @@ function gameInput() {
             }
         }
         else {
-            // Dig block
-            if(timers["timer_mining"] <= 0 && (/*mychar.invGetSelected()[0] == -1 || */mychar.invGetSelected()[0] == 8) && !mychar.justPlacedBlock) {
-                // Try to dig block
-                var blockDamaged = tryDamageBlock(mychar.miningefficiency);
-                if(blockDamaged) {
-                    timers["timer_mining"] = mychar.cooldown_mining;
-                }
-            }
+            // None: block is not known
         }
         // Random other click stuff
         if(!hasMusicStarted) randomMusics(); // Sounds can only play when the user has clicked
@@ -717,7 +739,8 @@ gameStart(); // call
 
 // Timers
 var timers = {
-    "timer_mining": 0
+    "timer_mining": 0,
+    "timer_shooting": 0
 };
 
 // Game loop

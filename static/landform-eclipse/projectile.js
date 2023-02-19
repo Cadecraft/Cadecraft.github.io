@@ -3,7 +3,7 @@
 // Projectile script
 class Projectile {
     // Constructor
-    constructor(locx, locy, directionx, directiony, type = "normal", dmgMult = 1, fromPlayer = true) {
+    constructor(locx, locy, directionx, directiony, critRate = 0.1, type = "normal", dmgMult = 1, fromPlayer = true) {
         // Set defaults
         this.type = type;
         if(!Object.keys(PROJECTILE_TYPES).includes(this.type)) this.type = "normal";
@@ -16,6 +16,7 @@ class Projectile {
         this.velx = this.init_directionx * PROJECTILE_TYPES[this.type].velinitial;
         this.vely = this.init_directiony * PROJECTILE_TYPES[this.type].velinitial;
         this.dmg = PROJECTILE_TYPES[this.type].baseDmg * dmgMult;
+        this.critRate = critRate;
     }
     // Apply physics
     applyPhysics() {
@@ -40,9 +41,10 @@ class Projectile {
         if(this.fromPlayer) {
             // Check if touching an entity
             for(let i = 0; i < entities.length; i++) {
-                if(Math.abs(this.locx - entities[i].locx) < 0.6 && Math.abs(this.locy - entities[i].locy) < 0.7) {
+                if(Math.abs(this.locx - entities[i].locx) < 0.7 && Math.abs(this.locy - entities[i].locy) < 0.8) {
                     // Touching this entity
-                    entities[i].takeDmg(this.dmg);
+                    if(Math.random() < this.critRate) entities[i].takeDmg(this.dmg * 2, true);
+                    else entities[i].takeDmg(this.dmg);
                     // Can pierce?
                     if(!PROJECTILE_TYPES[this.type].canPierce) {
                         return true; // Destroy

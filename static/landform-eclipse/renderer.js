@@ -161,9 +161,10 @@ function render(indbgm = false) {
         ctx.globalAlpha = 0.8;
         var pdrawx = (thisprojectile.locx+offsetx)*iwidth;
         var pdrawy = (thisprojectile.locy+offsety)*iwidth;
+        var pdrawwidth = PROJECTILE_TYPES[thisprojectile.type].width*globalScale;
         if(!isPointVisible(pdrawx, pdrawy, iwidth)) continue; // Projectile is not visible
         ctx.fillStyle = PROJECTILE_TYPES[thisprojectile.type].color;
-        ctx.fillRect(pdrawx, pdrawy, 5*globalScale, 5*globalScale);
+        ctx.fillRect(pdrawx-pdrawwidth/2, pdrawy-pdrawwidth/2, pdrawwidth, pdrawwidth);
     }
 
     // FX
@@ -171,7 +172,7 @@ function render(indbgm = false) {
 
     // UI
     // Render ui dmg messages
-    ctx.font = '14px Tahoma';
+    ctx.font = '15px Tahoma';
     ui_updateDmgMessages();
     for(let i = 0; i < ui_dmgMessages.length; i++) {
         var thismsg = ui_dmgMessages[i];

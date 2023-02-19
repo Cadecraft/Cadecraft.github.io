@@ -164,12 +164,9 @@ const BLOCKS = {
         idescr: 'A pickaxe',
         irarity: 1,
         img: 'images/items/item_pick.png',
-        placeable: false,
-        collision: 'item',
-        hardness: -1,
-        hp: -1,
-        drops: [],
-        destroyByWater: false
+        isitem: true,
+        itemtype: "pick",
+        oneperstack: true
     },
     9: {
         iname: "Snow",
@@ -427,6 +424,15 @@ const BLOCKS = {
         drops: [29], // or perhaps drop 4 (regular Stone)
         destroyByWater: false
     },
+    30: {
+        iname: 'Blaster',
+        idescr: 'A simple blaster. You forgot where you acquired it.',
+        irarity: 1,
+        img: 'images/items/item_gun_0.png',
+        isitem: true,
+        itemtype: "gun",
+        oneperstack: true
+    },
 };
 
 // World gen consts
@@ -475,6 +481,15 @@ const PROJECTILE_TYPES = {
         color: "#ff456a",
         gravity: 0.005,
         canPierce: false,
-        baseDmg: 5
+        baseDmg: 5,
+        width: 4
+    },
+    "blaster": {
+        velinitial: 0.6,
+        color: "#19f8ac",
+        gravity: 0.002,
+        canPierce: false,
+        baseDmg: 15,
+        width: 6
     }
 };

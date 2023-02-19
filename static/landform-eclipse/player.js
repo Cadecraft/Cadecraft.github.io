@@ -22,6 +22,7 @@ class Player {
         this.miningefficiency = 2; // Dmg to deal: def=1
         this.justPlacedBlock = false;
         this.justMinedBlock = false;
+        this.cooldown_shooting = 200;
         // Physics defs
         this.phys_decel = 0.023; // 0.023
         this.phys_accel = 0.034; // 0.034
@@ -35,15 +36,16 @@ class Player {
         this.phys_waterslowfactorX = 0.6; // 0.6
         // Inv defs
         this.inventory = [
-            [8,1],[-1,0]
-        ]; // [itemid,itemstackamt]
+            [8, 1, { empty: true }], // Default pick
+            [30, 1, { dmgmult: 1.1, projectiletype: "blaster" }] // Default blaster
+        ]; // [itemid,itemstackamt,itemdata]
         this.inv_selected = 0;
         this.inv_maxstack = 64;
         this.inv_menuwidth = 10;
         this.inv_defaultLength = 40;
         var origInvlen = this.inventory.length; // Because of defaults like pick
         for(let i = 0; i < (this.inv_defaultLength-origInvlen); i++) {
-            this.inventory.push([-1,0]); // Default void slot
+            this.inventory.push([-1, 0, { empty: true }]); // Default void slot
         }
         // Dbg defs
         this.dbg_highl_bl1 = [0,0]; // Debug highlighting (x, y)
@@ -51,7 +53,7 @@ class Player {
     }
     // Inv funcs
     // Add inamt blocks of inid type to inv; returns false if cannot add
-    invAddBlock(inid, inamt=1) {
+    invAddBlock(inid, inamt=1, initemdata = { empty: true }) {
         // Check that block exists
         if(inid >= Object.keys(BLOCKS).length) {
             console.log("Err: Block id "+inid+" does not exist; ids 0-"+(Object.keys(BLOCKS).length-1)+" exist");
@@ -66,16 +68,17 @@ class Player {
             // Loop through inv and try to add
             var added = false;
             for(let j = 0; j < this.inventory.length; j++) {
-                // find open slot OR same item not fully stacked
+                // find open slot OR same item not fully stacked (except for items that are only one per stack)
                 if(this.inventory[j][1] >= this.inv_maxstack) {
                     continue;
-                } else if(this.inventory[j][0] == inid) {
+                } else if(this.inventory[j][0] == inid && !('oneperstack' in BLOCKS[inid])) {
                     this.inventory[j][1]++; // Add
                     added = true;
                     break;
                 } else if(this.inventory[j][0] == -1) {
                     this.inventory[j][0] = inid;
                     this.inventory[j][1] = 1;
+                    this.inventory[j][2] = initemdata;
                     added = true;
                     break;
                 }
@@ -97,7 +100,7 @@ class Player {
     invGetSelected() {
         // Get the item at selected index
         if(this.inv_selected >= this.inventory.length) {
-            return [-1,0];
+            return [-1,0, { empty: true }];
         }
         return this.inventory[this.inv_selected];
     }
@@ -117,14 +120,25 @@ class Player {
     }
     invReduceBlock(inindex) {
         // Decrease amount in the stack
-        if(inindex < this.inventory.length) {
-            this.inventory[inindex][1]--;
-            if(this.inventory[inindex][1] <= 0) {
-                this.inventory[inindex][0] = -1;
-            }
+        if(inindex >= this.inventory.length || inindex < 0) {
+            return false; // Index out of range
+        }
+        this.inventory[inindex][1]--;
+        if(this.inventory[inindex][1] <= 0) {
+            // None left: clear
+            this.inventory[inindex][0] = -1;
+            this.inventory[inindex][2] = { empty: true };
         }
         this.invUpdateMenu();
         return true;
+    }
+    invUpdateItemData(inindex, keyToChange, newValue) {
+        // Update the item data of an inventory item
+        if(inindex >= this.inventory.length || inindex < 0) {
+            return false; // Index out of range
+        }
+        this.inventory[inindex][2][keyToChange] = newValue;
+        this.invUpdateMenu();
     }
     // Get map block
     getMapBlock(map, locy, locx) {
@@ -280,6 +294,13 @@ class Player {
     }
     uncrouch() {
         this.crouched = false;
+    }
+    // ARTIFACTS: Calculate stats
+    // todo: make accurate based on artifacts in inventory
+    calculateStats() {
+        return {
+            critRate: 0.1
+        };
     }
 
     // DBG: Inventory pack

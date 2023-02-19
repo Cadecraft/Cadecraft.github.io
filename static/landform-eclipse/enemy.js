@@ -151,21 +151,21 @@ class Entity {
         res += "_" + this.currentTextureFrame + ".png"; // ex. images/entities/enemy_crab_idleright_0.png
         return res;
     }
-    // Take dmg (negative heals)
-    takeDmg(inamt) {
+    // Take dmg (negative heals) (wasCrit is only for display purposes)
+    takeDmg(inamt, wasCrit = false) {
         if(inamt < 0) {
             // Heal
             this.hp += (-1) * inamt;
             if(this.hp > this.hpmax) { this.hp = this.hpmax; }
             // Show heal number floating (ex. "+15")
             console.log('Entity HEALED');
-            ui_addDmgMessage("+" + ((-1) * inamt), this.locx+0.7, this.locy, "#2cfc03"); // #2cfc03
+            ui_addDmgMessage("+" + Math.round((-1) * inamt), this.locx+0.7, this.locy, "#2cfc03"); // #2cfc03
         } else {
             // Damage
             this.hp -= inamt;
             if(this.hp < 0) { this.hp = 0; } // Is now dead
-            // Show dmg number floating (ex. "15")
-            ui_addDmgMessage("" + (inamt), this.locx+0.5, this.locy);
+            // Show dmg number floating (ex. "15") (crit is red)
+            ui_addDmgMessage("" + Math.round(inamt), this.locx+0.5, this.locy, wasCrit ? "#ff0000" : "#ffffff");
         }
     }
     // Check is alive
