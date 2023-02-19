@@ -17,12 +17,14 @@ class Projectile {
         this.vely = this.init_directiony * PROJECTILE_TYPES[this.type].velinitial;
         this.dmg = PROJECTILE_TYPES[this.type].baseDmg * dmgMult;
         this.critRate = critRate;
+        this.gravity = PROJECTILE_TYPES[this.type].gravity;
+        this.canPierce = PROJECTILE_TYPES[this.type].canPierce;
     }
     // Apply physics
     applyPhysics() {
         this.locx += this.velx * veleq;
         this.locy += this.vely * veleq;
-        this.vely += PROJECTILE_TYPES[this.type].gravity * veleq;
+        this.vely += this.gravity * veleq;
     }
     // Update when given map (returns true if should be deleted)
     update(map) {
@@ -46,7 +48,7 @@ class Projectile {
                     if(Math.random() < this.critRate) entities[i].takeDmg(this.dmg * 2, true);
                     else entities[i].takeDmg(this.dmg);
                     // Can pierce?
-                    if(!PROJECTILE_TYPES[this.type].canPierce) {
+                    if(!this.canPierce) {
                         return true; // Destroy
                     }
                 }
@@ -58,7 +60,7 @@ class Projectile {
                 // Touching player
                 // todo: player take dmg
                 // Can pierce?
-                if(!PROJECTILE_TYPES[this.type].canPierce) {
+                if(!this.canPierce) {
                     return true; // Destroy
                 }
             }

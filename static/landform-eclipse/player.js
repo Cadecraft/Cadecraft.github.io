@@ -18,11 +18,8 @@ class Player {
         this.crouched = false;
         this.inWater = false;
         // Cooldown defs
-        this.cooldown_mining = 50;
-        this.miningefficiency = 2; // Dmg to deal: def=1
         this.justPlacedBlock = false;
         this.justMinedBlock = false;
-        this.cooldown_shooting = 200;
         // Physics defs
         this.phys_decel = 0.023; // 0.023
         this.phys_accel = 0.034; // 0.034
@@ -36,8 +33,8 @@ class Player {
         this.phys_waterslowfactorX = 0.6; // 0.6
         // Inv defs
         this.inventory = [
-            [8, 1, { empty: true }], // Default pick
-            [30, 1, { dmgmult: 1.1, projectiletype: "blaster" }] // Default blaster
+            [8, 1, { efficiency: 1.5, cooldowntime: 50 }], // Default pick
+            [30, 1, { dmgmult: 1.1, projectiletype: "blaster", cooldowntime: 200, critrate: 0.1 }] // Default blaster
         ]; // [itemid,itemstackamt,itemdata]
         this.inv_selected = 0;
         this.inv_maxstack = 64;
@@ -103,6 +100,9 @@ class Player {
             return [-1,0, { empty: true }];
         }
         return this.inventory[this.inv_selected];
+    }
+    invGetSelectedIndex() {
+        return this.inv_selected;
     }
     invSetSelected(newinv_selected, toprint = true) {
         // Set the selected index
@@ -295,11 +295,11 @@ class Player {
     uncrouch() {
         this.crouched = false;
     }
-    // ARTIFACTS: Calculate stats
+    // ARTIFACTS: Calculate stats (some are additive to weapon stats)
     // todo: make accurate based on artifacts in inventory
     calculateStats() {
         return {
-            critRate: 0.1
+            critrate: 0.0
         };
     }
 

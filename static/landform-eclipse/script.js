@@ -38,6 +38,8 @@ TO ADD (also search: `toadd`~):
 > Entity logic
 > Entity attacking
 > Tree shape diversity (acacia)
+> Torches in caves
+> Cave animals (spawn with cave bg wall)
 > Render chunk (only loop through the blocks visible (i starts after 0))
 > Circular lighting (remove corners)
 > Water source generation (on destroy done, on place)
@@ -55,11 +57,14 @@ TO ADD (also search: `toadd`~):
 > DROPS: Entity drops
 > Artifacts
 > Show player holding items
+> Gun pickup drops
+> Random name on items, like pick or gun: use syntax "Gun: {}", "Slothful Shooter"
+> Projectile imgs
 > Entity piggy back jump off each other ?
 > Title screen: show bar w/ trebuchet ms like in promo_Landform.psd
 > More soundtracks (Tierra del Fuego, Datura)
 > Bosses
-> Enemy hit knockback, gore ?
+> Enemy hit knockback, gore ? (esp. on crit)
 > Bg: per biome (add more)
 > Bg: improve desert bg
 > Bg: clouds
@@ -69,6 +74,10 @@ TO ADD (also search: `toadd`~):
 > 1. Weapon items for player (start inv with default)
 > 3. UI panel for NPC prchasing
 > 4. Player weapons/tools/items should use NEGATIVE numbers for IDs, create separate data object
+
+> Legendary weapon ideas
+  - import from LiWOl (including morning star, dune slicer, etc.)
+  - guitargun (bocchi the glock)
 
 RECENT CHANGES
 > None
@@ -670,31 +679,38 @@ function gameInput() {
             if(BLOCKS[thisItemSlot[0]].itemtype == "pick") {
                 // Pick: Dig block
                 if(timers["timer_mining"] <= 0 && !mychar.justPlacedBlock) {
+                    // Check that pick data is valid; if not, substitute defs
+                    if(!('efficiency' in thisItemSlot[2])) mychar.invUpdateItemData(mychar.invGetSelectedIndex(), 'efficiency', picks_default_efficiency);
+                    if(!('cooldowntime' in thisItemSlot[2])) mychar.invUpdateItemData(mychar.invGetSelectedIndex(), 'cooldowntime', picks_default_cooldowntime);
                     // Try to dig block
-                    var blockDamaged = tryDamageBlock(mychar.miningefficiency);
+                    var blockDamaged = tryDamageBlock(thisItemSlot[2].efficiency);
                     if(blockDamaged) {
-                        timers["timer_mining"] = mychar.cooldown_mining;
+                        timers["timer_mining"] = thisItemSlot[2].cooldowntime;
                     }
                 }
             } else if(BLOCKS[thisItemSlot[0]].itemtype == "gun") {
                 // Gun: shoot projectile
                 if(timers["timer_shooting"] <= 0) {
+                    // Check that gun data is valid; if not, substitute defs
+                    if(!('critrate' in thisItemSlot[2])) mychar.invUpdateItemData(mychar.invGetSelectedIndex(), 'critrate', guns_default_critRate);
+                    if(!('dmgmult' in thisItemSlot[2])) mychar.invUpdateItemData(mychar.invGetSelectedIndex(), 'dmgmult', guns_default_dmgMult);
+                    if(!('cooldowntime' in thisItemSlot[2])) mychar.invUpdateItemData(mychar.invGetSelectedIndex(), 'cooldowntime', guns_default_cooldowntime);
+                    if(!('projectiletype' in thisItemSlot[2])) mychar.invUpdateItemData(mychar.invGetSelectedIndex(), 'projectiletype', guns_default_projectiletype);
                     // Determine direction to mouse (will be normalized by projectile)
                     var directionx = pointerxwr - mychar.locx;
                     var directiony = pointerywr - mychar.locy;
                     // Create projectile
-                    // todo: make projectile based on weapon data
                     var newProjectile = new Projectile(
                         mychar.locx, mychar.locy,
                         directionx, directiony,
-                        mychar.calculateStats().critRate,
+                        mychar.calculateStats().critrate + thisItemSlot[2].critrate,
                         thisItemSlot[2].projectiletype,
                         thisItemSlot[2].dmgmult,
                         true
                     );
                     projectiles.push(newProjectile);
                     // Update cooldown
-                    timers["timer_shooting"] = mychar.cooldown_shooting;
+                    timers["timer_shooting"] = thisItemSlot[2].cooldowntime;
                 }
             } else {
                 // Use item other (toadd~)

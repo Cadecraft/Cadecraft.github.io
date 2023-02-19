@@ -39,7 +39,8 @@ const MUSICS = [
     'sounds/S_06_FullDive.mp3', // FULL DIVE
     'sounds/S_13_Backroad.mp3', // Backroad
     'sounds/S_16_Tteokguk.mp3', // Tteokguk
-    'sounds/S_19_Plain.mp3' // Plain
+    'sounds/S_19_Plain.mp3', // Plain
+    'sounds/S_23_Cognizant.mp3' // Cognizant
 ];
 const MUSICS_VOL = 0.25;
 
@@ -425,7 +426,7 @@ const BLOCKS = {
         destroyByWater: false
     },
     30: {
-        iname: 'Blaster',
+        iname: 'Gun',
         idescr: 'A simple blaster. You forgot where you acquired it.',
         irarity: 1,
         img: 'images/items/item_gun_0.png',
@@ -466,9 +467,9 @@ const WGEN_STRUCTURES = {
 
 // Entity spawn rates
 const ENTITY_SPAWN_RATES = [
-    [
+    [ // Biome 0:
         { spawnClassName: "Crab", spawnChance: 0.01 },
-        { spawnClassName: "Monkey", spawnChance: 0.005 }
+        { spawnClassName: "Monkey", spawnChance: 0.005 } // todo: add key "cave" for cave-only animals
     ]
 ];
 const max_entities_natural = 100; // 100; Maximum number of entties naturally spawned
@@ -491,5 +492,26 @@ const PROJECTILE_TYPES = {
         canPierce: false,
         baseDmg: 15,
         width: 6
+    },
+    "decimbolt": {
+        velinitial: 0.8,
+        color: "#0d0c1a",
+        gravity: 0,
+        canPierce: true,
+        baseDmg: 5,
+        width: 9
     }
+};
+
+// Pick data
+const picks_default_efficiency = 1.5;
+const picks_default_cooldowntime = 50;
+
+// Gun data
+const guns_default_critRate = 0.1;
+const guns_default_dmgMult = 1.1;
+const guns_default_cooldowntime = 200;
+const guns_default_projectiletype = "normal";
+const GUNS_DATA = {
+
 };

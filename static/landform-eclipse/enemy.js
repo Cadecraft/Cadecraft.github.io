@@ -52,7 +52,7 @@ class Entity {
         this.descr = "A default entity (should not exist in-game)."; // Descr
         this.drops = [14]; // Drop items
         this.hpmax = 100; // Max HP
-        this.friendly = false; // !friendly = attacks player
+        this.friendly = false; // -> !friendly = attacks player
         this.textures = [ // do not append frame numbers, 'right', or '.png'
             "images/entities/enemy_crab_idle"
         ];
