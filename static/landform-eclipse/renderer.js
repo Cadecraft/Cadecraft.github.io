@@ -220,7 +220,7 @@ function render(indbgm = false) {
         ctx.globalAlpha = Math.min(thismsg.duration/1000.0, 1)*0.8;
         // Render
         ctx.fillStyle = 'black';
-        ctx.fillRect(20, 20+ui_invItemWidth+(i)*24, 150, 20);
+        ctx.fillRect(20, 20+ui_invItemWidth+(i)*24, 160, 20);
         ctx.fillStyle = 'white';
         ctx.fillText(thismsg.msg, 23, 35+ui_invItemWidth+(i)*24);
     }

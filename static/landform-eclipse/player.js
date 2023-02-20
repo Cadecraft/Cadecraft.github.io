@@ -88,7 +88,7 @@ class Player {
         }
         this.invUpdateMenu();
         // Message
-        ui_addMessage("+"+inamt+" "+BLOCKS[inid].iname);
+        ui_addMessage("+"+inamt+" "+this.formatInvItemName([inid, inamt, initemdata])); // BLOCKS[inid].iname);
         return true;
     }
     invUpdateMenu() {
@@ -111,7 +111,7 @@ class Player {
         else if(this.inv_selected < 0) this.inv_selected = 10+this.inv_selected;
         // Print
         if(toprint && this.invGetSelected()[0] != -1) {
-            ui_addMessage(BLOCKS[this.invGetSelected()[0]].iname, 2000, 0, 0, true);
+            ui_addMessage(this.formatInvItemName(this.invGetSelected()), 2000, 0, 0, true);
         }
     }
     invIncrementSelected(amt, toprint = true) {
@@ -301,6 +301,14 @@ class Player {
         return {
             critrate: 0.0
         };
+    }
+    // Format inv item name (given the [3] array for an inventory item)
+    formatInvItemName(invItemArr) {
+        if('nameappend' in invItemArr[2]) {
+            return BLOCKS[invItemArr[0]].iname + ": " + invItemArr[2].nameappend;
+        } else {
+            return BLOCKS[invItemArr[0]].iname;
+        }
     }
 
     // DBG: Inventory pack

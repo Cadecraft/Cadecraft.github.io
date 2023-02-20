@@ -91,18 +91,21 @@ class Entity {
             }
             break;
         case 1:
-            // move l/r with jump when wall found
+            // move l/r with jump when wall found or if directly below/above target
             if(inlocx < this.locx - 0.5) {
                 this.addVel(this.phys_accel * -1, 0); this.facingRight = false;
                 if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy+0.1), Math.floor(this.locx-0.1))].collision == 'solid') {
                     this.jump(1);
                 }
             }
-            if(inlocx > this.locx + 0.5) {
+            else if(inlocx > this.locx + 0.5) {
                 this.addVel(this.phys_accel * 1, 0); this.facingRight = true;
                 if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy+0.1), Math.floor(this.locx+1.1))].collision == 'solid') {
                     this.jump(1);
                 }
+            }
+            else {
+                this.jump(1);
             }
             break;
         case 2:

@@ -115,7 +115,7 @@ class InvMenu {
         }
         // Msg if new item selected
         if(this.contentsSelected != -1 && this.contentsArr[this.contentsSelected][0] != -1 && this.boundToPlayer) {
-            ui_addMessage(BLOCKS[this.contentsArr[this.contentsSelected][0]].iname, 2000, 0, 0, true);
+            ui_addMessage(mychar.formatInvItemName(this.contentsArr[this.contentsSelected]), 2000, 0, 0, true);
         }
         // Updates
         if(this.boundToPlayer) {
