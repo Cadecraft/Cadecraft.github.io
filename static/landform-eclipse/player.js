@@ -33,8 +33,8 @@ class Player {
         this.phys_waterslowfactorX = 0.6; // 0.6
         // Inv defs
         this.inventory = [
-            [8, 1, { efficiency: 1.5, cooldowntime: 50 }], // Default pick
-            [30, 1, { dmgmult: 1.1, projectiletype: "blaster", cooldowntime: 200, critrate: 0.1 }] // Default blaster
+            [8, 1, { nameappend: "space mining standard", efficiency: 1.5, cooldowntime: 50 }], // Default pick
+            [30, 1, { nameappend: "old blaster", dmgmult: 1.1, projectiletype: "blaster", cooldowntime: 200, critrate: 0.1 }] // Default blaster
         ]; // [itemid,itemstackamt,itemdata]
         this.inv_selected = 0;
         this.inv_maxstack = 64;

@@ -130,6 +130,7 @@ function render(indbgm = false) {
     } catch(err) { console.log('err: rendering PLAYER'); }
     // Render entities
     for(let i = 0; i < entities.length; i++) {
+        ctx.globalAlpha = 1;
         var thisentity = entities[i];
         // Render
         var edrawx = (thisentity.locx+offsetx)*iwidth; // - toDrawImg.naturalWidth; // - toDrawImg.naturalWidth
