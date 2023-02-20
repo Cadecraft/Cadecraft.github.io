@@ -500,11 +500,24 @@ function setWorldEventState(newstate) {
     updateBlockLightLvls();
 }
 
+// Spawn projectile
+function spawnProjectile(locx, locy, directionx, directiony, critrate, projectiletype, dmgmult, fromPlayer) {
+    var newprojectile = new Projectile(
+        locx, locy,
+        directionx, directiony,
+        critrate,
+        projectiletype,
+        dmgmult,
+        true
+    );
+    projectiles.push(newprojectile);
+}
+
 // Spawn entity (inclass should be a reference to the entity)
 function spawnEntity(InClass, inlocx, inlocy, inlvl) {
     //if(InClass ) // check whether InClass extends Entity (toadd)
-    var newenemy = new InClass(inlocx, inlocy, inlvl);
-    entities.push(newenemy);
+    var newentity = new InClass(inlocx, inlocy, inlvl);
+    entities.push(newentity);
 }
 // Spawn entities pass (has a chance of spawning an entity across the world, if the limit is not reached yet)
 function spawnEntitiesPass() {
@@ -530,9 +543,6 @@ function spawnEntitiesPass() {
                 }
             }
         }
-        // Dbg
-        /* console.log('Crab spawned');
-        spawnEntity(Crab, x, thisheight - 3); */
     }
 }
 // Entity spawn timer
@@ -569,10 +579,6 @@ document.onmousedown = function(event) {
     // Set value
     mousedown = true;
     mouseclicktick = true;
-    // If in game, call function
-    /*if(mylocation != 'lobby') {
-        gameInputClick();
-    }*/
 }
 // Mouse up
 document.onmouseup = function(event) {
@@ -680,8 +686,8 @@ function gameInput() {
                 // Pick: Dig block
                 if(timers["timer_mining"] <= 0 && !mychar.justPlacedBlock) {
                     // Check that pick data is valid; if not, substitute defs
-                    if(!('efficiency' in thisItemSlot[2])) mychar.invUpdateItemData(mychar.invGetSelectedIndex(), 'efficiency', picks_default_efficiency);
-                    if(!('cooldowntime' in thisItemSlot[2])) mychar.invUpdateItemData(mychar.invGetSelectedIndex(), 'cooldowntime', picks_default_cooldowntime);
+                    mychar.invRequireSelectedContainsKey('efficiency', picks_default_efficiency);
+                    mychar.invRequireSelectedContainsKey('cooldowntime', picks_default_cooldowntime);
                     // Try to dig block
                     var blockDamaged = tryDamageBlock(thisItemSlot[2].efficiency);
                     if(blockDamaged) {
@@ -692,15 +698,15 @@ function gameInput() {
                 // Gun: shoot projectile
                 if(timers["timer_shooting"] <= 0) {
                     // Check that gun data is valid; if not, substitute defs
-                    if(!('critrate' in thisItemSlot[2])) mychar.invUpdateItemData(mychar.invGetSelectedIndex(), 'critrate', guns_default_critRate);
-                    if(!('dmgmult' in thisItemSlot[2])) mychar.invUpdateItemData(mychar.invGetSelectedIndex(), 'dmgmult', guns_default_dmgMult);
-                    if(!('cooldowntime' in thisItemSlot[2])) mychar.invUpdateItemData(mychar.invGetSelectedIndex(), 'cooldowntime', guns_default_cooldowntime);
-                    if(!('projectiletype' in thisItemSlot[2])) mychar.invUpdateItemData(mychar.invGetSelectedIndex(), 'projectiletype', guns_default_projectiletype);
+                    mychar.invRequireSelectedContainsKey('critrate', guns_default_critrate);
+                    mychar.invRequireSelectedContainsKey('dmgmult', guns_default_dmgmult);
+                    mychar.invRequireSelectedContainsKey('cooldowntime', guns_default_cooldowntime);
+                    mychar.invRequireSelectedContainsKey('projectiletype', guns_default_projectiletype);
                     // Determine direction to mouse (will be normalized by projectile)
                     var directionx = pointerxwr - mychar.locx;
                     var directiony = pointerywr - mychar.locy;
-                    // Create projectile
-                    var newProjectile = new Projectile(
+                    // Spawn projectile
+                    spawnProjectile(
                         mychar.locx, mychar.locy,
                         directionx, directiony,
                         mychar.calculateStats().critrate + thisItemSlot[2].critrate,
@@ -708,7 +714,6 @@ function gameInput() {
                         thisItemSlot[2].dmgmult,
                         true
                     );
-                    projectiles.push(newProjectile);
                     // Update cooldown
                     timers["timer_shooting"] = thisItemSlot[2].cooldowntime;
                 }
@@ -720,7 +725,7 @@ function gameInput() {
             // Place block if enabled
             if(!mychar.justMinedBlock) {
                 placeBlock(pointerybl, pointerxbl, mychar.invGetSelected()[0]);
-                mychar.invReduceBlock(mychar.inv_selected);
+                mychar.invReduceStack(mychar.inv_selected);
                 mychar.justPlacedBlock = true;
             }
         }

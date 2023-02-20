@@ -508,8 +508,8 @@ const picks_default_efficiency = 1.5;
 const picks_default_cooldowntime = 50;
 
 // Gun data
-const guns_default_critRate = 0.1;
-const guns_default_dmgMult = 1.1;
+const guns_default_critrate = 0.1;
+const guns_default_dmgmult = 1.1;
 const guns_default_cooldowntime = 200;
 const guns_default_projectiletype = "normal";
 const GUNS_DATA = {

@@ -91,21 +91,23 @@ class Player {
         ui_addMessage("+"+inamt+" "+this.formatInvItemName([inid, inamt, initemdata])); // BLOCKS[inid].iname);
         return true;
     }
+    // Update main inventory menu
     invUpdateMenu() {
         ui_invMenus[0].setContentsArr(this.inventory);
     }
+    // Get the item at selected index
     invGetSelected() {
-        // Get the item at selected index
-        if(this.inv_selected >= this.inventory.length) {
+        if(this.inv_selected >= this.inventory.length || this.inv_selected < 0) {
             return [-1,0, { empty: true }];
         }
         return this.inventory[this.inv_selected];
     }
+    // Get the selected index
     invGetSelectedIndex() {
         return this.inv_selected;
     }
+    // Set the selected index
     invSetSelected(newinv_selected, toprint = true) {
-        // Set the selected index
         this.inv_selected = newinv_selected;
         if(this.inv_selected > 9) this.inv_selected = (this.inv_selected % 9) - 1;
         else if(this.inv_selected < 0) this.inv_selected = 10+this.inv_selected;
@@ -114,12 +116,12 @@ class Player {
             ui_addMessage(this.formatInvItemName(this.invGetSelected()), 2000, 0, 0, true);
         }
     }
+    // Change the selected index
     invIncrementSelected(amt, toprint = true) {
-        // Change the selected index
         this.invSetSelected(this.inv_selected + amt, toprint);
     }
-    invReduceBlock(inindex) {
-        // Decrease amount in the stack
+    // Decrease amount in the stack
+    invReduceStack(inindex) {
         if(inindex >= this.inventory.length || inindex < 0) {
             return false; // Index out of range
         }
@@ -132,13 +134,20 @@ class Player {
         this.invUpdateMenu();
         return true;
     }
+    // Update the item data of an inventory item
     invUpdateItemData(inindex, keyToChange, newValue) {
-        // Update the item data of an inventory item
         if(inindex >= this.inventory.length || inindex < 0) {
             return false; // Index out of range
         }
         this.inventory[inindex][2][keyToChange] = newValue;
         this.invUpdateMenu();
+    }
+    // Require the selected inventory item to have a certain key in its data
+    invRequireSelectedContainsKey(inkey, defaultValue) {
+        if(!(inkey in this.invGetSelected()[2])) {
+            // Key does not exist here: add it with a default value
+            this.invUpdateItemData(this.invGetSelectedIndex(), inkey, defaultValue);
+        }
     }
     // Get map block
     getMapBlock(map, locy, locx) {
