@@ -797,7 +797,7 @@ function gameLoop() {
             continue;
         }
         entities[i].updateTarget();
-        entities[i].moveToTarget();
+        entities[i].moveToTarget(worldMap);
         entities[i].applyPhysics(worldMap);
     }
     for(let i = 0; i < entityIdsToRemove.length; i++) {

@@ -69,7 +69,7 @@ class Entity {
         // attack
     }
     // Movement function
-    moveTo(inlocx, inlocy) {
+    moveTo(inlocx, inlocy, map) {
         // Check that location exists
         if(inlocx < 0 || inlocy < 0 || inlocx > worldMap[0].length || inlocy > worldMap.length) {
             console.log('Err: entity '+this.name+' cannot moveTo ('+inlocx+', '+inlocy+'), which is off the map');
@@ -94,12 +94,16 @@ class Entity {
             // move l/r with jump when wall found
             if(inlocx < this.locx - 0.5) {
                 this.addVel(this.phys_accel * -1, 0); this.facingRight = false;
+                if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy+0.1), Math.floor(this.locx-0.1))].collision == 'solid') {
+                    this.jump(1);
+                }
             }
             if(inlocx > this.locx + 0.5) {
                 this.addVel(this.phys_accel * 1, 0); this.facingRight = true;
+                if(BLOCKS[this.getMapBlock(map, Math.floor(this.locy+0.1), Math.floor(this.locx+1.1))].collision == 'solid') {
+                    this.jump(1);
+                }
             }
-            // (toadd)
-            this.jump(1);
             break;
         case 2:
             // move l/r with constant jump
@@ -114,8 +118,8 @@ class Entity {
         }
     }
     // Move to target
-    moveToTarget() {
-        this.moveTo(this.targetLocx, this.targetLocy);
+    moveToTarget(map) {
+        this.moveTo(this.targetLocx, this.targetLocy, map);
     }
     // Update target function
     updateTarget() {

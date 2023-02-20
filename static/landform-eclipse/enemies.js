@@ -14,7 +14,7 @@ class Crab extends Entity {
         this.textures = [
             "images/entities/enemy_crab_idle"
         ];
-        this.moveStyle = 2;
+        this.moveStyle = 1;
         // Overrides (optional)
         this.phys_accel = 0.030; // originally 0.034
     }
