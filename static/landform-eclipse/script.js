@@ -23,7 +23,8 @@ TO ADD (also search: `toadd`~):
 > Prevent block placed inside player (next)
 > Music vol settings
 > Sound effects (mining, breaking, walking, etc.)
-> Pickaxe leveling/upgrading (and reset to default efficiency being 1) (Maybe use STACK AMT as level?)
+> Pickaxe mining radius range
+> Multiple pickaxes
 > Specialized music per region (ex. don't play desert music in highlands)
 > Cookies to save progress (ask for consent)
 > TOS?
@@ -53,8 +54,7 @@ TO ADD (also search: `toadd`~):
 > Entity physics efficiency ?
 > Render efficiency
 > Projectile: check for collision halfway between applying velocity to prevent teleporting through
-> DROPPED ITEMS (include stacks)
-> DROPS: Entity drops
+> DROPS: Entity drops on death (such as crab leg) (use spawnFloatingItem)
 > Artifacts
 > Show player holding items
 > Gun pickup drops
@@ -117,6 +117,7 @@ var dbg_fps = 0;
 var dbg_totalframes = 0;
 var dbg_fps_avg = 0;
 var dbg_fps_graph = [0];
+var totalMsElapsed = 0; // ms elapsed since the loop started (used for rendering sin waves, etc.)
 var globalScale = 2.0;
 var blockWidth = 16;
 var generateWorld = true; // def: true (dbg: true/false)
@@ -133,6 +134,7 @@ var veleq = 1;
 var display_skipFrames = true;
 var entities = [];
 var projectiles = [];
+var floatingItems = [];
 var ui_messages = [/*{
     loc: 0, // Location (0=top left)
     color: 0, // Color (0=white)
@@ -501,16 +503,22 @@ function setWorldEventState(newstate) {
 }
 
 // Spawn projectile
-function spawnProjectile(locx, locy, directionx, directiony, critrate, projectiletype, dmgmult, fromPlayer) {
+function spawnProjectile(locx, locy, directionx, directiony, critrate = 0.1, type = "normal", dmgmult = 1, fromPlayer = true) {
     var newprojectile = new Projectile(
         locx, locy,
         directionx, directiony,
         critrate,
-        projectiletype,
+        type,
         dmgmult,
-        true
+        fromPlayer
     );
     projectiles.push(newprojectile);
+}
+
+// Spawn floating item
+function spawnFloatingItem(locx, locy, id, amt = 1, itemdata = { empty: true }) {
+    var newfloatingItem = new FloatingItem(locx, locy, id, amt, itemdata);
+    floatingItems.push(newfloatingItem);
 }
 
 // Spawn entity (inclass should be a reference to the entity)
@@ -767,6 +775,7 @@ var timers = {
 // Game loop
 function gameLoop() {
     // Determine fps
+    totalMsElapsed+= gameInterval;
     var msElapsed = Date.now() - lastDate;
     lastDate = Date.now();
     if(dbgm) {
@@ -808,7 +817,7 @@ function gameLoop() {
     for(let i = 0; i < entityIdsToRemove.length; i++) {
         entities.splice(entityIdsToRemove[i]-i, 1);
     }
-    // Apply projectiles velocity, update them, remove destroyed
+    // Apply projectile physics, update them, remove destroyed
     var projectileIdsToRemove = [];
     for(let i = 0; i < projectiles.length; i++) {
         projectiles[i].applyPhysics();
@@ -821,7 +830,19 @@ function gameLoop() {
     for(let i = 0; i < projectileIdsToRemove.length; i++) {
         projectiles.splice(projectileIdsToRemove[i]-i, 1);
     }
-    // Check collision (items) if not dead
+    // Apply floating item physics, update them, remove destroyed
+    var floatingItemIdsToRemove = [];
+    for(let i = 0; i < floatingItems.length; i++) {
+        floatingItems[i].applyPhysics(worldMap);
+        var destroyed = floatingItems[i].update();
+        if(destroyed) {
+            floatingItemIdsToRemove.push(i);
+            continue;
+        }
+    }
+    for(let i = 0; i < floatingItemIdsToRemove.length; i++) {
+        floatingItems.splice(floatingItemIdsToRemove[i]-i, 1);
+    }
     
     // Render
     if(!skipRenderingThisFrame) {

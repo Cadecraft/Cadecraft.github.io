@@ -167,6 +167,18 @@ function render(indbgm = false) {
         ctx.fillStyle = PROJECTILE_TYPES[thisprojectile.type].color;
         ctx.fillRect(pdrawx-pdrawwidth/2, pdrawy-pdrawwidth/2, pdrawwidth, pdrawwidth);
     }
+    // Render floating items
+    for(let i = 0; i < floatingItems.length; i++) {
+        var thisfloatingItem = floatingItems[i];
+        // Render
+        ctx.globalAlpha = 1.0;
+        var idrawx = (thisfloatingItem.locx+offsetx)*iwidth;
+        var idrawy = (thisfloatingItem.locy+thisfloatingItem.locyOffset+offsety-0.5+(Math.sin(totalMsElapsed/900)*0.2))*iwidth;
+        var idrawwidth = iwidth*0.7;
+        if(!isPointVisible(idrawx, idrawy, idrawwidth)) continue;
+        var toDrawImg = allimgs[BLOCKS[thisfloatingItem.id].img];
+        ctx.drawImage(toDrawImg, 0, 0, 16, 16, idrawx+idrawwidth/2, idrawy, idrawwidth, idrawwidth);
+    }
 
     // FX
     // (toadd~)

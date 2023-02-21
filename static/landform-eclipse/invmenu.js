@@ -1,3 +1,6 @@
+// LANDFORM ECLIPSE script
+
+// Inventory menu script
 class InvMenu {
     // Constructor: menu name str, width of contents menu in blocks, array of contents [type, amt, optional_cost], is visible by default, should update player inv
     constructor(inMenuName, inMenuLocx, inMenuLocy, inContentsWidth, inMenuMarginx = 24, inMenuMarginy = 24, inBgOpacity = 0.8, inContentsArr = [], inVisible = false, inBoundToPlayer = false) {

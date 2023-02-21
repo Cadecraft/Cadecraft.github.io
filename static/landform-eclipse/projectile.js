@@ -22,9 +22,11 @@ class Projectile {
     }
     // Apply physics
     applyPhysics() {
+        // Gravity
+        this.vely += this.gravity * veleq;
+        // Apply
         this.locx += this.velx * veleq;
         this.locy += this.vely * veleq;
-        this.vely += this.gravity * veleq;
     }
     // Update when given map (returns true if should be deleted)
     update(map) {
@@ -55,8 +57,8 @@ class Projectile {
             }
         }
         else {
-            // Check if touching a player
-            if((this.locx - mychar.locx) < 0.5 && (this.locy - mychar.locy) < 0.8) {
+            // Check if touching player
+            if(Math.abs(this.locx - mychar.locx) < 0.7 && Math.abs(this.locy - mychar.locy) < 0.8) {
                 // Touching player
                 // todo: player take dmg
                 // Can pierce?
@@ -65,5 +67,6 @@ class Projectile {
                 }
             }
         }
+        return false;
     }
 }

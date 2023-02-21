@@ -23,7 +23,7 @@ class Player {
         // Physics defs
         this.phys_decel = 0.023; // 0.023
         this.phys_accel = 0.034; // 0.034
-        this.phys_grav = 0.023;
+        this.phys_grav = 0.023; // 0.023
         this.phys_velxmax = 0.145; // 0.145
         this.phys_velymax = 0.6; // 0.6
         this.phys_xshrinkbias = 0.15; // 0.15
