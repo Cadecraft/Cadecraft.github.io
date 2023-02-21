@@ -414,8 +414,9 @@ function destroyBlock(locy, locx) {
     worldStates[locy][locx].dmg = 0;
     worldStates[locy][locx].state = 0;
     for(let i = 0; i < BLOCKS[oldblock].drops.length; i++) {
-        // Player gets block
-        mychar.invAddBlock(BLOCKS[oldblock].drops[i]);
+        // Drop block as a floating item
+        spawnFloatingItem(locx, locy, oldblock);
+        //mychar.invAddBlock(BLOCKS[oldblock].drops[i]);
         mychar.justMinedBlock = true;
     }
     // Update blocks nearby
