@@ -819,17 +819,20 @@ function gameLoop() {
         entities.splice(entityIdsToRemove[i]-i, 1);
     }
     // Apply projectile physics, update them, remove destroyed
-    var projectileIdsToRemove = [];
-    for(let i = 0; i < projectiles.length; i++) {
-        projectiles[i].applyPhysics();
-        var destroyed = projectiles[i].update(worldMap);
-        if(destroyed) {
-            projectileIdsToRemove.push(i);
-            continue;
+    var projectilePrecisenessIterationCount = 2;
+    for(let i = 0; i < projectilePrecisenessIterationCount; i++) {
+        var projectileIdsToRemove = [];
+        for(let i = 0; i < projectiles.length; i++) {
+            projectiles[i].applyPhysics(1/projectilePrecisenessIterationCount);
+            var destroyed = projectiles[i].update(worldMap);
+            if(destroyed) {
+                projectileIdsToRemove.push(i);
+                continue;
+            }
         }
-    }
-    for(let i = 0; i < projectileIdsToRemove.length; i++) {
-        projectiles.splice(projectileIdsToRemove[i]-i, 1);
+        for(let i = 0; i < projectileIdsToRemove.length; i++) {
+            projectiles.splice(projectileIdsToRemove[i]-i, 1);
+        }
     }
     // Apply floating item physics, update them, remove destroyed
     var floatingItemIdsToRemove = [];

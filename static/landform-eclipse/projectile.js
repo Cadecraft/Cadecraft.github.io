@@ -21,12 +21,12 @@ class Projectile {
         this.canPierce = PROJECTILE_TYPES[this.type].canPierce;
     }
     // Apply physics
-    applyPhysics() {
+    applyPhysics(amtRatio) {
         // Gravity
-        this.vely += this.gravity * veleq;
+        this.vely += this.gravity * veleq * amtRatio;
         // Apply
-        this.locx += this.velx * veleq;
-        this.locy += this.vely * veleq;
+        this.locx += this.velx * veleq * amtRatio;
+        this.locy += this.vely * veleq * amtRatio;
     }
     // Update when given map (returns true if should be deleted)
     update(map) {
