@@ -23,7 +23,7 @@ class Crab extends Entity {
         // attack: pincers (melee)
     }
 }
-// Monkey (toadd)
+// Monkey
 class Monkey extends Entity {
     resetValsEntity() {
         // Entity defs
@@ -37,16 +37,40 @@ class Monkey extends Entity {
         ];
         this.moveStyle = 2;
         // Overrides (optional)
-        this.phys_jumpvel = 0.44 // originally 0.33
+        this.phys_jumpvel = 0.44; // originally 0.33
     }
     // Attack override
     attack() {
         // attack: claw leap (melee)
     }
 }
+// Slug
+class Slug extends Entity {
+    resetValsEntity() {
+        // Entity defs
+        this.name = "Cave Slug";
+        this.descr = "A slug found deep in the caverns below the highlands.";
+        this.drops = [14];
+        this.hpmax = 80;
+        this.friendly = true;
+        this.textures = [
+            "images/entities/enemy_slug_idle"
+        ];
+        this.moveStyle = 1;
+        // Overrides (optional)
+        this.phys_jumpvel = 0.29;
+        this.phys_velxmax = 0.04;
+        this.updateTargetIntervalDefault = 1000;
+    }
+    // Attack override
+    attack() {
+        // attack: slime (melee)
+    }
+}
 
 // From string data
 const ENTITY_CLASSES_FROM_STRING = {
     "Crab": Crab,
-    "Monkey": Monkey
+    "Monkey": Monkey,
+    "Slug": Slug
 }

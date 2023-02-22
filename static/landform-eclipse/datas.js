@@ -12,7 +12,9 @@ const IMGS_ENTITY = [
     'images/entities/enemy_crab_idle_0.png',
     'images/entities/enemy_crab_idleright_0.png',
     'images/entities/enemy_strider_idle_0.png',
-    'images/entities/enemy_strider_idleright_0.png'
+    'images/entities/enemy_strider_idleright_0.png',
+    'images/entities/enemy_slug_idle_0.png',
+    'images/entities/enemy_slug_idleright_0.png'
 ];
 const IMGS_OTHER = [
     'images/overlays/Dmg_0.png',
@@ -467,9 +469,13 @@ const WGEN_STRUCTURES = {
 
 // Entity spawn rates
 const ENTITY_SPAWN_RATES = [
-    [ // Biome 0:
-        { spawnClassName: "Crab", spawnChance: 0.01 },
-        { spawnClassName: "Monkey", spawnChance: 0.005 } // todo: add key "cave" for cave-only animals
+    [ // Biome 0 (highlands):
+        { spawnClassName: "Crab", spawnChance: 0.008, cave: false },
+        { spawnClassName: "Monkey", spawnChance: 0.004, cave: false }, // todo: use key "cave" for cave-only animals
+        { spawnClassName: "Slug", spawnChance: 0.003, cave: true }
+    ],
+    [ // Biome 1 (desert):
+        { spawnClassName: "Crab", spawnChance: 0.008, cave: false }
     ]
 ];
 const max_entities_natural = 100; // 100; Maximum number of entties naturally spawned

@@ -548,6 +548,8 @@ function spawnEntitiesPass() {
                 var thisSpawnChance = ENTITY_SPAWN_RATES[thisbiome][i].spawnChance;
                 if(Math.random() < thisSpawnChance) {
                     // Spawn
+                    // Set y location depending on if cave entity
+                    // todo: above
                     spawnEntity(thisSpawnClass, x, thisheight - 3);
                 }
             }
