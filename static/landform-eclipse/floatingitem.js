@@ -40,7 +40,7 @@ class FloatingItem {
     // Update
     update() {
         // Check if touching player
-        if(Math.abs(this.locx - mychar.locx) < 1 && Math.abs((this.locy - 0.2) - mychar.locy) < 1) {
+        if(Math.abs(this.locx - mychar.locx) < 1 && Math.abs((this.locy - 0.5) - mychar.locy) < 1) { // this.locy - 0.2
             // Touching player
             // Give player items and delete
             mychar.invAddBlock(this.id, this.amt, this.itemdata);

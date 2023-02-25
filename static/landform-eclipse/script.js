@@ -60,6 +60,8 @@ TO ADD (also search: `toadd`~):
 > Gun pickup drops
 > Random name on items, like pick or gun: use syntax "Gun: {}", "Slothful Shooter"
 > Projectile imgs
+> Enemy swimming
+> Drop items for blocks destroyed by water (destroyByWater)
 > Entity piggy back jump off each other ?
 > Title screen: show bar w/ trebuchet ms like in promo_Landform.psd
 > More soundtracks (Tierra del Fuego, Datura)
@@ -407,9 +409,10 @@ function tryDamageBlock(indmg) {
 }
 
 // Destroy block, drop items, trigger extra events if necessary (including light level changes) (toadd)
-function destroyBlock(locy, locx) {
+function destroyBlock(locy, locx, triggeredByPlayer = true) {
     var oldblock = getMapBlock(worldMap, locy, locx);
     var oldblockState = getMapBlockState(worldStates, locy, locx);
+    if(oldblock == 0) return; // cannot destroy air
     worldMap[locy][locx] = 0;
     worldStates[locy][locx].dmg = 0;
     worldStates[locy][locx].state = 0;
@@ -417,16 +420,17 @@ function destroyBlock(locy, locx) {
         // Drop block as a floating item
         spawnFloatingItem(locx, locy, oldblock);
         //mychar.invAddBlock(BLOCKS[oldblock].drops[i]);
-        mychar.justMinedBlock = true;
+        if(triggeredByPlayer) { mychar.justMinedBlock = true; }
     }
     // Update blocks nearby
     var blockAbove = getMapBlock(worldMap, locy-1, locx);
     if(Object.keys(BLOCKS[blockAbove]).includes('groundPlant') /*blockAbove == 3 || blockAbove == 23 || blockAbove == 24*/) { // destroy tall grass/plants (toadd checks)
-        destroyBlock(locy-1, locx);
+        destroyBlock(locy-1, locx, false);
     }
     if(blockAbove == 20 || blockAbove == 19) { // if water exist above, allow down
         for(let i = 0; i < worldMap.length - locy; i++) {
             if(BLOCKS[getMapBlock(worldMap, locy+i, locx)].destroyByWater) { // getMapBlock(worldMap, locy+i, locx) == 0 || getMapBlock(worldMap, locy+i, locx) == 19
+                destroyBlock(locy+i, locx, false);
                 placeBlock(locy+i, locx, 20);
             } else { break };
         }
@@ -455,6 +459,7 @@ function placeBlock(locy, locx, blockid) {
     if(blockid == 19) { // if water source, generate water below
         for(let i = 0; i < worldMap.length - locy - 1; i++) {
             if(BLOCKS[getMapBlock(worldMap, locy+i+1, locx)].destroyByWater) { // getMapBlock(worldMap, locy+i+1, locx) == 0 || getMapBlock(worldMap, locy+i+1, locx) == 19
+                destroyBlock(locy+i+1, locx, false);
                 placeBlock(locy+i+1, locx, 20);
             } else { break };
         }

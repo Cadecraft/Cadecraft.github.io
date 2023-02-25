@@ -436,6 +436,27 @@ const BLOCKS = {
         itemtype: "gun",
         oneperstack: true
     },
+    31: {
+        iname: 'Slime',
+        idescr: '"I\'m just a friendly slime!"',
+        irarity: 1,
+        img: 'images/items/item_slime.png',
+        isitem: true,
+        itemtype: "gun",
+        oneperstack: true
+    },
+    32: {
+        iname: 'Slime Block',
+        idescr: 'Gelatinous',
+        irarity: 1,
+        img: 'images/blocks/Block_Slime.png',
+        placeable: true,
+        collision: 'platform',
+        hardness: 1,
+        hp: 30,
+        drops: [31], // drops slime pieces
+        destroyByWater: true
+    }
 };
 
 // World gen consts
