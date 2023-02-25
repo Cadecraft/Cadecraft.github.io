@@ -8,7 +8,7 @@ class Crab extends Entity {
         // Entity defs
         this.name = "Crab";
         this.descr = "A red crustacean. Its smooth shell gleams; its claws glint.";
-        this.drops = [14];
+        this.drops = [33];
         this.hpmax = 100;
         this.friendly = false;
         this.textures = [
@@ -50,7 +50,7 @@ class Slug extends Entity {
         // Entity defs
         this.name = "Cave Slug";
         this.descr = "A slug found deep in the caverns below the highlands.";
-        this.drops = [14];
+        this.drops = [31, 32];
         this.hpmax = 80;
         this.friendly = true;
         this.textures = [

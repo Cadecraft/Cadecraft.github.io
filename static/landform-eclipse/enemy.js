@@ -50,7 +50,7 @@ class Entity {
         // Entity defs
         this.name = "Default Entity"; // Name
         this.descr = "A default entity (should not exist in-game)."; // Descr
-        this.drops = [14]; // Drop items
+        this.drops = []; // Drop item ids
         this.hpmax = 100; // Max HP
         this.friendly = false; // -> !friendly = attacks player
         this.textures = [ // do not append frame numbers, 'right', or '.png'
@@ -280,5 +280,11 @@ class Entity {
         if(locy >= 0 && locy < map.length && locx >= 0 && locx < map[0].length) {
             return map[locy][locx];
         } else { return -1; }
+    }
+    // On death, drop items
+    onDeath() {
+        for(let i = 0; i < this.drops.length; i++) {
+            spawnFloatingItem(this.locx, this.locy, this.drops[i], 1);
+        }
     }
 }

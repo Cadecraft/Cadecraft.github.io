@@ -442,12 +442,11 @@ const BLOCKS = {
         irarity: 1,
         img: 'images/items/item_slime.png',
         isitem: true,
-        itemtype: "gun",
-        oneperstack: true
+        itemtype: "crafting"
     },
     32: {
         iname: 'Slime Block',
-        idescr: 'Gelatinous',
+        idescr: 'Gelatinous.',
         irarity: 1,
         img: 'images/blocks/Block_Slime.png',
         placeable: true,
@@ -456,6 +455,14 @@ const BLOCKS = {
         hp: 30,
         drops: [31], // drops slime pieces
         destroyByWater: true
+    },
+    33: {
+        iname: 'Crab Meat',
+        idescr: 'Delicious and crunchy.',
+        irarity: 1,
+        img: 'images/items/item_food_crabclaw.png',
+        isitem: true,
+        itemtype: "food"
     }
 };
 

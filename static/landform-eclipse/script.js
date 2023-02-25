@@ -54,7 +54,8 @@ TO ADD (also search: `toadd`~):
 > Entity physics efficiency ?
 > Render efficiency
 > Projectile: check for collision halfway between applying velocity to prevent teleporting through
-> DROPS: Entity drops on death (such as crab leg) (use spawnFloatingItem)
+> DROPS: entity drop chances
+> Allow player eating
 > Artifacts
 > Show player holding items
 > Gun pickup drops
@@ -418,7 +419,7 @@ function destroyBlock(locy, locx, triggeredByPlayer = true) {
     worldStates[locy][locx].state = 0;
     for(let i = 0; i < BLOCKS[oldblock].drops.length; i++) {
         // Drop block as a floating item
-        spawnFloatingItem(locx, locy, oldblock);
+        spawnFloatingItem(locx, locy, BLOCKS[oldblock].drops[i]);
         //mychar.invAddBlock(BLOCKS[oldblock].drops[i]);
         if(triggeredByPlayer) { mychar.justMinedBlock = true; }
     }
@@ -733,8 +734,10 @@ function gameInput() {
                     // Update cooldown
                     timers["timer_shooting"] = thisItemSlot[2].cooldowntime;
                 }
+            } else if(BLOCKS[thisItemSlot[0]].itemtype == "food") {
+                // Eat food (todo~)
             } else {
-                // Use item other (toadd~)
+                // Use item other (todo~)
             }
         }
         else if(getMapBlock(worldMap, pointerybl, pointerxbl) == 0 && BLOCKS[mychar.invGetSelected()[0]].placeable) {
@@ -816,6 +819,7 @@ function gameLoop() {
     for(let i = 0; i < entities.length; i++) {
         if(!entities[i].isAlive()) { // Is dead
             entityIdsToRemove.push(i);
+            entities[i].onDeath();
             continue;
         }
         entities[i].updateTarget();
