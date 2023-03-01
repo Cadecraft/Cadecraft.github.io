@@ -16,6 +16,7 @@ TO ADD (also search: `toadd`~):
 > Background on screen: mountains, desert, etc.
 > Background on screen: clouds
 > Mining distance limit
+> Player hp bar
 > Title menu
 > Improve existing scuffed platform collision?
 > Platform: snap slightly down into it (so no standing above tree leaves)
@@ -67,6 +68,8 @@ TO ADD (also search: `toadd`~):
 > Title screen: show bar w/ trebuchet ms like in promo_Landform.psd
 > More soundtracks (Tierra del Fuego, Datura)
 > Bosses
+> Naturally spawning slime blocks in caves
+> Make floating items spawn slightly lower
 > Enemy hit knockback, gore ? (esp. on crit)
 > Bg: per biome (add more)
 > Bg: improve desert bg
@@ -869,4 +872,3 @@ function gameLoop() {
         dbg_fps_graph[0] = 0;
     }
 }
-

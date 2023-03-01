@@ -5,7 +5,7 @@ class FloatingItem {
     // Constructor
     constructor(locx, locy, id, amt = 1, itemdata = { empty: true }, randOffset = true) {
         this.locx = locx;
-        this.locy = locy;
+        this.locy = locy+0.3;
         this.locyOffset = 0;
         this.vely = 0;
         this.id = id;
