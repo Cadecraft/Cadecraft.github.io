@@ -211,13 +211,13 @@ function render(indbgm = false) {
     // Render hp bar (bottom left)
     ctx.globalAlpha = 0.5;
     ctx.fillStyle = 'black'; // Background
-    ctx.fillRect(20, window.innerHeight - 20 - 24, 400, 24);
+    ctx.fillRect(20, window.innerHeight - 20 - 24, 400, 26);
     ctx.globalAlpha = 0.7;
     ctx.fillStyle = '#1c222a'; // Drain indicator
     ctx.fillRect(24, window.innerHeight - 20 - 8, 400 - 8, 4);
     ctx.globalAlpha = 0.7;
     ctx.fillStyle = 'rgb(200, 0, 0)'; // Hp
-    ctx.fillRect(24, window.innerHeight - 20 - 24 + 4, 400 * Math.min(mychar.hp / mychar.hpmax, 1) - 8, 18);
+    ctx.fillRect(23, window.innerHeight - 20 - 25 + 4, 400 * Math.min(mychar.hp / mychar.hpmax, 1) - 6, 20);
     ctx.globalAlpha = 1.0;
     var toDrawImgBracket = allimgs['images/ui/CornerBracket_L.png']; // Corner brackets
     ctx.drawImage(toDrawImgBracket, 0, 0, 6, 6, 20, window.innerHeight - 20 - 24, blockWidth, blockWidth);

@@ -14,7 +14,9 @@ const IMGS_ENTITY = [
     'images/entities/enemy_strider_idle_0.png',
     'images/entities/enemy_strider_idleright_0.png',
     'images/entities/enemy_slug_idle_0.png',
-    'images/entities/enemy_slug_idleright_0.png'
+    'images/entities/enemy_slug_idleright_0.png',
+    'images/entities/enemy_snowball_idle_0.png',
+    'images/entities/enemy_snowball_idleright_0.png'
 ];
 const IMGS_OTHER = [
     'images/overlays/Dmg_0.png',
@@ -506,6 +508,12 @@ const ENTITY_SPAWN_RATES = [
     ],
     [ // Biome 1 (desert):
         { spawnClassName: "Crab", spawnChance: 0.008, cave: false }
+    ],
+    [ // Biome 2 (plains):
+
+    ],
+    [ // Biome 3 (mountains):
+        { spawnClassName: "Snowball", spawnChance: 0.010, cave: false }
     ]
 ];
 const max_entities_natural = 100; // 100; Maximum number of entties naturally spawned

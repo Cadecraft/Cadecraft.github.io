@@ -67,10 +67,35 @@ class Slug extends Entity {
         // attack: slime (melee)
     }
 }
+// Snowball
+class Snowball extends Entity {
+    resetValsEntity() {
+        // Entity defs
+        this.name = "Snowball";
+        this.descr = "Made of soft snow. It rolls throughout the mountain cliffs.";
+        this.drops = [9];
+        this.hpmax = 30;
+        this.friendly = false;
+        this.textures = [
+            "images/entities/enemy_snowball_idle"
+        ];
+        this.moveStyle = 2;
+        // Overrides (optional)
+        this.phys_jumpvel = 0.33;
+        this.phys_velxmax = 0.21;
+        this.phys_accel = 0.05;
+        this.updateTargetIntervalDefault = 1000;
+    }
+    // Attack override
+    attack() {
+        // attack: slime (melee)
+    }
+}
 
 // From string data
 const ENTITY_CLASSES_FROM_STRING = {
     "Crab": Crab,
     "Monkey": Monkey,
-    "Slug": Slug
+    "Slug": Slug,
+    "Snowball": Snowball
 }
