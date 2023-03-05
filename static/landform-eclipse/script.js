@@ -74,16 +74,18 @@ TO ADD (also search: `toadd`~):
 > Bg: per biome (add more)
 > Bg: improve desert bg
 > Bg: clouds
+> Prevent player from floating up and clipping through blocks when swimming up in water directly below a block
+> Random alien stone structures
 > Inv: merge inv hotbar with the rest of inv menu?
 > Inv: allow combining/merging items of same type (and calc stack excess)
 > Inv: throwing out item as drop
 > 1. Weapon items for player (start inv with default)
-> 3. UI panel for NPC prchasing
+> 3. UI panel for NPC purchasing
 > 4. Player weapons/tools/items should use NEGATIVE numbers for IDs, create separate data object
 
 > Legendary weapon ideas
   - import from LiWOl (including morning star, dune slicer, etc.)
-  - guitargun (bocchi the glock)
+  - ? (bocchi the glock)
 
 RECENT CHANGES
 > None

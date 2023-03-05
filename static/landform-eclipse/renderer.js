@@ -194,6 +194,36 @@ function render(indbgm = false) {
         ctx.fillStyle = thismsg.color;
         ctx.fillText(thismsg.msg, (thismsg.locx+offsetx)*iwidth, (thismsg.locy+offsety)*iwidth);
     }
+    ctx.globalAlpha = 1.0;
+    // Render ui messages
+    ctx.font = '12px Tahoma';
+    ui_updateMessages();
+    for(let i = 0; i < ui_messages.length; i++) {
+        var thismsg = ui_messages[ui_messages.length - i - 1];
+        ctx.globalAlpha = Math.min(thismsg.duration/1000.0, 1)*0.8;
+        // Render
+        ctx.fillStyle = 'black';
+        ctx.fillRect(20, 20+ui_invItemWidth+(i)*24, 160, 20);
+        ctx.fillStyle = 'white';
+        ctx.fillText(thismsg.msg, 23, 35+ui_invItemWidth+(i)*24);
+    }
+    ctx.globalAlpha = 1.0;
+    // Render hp bar (bottom left)
+    ctx.globalAlpha = 0.5;
+    ctx.fillStyle = 'black'; // Background
+    ctx.fillRect(20, window.innerHeight - 20 - 24, 400, 24);
+    ctx.globalAlpha = 0.7;
+    ctx.fillStyle = '#1c222a'; // Drain indicator
+    ctx.fillRect(24, window.innerHeight - 20 - 8, 400 - 8, 4);
+    ctx.globalAlpha = 0.7;
+    ctx.fillStyle = 'rgb(200, 0, 0)'; // Hp
+    ctx.fillRect(24, window.innerHeight - 20 - 24 + 4, 400 * Math.min(mychar.hp / mychar.hpmax, 1) - 8, 18);
+    ctx.globalAlpha = 1.0;
+    var toDrawImgBracket = allimgs['images/ui/CornerBracket_L.png']; // Corner brackets
+    ctx.drawImage(toDrawImgBracket, 0, 0, 6, 6, 20, window.innerHeight - 20 - 24, blockWidth, blockWidth);
+    toDrawImgBracket = allimgs['images/ui/CornerBracket_R.png'];
+    ctx.drawImage(toDrawImgBracket, 0, 0, 6, 6, 20 + 400 - 14, window.innerHeight - 20 - 12, blockWidth, blockWidth);
+    ctx.globalAlpha = 1.0;
     // Render inv bar
     var inv_boxwidth = 1;
     for(let i = 0; i < mychar.inv_menuwidth; i++) {
@@ -222,19 +252,6 @@ function render(indbgm = false) {
             ctx.globalAlpha = 0.8;
             ctx.fillText(''+invamt, 24+i*ui_invItemWidth, 57);
         }
-    }
-    ctx.globalAlpha = 1.0;
-    // Render ui messages
-    ctx.font = '12px Tahoma';
-    ui_updateMessages();
-    for(let i = 0; i < ui_messages.length; i++) {
-        var thismsg = ui_messages[ui_messages.length - i - 1];
-        ctx.globalAlpha = Math.min(thismsg.duration/1000.0, 1)*0.8;
-        // Render
-        ctx.fillStyle = 'black';
-        ctx.fillRect(20, 20+ui_invItemWidth+(i)*24, 160, 20);
-        ctx.fillStyle = 'white';
-        ctx.fillText(thismsg.msg, 23, 35+ui_invItemWidth+(i)*24);
     }
     ctx.globalAlpha = 1.0;
     // Render inv menus (if visible)

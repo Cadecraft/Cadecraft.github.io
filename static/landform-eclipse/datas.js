@@ -27,6 +27,8 @@ const IMGS_OTHER = [
     'images/ui/Invbox.png',
     'images/ui/Invbox2.png',
     'images/ui/Invbox2_Select.png',
+    'images/ui/CornerBracket_L.png',
+    'images/ui/CornerBracket_R.png',
     'images/bg/bg_main_highlands.png',
     'images/bg/bg_main_highlands_dark_fade.png',
     'images/bg/bg_main_desert_dark_fade.png',
@@ -534,6 +536,14 @@ const PROJECTILE_TYPES = {
         canPierce: true,
         baseDmg: 5,
         width: 9
+    },
+    "gravitractor": {
+        velinitial: 0.17,
+        color: "#092285",
+        gravity: 0.004,
+        canPierce: false,
+        baseDmg: 19,
+        width: 4
     }
 };
 

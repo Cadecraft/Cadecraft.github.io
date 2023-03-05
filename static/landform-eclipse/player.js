@@ -17,6 +17,8 @@ class Player {
         this.facingRight = true;
         this.crouched = false;
         this.inWater = false;
+        this.hpmax = 100;
+        this.hp = this.hpmax;
         // Cooldown defs
         this.justPlacedBlock = false;
         this.justMinedBlock = false;
@@ -345,5 +347,21 @@ class Player {
         }
         this.phys_accel = 0.3;
         this.phys_velxmax = 0.5;
+    }
+    // DBG: Op gun
+    dbg_opGun() {
+        if(!dbgm) {
+            console.log('err: Player::dbg_opGun() is only accessible in dbg mode (dbgm)');
+            return;
+        }
+        this.invAddBlock(30, 1, { nameappend: "One Punch Gun", dmgmult: 1.0, projectiletype: "decimbolt", cooldowntime: 0, critrate: 1 });
+    }
+    // DBG: Gravity gun
+    dbg_gravGun() {
+        if(!dbgm) {
+            console.log('err: Player::dbg_gravGun() is only accessible in dbg mode (dbgm)');
+            return;
+        }
+        this.invAddBlock(30, 1, { nameappend: "grav gun", descrappend: "shedding tears of pain", dmgmult: 1.0, projectiletype: "gravitractor", cooldowntime: 300, critrate: 1 });
     }
 }
