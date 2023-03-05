@@ -65,20 +65,29 @@ function wgenMain() {
                 newHeight = Math.floor(lastHeight/1.5); // /1.5 -- seeking asymptote of 0
             }
             // Generate new heights
-            if(thisbiome == 0) {
-                newHeight += Math.floor(Math.random()*3)-1; // Normal (highlands) biome
+            if(thisbiome == 0) { // Normal (highlands) biome
+                newHeight += Math.floor(Math.random()*3)-1;
             }
-            else if(thisbiome == 1) {
-                newHeight += Math.floor(Math.random()*2.65)-(1); // Desert biome
+            else if(thisbiome == 1) { // Desert biome
+                newHeight += Math.floor(Math.random()*2.65)-(1);
             }
-            else if(thisbiome == 12) {
-                newHeight += Math.floor(Math.random()*10)-5; // RARE mesa biome
+            else if(thisbiome == 12) { // RARE mesa biome
+                newHeight += Math.floor(Math.random()*10)-5;
             }
-            else if(thisbiome == 2) {
-                if(Math.random() < 0.3) { newHeight += Math.floor(Math.random()*3)-1; } // Plains biome is flatter
+            else if(thisbiome == 3) { // Mountains biome
+                newHeight += (-1*Math.floor(Math.pow(Math.random()*2.2, 2)))+1;
             }
-            if(newHeight > worldgen_heightoffsetmax) newHeight = worldgen_heightoffsetmax;
-            if(newHeight < -1*worldgen_heightoffsetmax) newHeight = -1*worldgen_heightoffsetmax;
+            else if(thisbiome == 2) { // Plains biome is flatter
+                if(Math.random() < 0.3) { newHeight += Math.floor(Math.random()*3)-1; }
+            }
+            // Cap new height if not in mountain
+            if(thisbiome != 3) {
+                if(newHeight > worldgen_heightoffsetmax) newHeight = worldgen_heightoffsetmax;
+                if(newHeight < -1*worldgen_heightoffsetmax) newHeight = -1*worldgen_heightoffsetmax;
+            } else {
+                if(newHeight > worldgen_heightoffsetmax + 13) newHeight = worldgen_heightoffsetmax + 13;
+                if(newHeight < -1*worldgen_heightoffsetmax - 13) newHeight = -1*worldgen_heightoffsetmax - 13;
+            }
             var newHeight2 = Math.floor(Math.random()*2);
             // Generate new features
             if(thisbiome == 0) { // Normal (highlands) biome
@@ -93,6 +102,9 @@ function wgenMain() {
             } else if(thisbiome == 2) { // Plains biome
                 if(Math.random() < worldgen_rateTrees && x < worldgen_width-6 && x > 5) { newFeature  = "hay bale"; }
                 else if(Math.random() < worldgen_rateGrass + 0.2) { newFeature = "tall plains grass"; }
+            } else if(thisbiome == 3) { // Mountains biome
+                if(Math.random() < worldgen_rateTrees && x < worldgen_width-6 && x > 5) { newFeature = "pine tree"; }
+                else if(Math.random() < worldgen_rateGrass - 0.05) { newFeature = "tall grass"; }
             }
             // Generate new structures?
             if(thisbiome == 2) { // Plains biome
@@ -151,6 +163,13 @@ function wgenMain() {
                             }
                         }
                         else if(thisbiome == 2) { worldMap[y].push(26); } // Plains - plains grass
+                        else if(thisbiome == 3) { // Mountains - snow or grass
+                            if(Math.random() < 0.7) {
+                                worldMap[y].push(9);
+                            } else {
+                                worldMap[y].push(2);
+                            }
+                        }
                         else { worldMap[y].push(2); }
                     } 
                 }

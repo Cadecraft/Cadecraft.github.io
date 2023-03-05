@@ -71,6 +71,7 @@ TO ADD (also search: `toadd`~):
 > Naturally spawning slime blocks in caves
 > Make floating items spawn slightly lower
 > Enemy hit knockback, gore ? (esp. on crit)
+> Particle effects--sand in desert, etc.
 > Bg: per biome (add more)
 > Bg: improve desert bg
 > Bg: clouds
