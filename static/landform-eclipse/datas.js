@@ -479,7 +479,7 @@ const BLOCKS = {
         collision: 'solid',
         hardness: 1,
         hp: 10,
-        drops: [22],
+        drops: [34],
         destroyByWater: false
     },
 };
