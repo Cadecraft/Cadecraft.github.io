@@ -34,7 +34,8 @@ const IMGS_OTHER = [
     'images/bg/bg_main_highlands.png',
     'images/bg/bg_main_highlands_dark_fade.png',
     'images/bg/bg_main_desert_dark_fade.png',
-    'images/bg/bg_main_plains_dark_fade.png'
+    'images/bg/bg_main_plains_dark_fade.png',
+    'images/bg/bg_main_mountains_dark_fade.png'
 ];
 
 // Audios info
@@ -54,7 +55,8 @@ const MUSICS_VOL = 0.25;
 const BGS_BYBIOME = [
     'images/bg/bg_main_highlands_dark_fade.png',
     'images/bg/bg_main_desert_dark_fade.png',
-    'images/bg/bg_main_plains_dark_fade.png'
+    'images/bg/bg_main_plains_dark_fade.png',
+    'images/bg/bg_main_mountains_dark_fade.png'
 ];
 
 // Blocks info
@@ -467,7 +469,19 @@ const BLOCKS = {
         img: 'images/items/item_food_crabclaw.png',
         isitem: true,
         itemtype: "food"
-    }
+    },
+    34: {
+        iname: "Powder Snow",
+        idescr: "A block of powdery snow.",
+        irarity: 0,
+        img: 'images/blocks/Block_Snow.png', // Block_Sand2_Top.png
+        placeable: true,
+        collision: 'solid',
+        hardness: 1,
+        hp: 10,
+        drops: [22],
+        destroyByWater: false
+    },
 };
 
 // World gen consts

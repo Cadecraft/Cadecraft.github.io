@@ -75,7 +75,7 @@ function wgenMain() {
                 newHeight += Math.floor(Math.random()*10)-5;
             }
             else if(thisbiome == 3) { // Mountains biome
-                newHeight += (-1*Math.floor(Math.pow(Math.random()*2.2, 2)))+1;
+                if(Math.random() < 0.9) { newHeight += (-1*Math.floor(Math.pow(Math.random()*2.2, 2)))+1; }
             }
             else if(thisbiome == 2) { // Plains biome is flatter
                 if(Math.random() < 0.3) { newHeight += Math.floor(Math.random()*3)-1; }
@@ -165,7 +165,10 @@ function wgenMain() {
                         else if(thisbiome == 2) { worldMap[y].push(26); } // Plains - plains grass
                         else if(thisbiome == 3) { // Mountains - snow or grass
                             if(Math.random() < 0.7) {
-                                worldMap[y].push(9);
+                                worldMap[y].push(9); // Snow
+                                if(Math.random() < 0.5) {
+                                    worldMap[y-1][x] = 34; // Snow block above
+                                }
                             } else {
                                 worldMap[y].push(2);
                             }
