@@ -73,7 +73,7 @@ class Snowball extends Entity {
         // Entity defs
         this.name = "Snowball";
         this.descr = "Made of soft snow. It rolls throughout the mountain cliffs.";
-        this.drops = [9];
+        this.drops = [34];
         this.hpmax = 30;
         this.friendly = false;
         this.textures = [
