@@ -16,7 +16,8 @@ TO ADD (also search: `toadd`~):
 > Background on screen: mountains, desert, etc.
 > Background on screen: clouds
 > Mining distance limit
-> Player hp bar
+> Player take dmg function
+> Player textures: animation
 > Title menu
 > Improve existing scuffed platform collision?
 > Platform: snap slightly down into it (so no standing above tree leaves)
@@ -126,6 +127,7 @@ var dbg_fps = 0;
 var dbg_totalframes = 0;
 var dbg_fps_avg = 0;
 var dbg_fps_graph = [0];
+var dbg_playerAsSquare = false;
 var totalMsElapsed = 0; // ms elapsed since the loop started (used for rendering sin waves, etc.)
 var globalScale = 2.0;
 var blockWidth = 16;
@@ -247,6 +249,29 @@ for(let i = BLOCKS_startsat; i < Object.keys(BLOCKS).length+BLOCKS_startsat; i++
         allimgs[BLOCKS[i].img] = document.getElementById(BLOCKS[i].img);
     } catch(err) {
         console.log('err: loading images: block id='+i);
+    }
+}
+const possibleTextureAdders = [
+    "_0", "right_0"
+];
+for(let i = 0; i < Object.keys(CHARACTERS).length; i++) {
+    var thisAllTextures = CHARACTERS[Object.keys(CHARACTERS)[i]].textures;
+    for(let j = 0; j < thisAllTextures.length; j++) {
+        for(let k = 0; k < possibleTextureAdders.length; k++) {
+            // Get src url
+            var imgsrc_orig = thisAllTextures[j] + possibleTextureAdders[k] + ".png";
+            var imgsrc = 'static/landform-eclipse/' + imgsrc_orig;
+            // Load img
+            try {
+                var imgelement = document.createElement('img');
+                imgelement.src = imgsrc;
+                imgelement.id = imgsrc_orig;
+                document.getElementById('imgfiles').append(imgelement);
+                allimgs[imgsrc_orig] = document.getElementById(imgsrc_orig);
+            } catch(err) {
+                console.log('err: loading images: block id='+i);
+            }
+        }
     }
 }
 for(let i = 0; i < IMGS_ENTITY.length; i++) {
@@ -651,10 +676,12 @@ function gameInput() {
     if(inputs.includes('left')) {
         // Move left
         mychar.addVel(mychar.phys_accel*-1, 0);
+        mychar.facingRight = false;
     }
     if(inputs.includes('right')) {
         // Move right
         mychar.addVel(mychar.phys_accel, 0);
+        mychar.facingRight = true;
     }
     if(inputs.includes('down')) {
         // Crouch/drop

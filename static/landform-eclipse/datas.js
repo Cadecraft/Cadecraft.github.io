@@ -59,6 +59,15 @@ const BGS_BYBIOME = [
     'images/bg/bg_main_mountains_dark_fade.png'
 ];
 
+// Characters info
+const CHARACTERS = {
+    "jeffrey": {
+        name: "Jeffrey",
+        textures: [
+            "images/characters/char_jeffrey_idle"
+        ]
+    }
+};
 // Blocks info
 const BLOCKS_startsat = -1;
 const BLOCKS = {

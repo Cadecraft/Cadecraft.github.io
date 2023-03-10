@@ -123,10 +123,17 @@ function render(indbgm = false) {
     var drawx = (mychar.locx+offsetx)*iwidth;
     var drawy = (mychar.locy+offsety)*iwidth;
     try {
-        ctx.fillStyle = 'rgb(0, 200, 0)';
-        ctx.fillRect(drawx, drawy, Math.ceil(iwidth), Math.ceil(iwidth));
-        ctx.fillStyle = 'rgb(0, 100, 0)';
-        ctx.fillRect(drawx, drawy-iwidth, Math.ceil(iwidth), Math.ceil(iwidth));
+        if(dbgm && dbg_playerAsSquare) {
+            // Render player as a green square
+            ctx.fillStyle = 'rgb(0, 200, 0)';
+            ctx.fillRect(drawx, drawy, Math.ceil(iwidth), Math.ceil(iwidth));
+            ctx.fillStyle = 'rgb(0, 100, 0)';
+            ctx.fillRect(drawx, drawy-iwidth, Math.ceil(iwidth), Math.ceil(iwidth));
+        } else {
+            // Render player based on textures
+            var toDrawImg = allimgs[mychar.getTextureFilename()];
+            ctx.drawImage(toDrawImg, 0, 0, toDrawImg.naturalWidth, toDrawImg.naturalHeight, Math.floor(drawx), Math.floor(drawy-((1-0.37)*iwidth)), Math.floor(toDrawImg.naturalWidth*globalScale), Math.floor(toDrawImg.naturalHeight*globalScale));
+        }
     } catch(err) { console.log('err: rendering PLAYER'); }
     // Render entities
     for(let i = 0; i < entities.length; i++) {

@@ -147,7 +147,7 @@ class Entity {
             this.targetLocy = 1; //Math.random() * worldMap.length;
         }
     }
-    // Get entity texture filename based on animation state, direction
+    // Get current entity texture filename based on animation state, direction
     getTextureFilename() {
         if(this.currentTextureId > this.textures.length || this.currentTextureId < 0) {
             console.log('Err: entity texture id '+this.currentTextureId+' for '+this.name+' is invalid');

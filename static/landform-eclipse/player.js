@@ -3,11 +3,11 @@
 // Player script
 class Player {
     // Constructor/reset
-    constructor(locx, locy) {
+    constructor(locx, locy, character = "jeffrey") {
         // Reset values
-        this.resetVals(locx, locy);
+        this.resetVals(locx, locy, character);
     }
-    resetVals(locx, locy) {
+    resetVals(locx, locy, character = "jeffrey") {
         // Defs
         this.locx = locx;
         this.locy = locy;
@@ -19,6 +19,7 @@ class Player {
         this.inWater = false;
         this.hpmax = 100;
         this.hp = this.hpmax;
+        this.character = character;
         // Cooldown defs
         this.justPlacedBlock = false;
         this.justMinedBlock = false;
@@ -46,6 +47,11 @@ class Player {
         for(let i = 0; i < (this.inv_defaultLength-origInvlen); i++) {
             this.inventory.push([-1, 0, { empty: true }]); // Default void slot
         }
+        // Texture defs
+        this.currentTextureId = 0;
+        this.currentTextureFrame = 0;
+        this.targetLocx = this.locx;
+        this.targetLocy = this.locy;
         // Dbg defs
         this.dbg_highl_bl1 = [0,0]; // Debug highlighting (x, y)
         this.dbg_highl_bl2 = [0,0];
@@ -92,6 +98,17 @@ class Player {
         // Message
         ui_addMessage("+"+inamt+" "+this.formatInvItemName([inid, inamt, initemdata])); // BLOCKS[inid].iname);
         return true;
+    }
+    // Get current player texture filename based on animation state, direction
+    getTextureFilename() {
+        if(this.currentTextureId > CHARACTERS[this.character].textures.length || this.currentTextureId < 0) {
+            console.log('Err: player texture id '+this.currentTextureId+' for character "'+this.character+'" is invalid');
+            return "error.png";
+        }
+        var res = CHARACTERS[this.character].textures[this.currentTextureId]; // ex. images/entities/enemy_crab_idle
+        if(this.facingRight) { res += "right"; } // ex. images/entities/enemy_crab_idleright
+        res += "_" + this.currentTextureFrame + ".png"; // ex. images/entities/enemy_crab_idleright_0.png
+        return res;
     }
     // Update main inventory menu
     invUpdateMenu() {
