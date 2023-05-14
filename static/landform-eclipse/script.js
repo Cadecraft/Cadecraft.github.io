@@ -18,6 +18,7 @@ TO ADD (also search: `toadd`~):
 > Mining distance limit
 > Player take dmg function
 > Player textures: animation
+> globalScale changes: adjust for HP BARS and DMG MARKERS (in-game UI) which do not scale properly
 > Title menu
 > Improve existing scuffed platform collision?
 > Platform: snap slightly down into it (so no standing above tree leaves)
@@ -57,7 +58,7 @@ TO ADD (also search: `toadd`~):
 > Render efficiency
 > Projectile: check for collision halfway between applying velocity to prevent teleporting through
 > DROPS: entity drop chances
-> Allow player eating
+> Allow player to eat
 > Artifacts
 > Show player holding items
 > Gun pickup drops
