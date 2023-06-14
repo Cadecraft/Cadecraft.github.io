@@ -4,7 +4,7 @@
 
 // Sys defs (REM init sequence pt1)
 const recentVersion = '0.0.10';
-const editDate = '2022/2/18';
+const editDate = '2022/3/18';
 const createdDate = '2022/9/5';
 
 // Other images info
