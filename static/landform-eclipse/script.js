@@ -2,6 +2,8 @@
 
 /*
 TO ADD (also search: `toadd`~):
+> Title screen
+> Controls tutorial
 > Velocity correction veleq for time (?)
 > Acceleration
 > Settling down onto ground effect (falling y loc)--snap y location closer to the ground (floor/ceil)
@@ -65,6 +67,7 @@ TO ADD (also search: `toadd`~):
 > Random name on items, like pick or gun: use syntax "Gun: {}", "Slothful Shooter"
 > Projectile imgs
 > Enemy swimming
+> Downloading save files ?
 > Drop items for blocks destroyed by water (destroyByWater)
 > Entity piggy back jump off each other ?
 > Title screen: show bar w/ trebuchet ms like in promo_Landform.psd
@@ -163,6 +166,8 @@ var ui_dmgMessages = [/*{
     msg: "2",
     duration: 1000 // Duration in ms (fades out the last 700ms)
 }*/];
+const PauseModes = Object.freeze({ None: Symbol(0), Paused: Symbol(1), Title: Symbol(2) });
+var ui_pauseMode = PauseModes.None; // None, Paused, or Title
 
 // Load game defs: load/generate map and world states
 function mapRegen(inGenerateWorld) {
@@ -660,7 +665,8 @@ document.addEventListener('keyup',
 function gameInput() {
     var inputs = [];
     // Get inputs based on control layout
-    var wasesc = keys['escape'];
+    //let wasesc = keys['escape'];
+    if (keys['escape']) { inputs.push('escape'); keys['escape'] = false; }
     if(keys['a']) { inputs.push('left'); }
     if(keys['d']) { inputs.push('right'); }
     if(keys['s']) { inputs.push('down'); }
@@ -673,122 +679,141 @@ function gameInput() {
         if(keys[''+i]) { inputs.push('inv'+i); keys[''+i]=false; }
     }
 
-    // Use controls
-    if(inputs.includes('left')) {
-        // Move left
-        mychar.addVel(mychar.phys_accel*-1, 0);
-        mychar.facingRight = false;
-    }
-    if(inputs.includes('right')) {
-        // Move right
-        mychar.addVel(mychar.phys_accel, 0);
-        mychar.facingRight = true;
-    }
-    if(inputs.includes('down')) {
-        // Crouch/drop
-        mychar.crouch();
-    }
-    if(inputs.includes('jump')) {
-        // Jump
-        mychar.jump(1);
-    }
-    for(let i = 0; i < 10; i++) {
-        if(inputs.includes('inv'+i)) {
-            // Select inventory based on number key
-            if(i == 0) { mychar.invSetSelected(9); }
-            else { mychar.invSetSelected(i-1); }
+    // Pause/unpause/start
+    if (inputs.includes('escape')) {
+        if (ui_pauseMode == PauseModes.None) {
+            // Pause
+            ui_pauseMode = PauseModes.Paused;
+        } else if (ui_pauseMode == PauseModes.Paused) {
+            // Unpause
+            ui_pauseMode = PauseModes.None;
         }
     }
-    if(inputs.includes('invl')) {
-        // Select inventory: left 1 (decrement)
-        console.log('e');
-        mychar.invIncrementSelected(-1);
+    if (inputs.includes('jump') && ui_pauseMode == PauseModes.Title) {
+        // Exit title and start game
+        ui_pauseMode = PauseModes.None;
     }
-    if(inputs.includes('invr')) {
-        // Select inventory: right 1 (increment)
-        mychar.invIncrementSelected(1);
-    }
-    if(inputs.includes('invmenu')) {
-        // Open/close inventory menu
-        ui_invMenus[0].toggleVisible();
-    }
-    if(mousedown) {
-        // Click
-        // Send click to menus
-        var clickedOnMenu = false;
-        for(let i = 0; i < ui_invMenus.length; i++) {
-            if(!ui_invMenus[i].getVisible()) { continue; }
-            var clickWasProcessed = ui_invMenus[i].processClick(pointerx, pointery);
-            if(clickWasProcessed) {
-                clickedOnMenu = true;
-                mousedown = false;
-                break;
+
+    // Use controls (if not paused)
+    if (ui_pauseMode == PauseModes.None) {
+        if(inputs.includes('left')) {
+            // Move left
+            mychar.addVel(mychar.phys_accel*-1, 0);
+            mychar.facingRight = false;
+        }
+        if(inputs.includes('right')) {
+            // Move right
+            mychar.addVel(mychar.phys_accel, 0);
+            mychar.facingRight = true;
+        }
+        if(inputs.includes('down')) {
+            // Crouch/drop
+            mychar.crouch();
+        }
+        if(inputs.includes('jump')) {
+            // Jump
+            mychar.jump(1);
+        }
+        for(let i = 0; i < 10; i++) {
+            if(inputs.includes('inv'+i)) {
+                // Select inventory based on number key
+                if(i == 0) { mychar.invSetSelected(9); }
+                else { mychar.invSetSelected(i-1); }
             }
         }
-        // If clicked on menu, do not click in world
-        if(clickedOnMenu) {
-            // Do nothing in world
+        if(inputs.includes('invl')) {
+            // Select inventory: left 1 (decrement)
+            console.log('e');
+            mychar.invIncrementSelected(-1);
         }
-        // Click in world: based on item type in player inv
-        else if("isitem" in BLOCKS[mychar.invGetSelected()[0]]) {
-            var thisItemSlot = mychar.invGetSelected();
-            // Is item: use
-            if(BLOCKS[thisItemSlot[0]].itemtype == "pick") {
-                // Pick: Dig block
-                if(timers["timer_mining"] <= 0 && !mychar.justPlacedBlock) {
-                    // Check that pick data is valid; if not, substitute defs
-                    mychar.invRequireSelectedContainsKey('efficiency', picks_default_efficiency);
-                    mychar.invRequireSelectedContainsKey('cooldowntime', picks_default_cooldowntime);
-                    // Try to dig block
-                    var blockDamaged = tryDamageBlock(thisItemSlot[2].efficiency);
-                    if(blockDamaged) {
-                        timers["timer_mining"] = thisItemSlot[2].cooldowntime;
+        if(inputs.includes('invr')) {
+            // Select inventory: right 1 (increment)
+            mychar.invIncrementSelected(1);
+        }
+        if(inputs.includes('invmenu')) {
+            // Open/close inventory menu
+            ui_invMenus[0].toggleVisible();
+        }
+        if(mousedown) {
+            // todo: refactor: move this code to a new inputClicked() function~
+            // Click
+            // Send click to menus
+            var clickedOnMenu = false;
+            for(let i = 0; i < ui_invMenus.length; i++) {
+                if(!ui_invMenus[i].getVisible()) { continue; }
+                var clickWasProcessed = ui_invMenus[i].processClick(pointerx, pointery);
+                if(clickWasProcessed) {
+                    clickedOnMenu = true;
+                    mousedown = false;
+                    break;
+                }
+            }
+            // If clicked on menu, do not click in world
+            if(clickedOnMenu) {
+                // Do nothing in world
+            }
+            // Click in world: based on item type in player inv
+            else if("isitem" in BLOCKS[mychar.invGetSelected()[0]]) {
+                var thisItemSlot = mychar.invGetSelected();
+                // Is item: use
+                if(BLOCKS[thisItemSlot[0]].itemtype == "pick") {
+                    // Pick: Dig block
+                    if(timers["timer_mining"] <= 0 && !mychar.justPlacedBlock) {
+                        // Check that pick data is valid; if not, substitute defs
+                        mychar.invRequireSelectedContainsKey('efficiency', picks_default_efficiency);
+                        mychar.invRequireSelectedContainsKey('cooldowntime', picks_default_cooldowntime);
+                        // Try to dig block
+                        var blockDamaged = tryDamageBlock(thisItemSlot[2].efficiency);
+                        if(blockDamaged) {
+                            timers["timer_mining"] = thisItemSlot[2].cooldowntime;
+                        }
                     }
+                } else if(BLOCKS[thisItemSlot[0]].itemtype == "gun") {
+                    // Gun: shoot projectile
+                    if(timers["timer_shooting"] <= 0) {
+                        // Check that gun data is valid; if not, substitute defs
+                        mychar.invRequireSelectedContainsKey('critrate', guns_default_critrate);
+                        mychar.invRequireSelectedContainsKey('dmgmult', guns_default_dmgmult);
+                        mychar.invRequireSelectedContainsKey('cooldowntime', guns_default_cooldowntime);
+                        mychar.invRequireSelectedContainsKey('projectiletype', guns_default_projectiletype);
+                        // Determine direction to mouse (will be normalized by projectile)
+                        var directionx = pointerxwr - mychar.locx;
+                        var directiony = pointerywr - mychar.locy;
+                        // Spawn projectile
+                        spawnProjectile(
+                            mychar.locx, mychar.locy,
+                            directionx, directiony,
+                            mychar.calculateStats().critrate + thisItemSlot[2].critrate,
+                            thisItemSlot[2].projectiletype,
+                            thisItemSlot[2].dmgmult,
+                            true
+                        );
+                        // Update cooldown
+                        timers["timer_shooting"] = thisItemSlot[2].cooldowntime;
+                    }
+                } else if(BLOCKS[thisItemSlot[0]].itemtype == "food") {
+                    // Eat food (todo~)
+                } else {
+                    // Use item other (todo~)
                 }
-            } else if(BLOCKS[thisItemSlot[0]].itemtype == "gun") {
-                // Gun: shoot projectile
-                if(timers["timer_shooting"] <= 0) {
-                    // Check that gun data is valid; if not, substitute defs
-                    mychar.invRequireSelectedContainsKey('critrate', guns_default_critrate);
-                    mychar.invRequireSelectedContainsKey('dmgmult', guns_default_dmgmult);
-                    mychar.invRequireSelectedContainsKey('cooldowntime', guns_default_cooldowntime);
-                    mychar.invRequireSelectedContainsKey('projectiletype', guns_default_projectiletype);
-                    // Determine direction to mouse (will be normalized by projectile)
-                    var directionx = pointerxwr - mychar.locx;
-                    var directiony = pointerywr - mychar.locy;
-                    // Spawn projectile
-                    spawnProjectile(
-                        mychar.locx, mychar.locy,
-                        directionx, directiony,
-                        mychar.calculateStats().critrate + thisItemSlot[2].critrate,
-                        thisItemSlot[2].projectiletype,
-                        thisItemSlot[2].dmgmult,
-                        true
-                    );
-                    // Update cooldown
-                    timers["timer_shooting"] = thisItemSlot[2].cooldowntime;
+            }
+            else if(getMapBlock(worldMap, pointerybl, pointerxbl) == 0 && BLOCKS[mychar.invGetSelected()[0]].placeable) {
+                // Place block if enabled
+                if(!mychar.justMinedBlock) {
+                    placeBlock(pointerybl, pointerxbl, mychar.invGetSelected()[0]);
+                    mychar.invReduceStack(mychar.inv_selected);
+                    mychar.justPlacedBlock = true;
                 }
-            } else if(BLOCKS[thisItemSlot[0]].itemtype == "food") {
-                // Eat food (todo~)
-            } else {
-                // Use item other (todo~)
             }
-        }
-        else if(getMapBlock(worldMap, pointerybl, pointerxbl) == 0 && BLOCKS[mychar.invGetSelected()[0]].placeable) {
-            // Place block if enabled
-            if(!mychar.justMinedBlock) {
-                placeBlock(pointerybl, pointerxbl, mychar.invGetSelected()[0]);
-                mychar.invReduceStack(mychar.inv_selected);
-                mychar.justPlacedBlock = true;
+            else {
+                // None: block is not known
             }
+            // Random other click stuff
+            if(!hasMusicStarted) randomMusics(); // Sounds can only play when the user has clicked
         }
-        else {
-            // None: block is not known
-        }
-        // Random other click stuff
-        if(!hasMusicStarted) randomMusics(); // Sounds can only play when the user has clicked
+        else { mychar.justPlacedBlock = false; mychar.justMinedBlock = false; }
     }
-    else { mychar.justPlacedBlock = false; mychar.justMinedBlock = false; }
+
     if(dbgm && inputs.includes('save')) {
         // Save world (only allowed in debug mode)
         download('landform_world.ccdata', JSON.stringify(worldMap));
@@ -819,11 +844,12 @@ var timers = {
 
 // Game loop
 function gameLoop() {
+    // SYSTEM
     // Determine fps
-    totalMsElapsed+= gameInterval;
-    var msElapsed = Date.now() - lastDate;
+    totalMsElapsed += gameInterval;
+    let msElapsed = Date.now() - lastDate;
     lastDate = Date.now();
-    if(dbgm) {
+    if (dbgm) {
         dbg_fps = 1/(msElapsed/1000); // inverse of (seconds per frame)
         dbg_fps_avg = ((dbg_fps)+(dbg_fps_avg)*dbg_totalframes)/(dbg_totalframes+1)
         dbg_totalframes++;
@@ -832,68 +858,76 @@ function gameLoop() {
             dbg_fps_graph.pop();
         }
     }
-    // Reduce timers
-    for(let i = 0; i < Object.keys(timers).length; i++) {
-        timers[Object.keys(timers)[i]] -= 17;
-    }
     // Frame rate compensation
-    var msRatio = (msElapsed / gameInterval);
+    let msRatio = (msElapsed / gameInterval);
     // Determine velocity equalization based on time per frame (for consistent physics speed) (deprecated)
     veleq = 1; // = msRatio;
     // Determine whether to skip frame
-    var skipRenderingThisFrame = false;
-    if(display_skipFrames && msRatio > 1.5) skipRenderingThisFrame = true;
-    // Handle input if not dead
-    updatePointerwr()
-    gameInput();
-    // Apply char physics
-    mychar.applyPhysics(worldMap);
-    // Apply entity physics, update them, remove dead
-    var entityIdsToRemove = [];
-    for(let i = 0; i < entities.length; i++) {
-        if(!entities[i].isAlive()) { // Is dead
-            entityIdsToRemove.push(i);
-            entities[i].onDeath();
-            continue;
+    let skipRenderingThisFrame = false;
+    if (display_skipFrames && msRatio > 1.5) skipRenderingThisFrame = true;
+
+    // REDUCE TIMERS
+    if (ui_pauseMode == PauseModes.None) {
+        for (let i = 0; i < Object.keys(timers).length; i++) {
+            timers[Object.keys(timers)[i]] -= gameInterval;
         }
-        entities[i].updateTarget();
-        entities[i].moveToTarget(worldMap);
-        entities[i].applyPhysics(worldMap);
     }
-    for(let i = 0; i < entityIdsToRemove.length; i++) {
-        entities.splice(entityIdsToRemove[i]-i, 1);
-    }
-    // Apply projectile physics, update them, remove destroyed
-    var projectilePrecisenessIterationCount = 2;
-    for(let i = 0; i < projectilePrecisenessIterationCount; i++) {
-        var projectileIdsToRemove = [];
-        for(let i = 0; i < projectiles.length; i++) {
-            projectiles[i].applyPhysics(1/projectilePrecisenessIterationCount);
-            var destroyed = projectiles[i].update(worldMap);
+
+    // HANDLE INPUT (if not dead)
+    updatePointerwr();
+    gameInput();
+
+    // APPLY PHYSICS
+    if (ui_pauseMode == PauseModes.None) {
+        // Apply char physics
+        mychar.applyPhysics(worldMap);
+        // Apply entity physics, update them, remove dead
+        let entityIdsToRemove = [];
+        for (let i = 0; i < entities.length; i++) {
+            if (!entities[i].isAlive()) { // Is dead
+                entityIdsToRemove.push(i);
+                entities[i].onDeath();
+                continue;
+            }
+            entities[i].updateTarget();
+            entities[i].moveToTarget(worldMap);
+            entities[i].applyPhysics(worldMap);
+        }
+        for (let i = 0; i < entityIdsToRemove.length; i++) {
+            entities.splice(entityIdsToRemove[i]-i, 1);
+        }
+        // Apply projectile physics, update them, remove destroyed
+        let projectilePrecisenessIterationCount = 2;
+        for (let i = 0; i < projectilePrecisenessIterationCount; i++) {
+            let projectileIdsToRemove = [];
+            for (let i = 0; i < projectiles.length; i++) {
+                projectiles[i].applyPhysics(1/projectilePrecisenessIterationCount);
+                let destroyed = projectiles[i].update(worldMap);
+                if (destroyed) {
+                    projectileIdsToRemove.push(i);
+                    continue;
+                }
+            }
+            for (let i = 0; i < projectileIdsToRemove.length; i++) {
+                projectiles.splice(projectileIdsToRemove[i]-i, 1);
+            }
+        }
+        // Apply floating item physics, update them, remove destroyed
+        var floatingItemIdsToRemove = [];
+        for(let i = 0; i < floatingItems.length; i++) {
+            floatingItems[i].applyPhysics(worldMap);
+            var destroyed = floatingItems[i].update();
             if(destroyed) {
-                projectileIdsToRemove.push(i);
+                floatingItemIdsToRemove.push(i);
                 continue;
             }
         }
-        for(let i = 0; i < projectileIdsToRemove.length; i++) {
-            projectiles.splice(projectileIdsToRemove[i]-i, 1);
+        for(let i = 0; i < floatingItemIdsToRemove.length; i++) {
+            floatingItems.splice(floatingItemIdsToRemove[i]-i, 1);
         }
-    }
-    // Apply floating item physics, update them, remove destroyed
-    var floatingItemIdsToRemove = [];
-    for(let i = 0; i < floatingItems.length; i++) {
-        floatingItems[i].applyPhysics(worldMap);
-        var destroyed = floatingItems[i].update();
-        if(destroyed) {
-            floatingItemIdsToRemove.push(i);
-            continue;
-        }
-    }
-    for(let i = 0; i < floatingItemIdsToRemove.length; i++) {
-        floatingItems.splice(floatingItemIdsToRemove[i]-i, 1);
     }
     
-    // Render
+    // RENDER
     if(!skipRenderingThisFrame) {
         // Render
         render(dbgm);

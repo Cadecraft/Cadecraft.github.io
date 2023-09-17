@@ -301,6 +301,22 @@ function render(indbgm = false) {
         }
     }
     ctx.globalAlpha = 1.0;
+    // Render pause info
+    if (ui_pauseMode != PauseModes.None) {
+        // Paused: darken screen
+        ctx.fillStyle = 'black';
+        ctx.globalAlpha = 0.5;
+        ctx.fillRect(0, 0, c.width, c.height);
+        // Info
+        if (ui_pauseMode == PauseModes.Paused) {
+            ctx.fillStyle = 'white';
+            ctx.font = '14px Tahoma';
+            ctx.globalAlpha = 0.8;
+            ctx.fillText('[ESC] PAUSED', c.width / 2 + 45, c.height / 2);
+        }
+    }
+
+    // DBG
     // Render dbg info
     if(dbgm) {
         // Dbg messages
