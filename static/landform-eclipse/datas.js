@@ -4,8 +4,8 @@
 
 // Sys defs (REM init sequence pt1)
 const recentVersion = '0.0.10';
-const editDate = '2022/3/18';
-const createdDate = '2022/9/5';
+const editDate = '2022/03/18';
+const createdDate = '2022/09/5';
 
 // Other images info
 const IMGS_ENTITY = [
@@ -35,7 +35,9 @@ const IMGS_OTHER = [
     'images/bg/bg_main_highlands_dark_fade.png',
     'images/bg/bg_main_desert_dark_fade.png',
     'images/bg/bg_main_plains_dark_fade.png',
-    'images/bg/bg_main_mountains_dark_fade.png'
+    'images/bg/bg_main_mountains_dark_fade.png',
+    'images/LandformEclipse_TitleLogo.png',
+    'images/LandformEclipse_Icon_Resiz.png'
 ];
 
 // Audios info

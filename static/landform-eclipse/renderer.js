@@ -313,7 +313,39 @@ function render(indbgm = false) {
             ctx.font = '14px Tahoma';
             ctx.globalAlpha = 0.8;
             ctx.fillText('[ESC] PAUSED', c.width / 2 + 45, c.height / 2);
+        } else if (ui_pauseMode == PauseModes.Title) {
+            // Slightly darker
+            ctx.fillStyle = 'black';
+            ctx.globalAlpha = 0.5;
+            if (ui_anitimers["planetfade"] > 0) {
+                ctx.globalAlpha += ui_anitimers["planetfade"] / 2000;
+            }
+            ctx.fillRect(0, 0, c.width, c.height);
+            // Icon and title logo
+            ctx.globalAlpha = 0.4;
+            if (ui_anitimers["planetfade"] > 0) {
+                ctx.globalAlpha = (1 - Math.pow(ui_anitimers["planetfade"] / 1000, 2)) * 0.4;
+            }
+            ctx.drawImage(allimgs['images/LandformEclipse_Icon_Resiz.png'], 0, 0, 320, 320, c.width / 2 - 160, c.height / 2 - 160, 320, 320);
+            ctx.globalAlpha = ctx.globalAlpha / 0.4;
+            let titleLogoPos = -100;
+            if (ui_anitimers["planetfade"] > 0) {
+                titleLogoPos = -100 + 100 * Math.pow(ui_anitimers["planetfade"] / 1000, 2);
+            }
+            ctx.drawImage(allimgs['images/LandformEclipse_TitleLogo.png'], 0, 0, 1330, 395, c.width / 2 + titleLogoPos, c.height / 2 - 100, 1330/4, 395/4);
+            // Start game prompt
+            ctx.fillStyle = 'white';
+            ctx.font = '14px Tahoma';
+            ctx.globalAlpha = 0.8;
+            if (ui_anitimers["planetfade"] > 0) {
+                ctx.globalAlpha = 0;
+            }
+            ctx.fillText('[Space] START GAME', c.width / 2 + 45 + 100, c.height / 2 + 10);
         }
+        // Bottom text
+        ctx.globalAlpha = 0.8;
+        ctx.fillText('Landform Eclipse • ©2022-2023 Cadecraft', c.width / 2 - 100, c.height - 40);
+        ctx.fillText('v' + recentVersion + ' • ' + editDate, c.width / 2 - 35, c.height - 20);
     }
 
     // DBG

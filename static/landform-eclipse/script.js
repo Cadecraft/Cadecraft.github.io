@@ -4,6 +4,7 @@
 TO ADD (also search: `toadd`~):
 > Title screen
 > Controls tutorial
+> Refactor: replace some stuff with enums
 > Velocity correction veleq for time (?)
 > Acceleration
 > Settling down onto ground effect (falling y loc)--snap y location closer to the ground (floor/ceil)
@@ -132,6 +133,7 @@ var dbg_totalframes = 0;
 var dbg_fps_avg = 0;
 var dbg_fps_graph = [0];
 var dbg_playerAsSquare = false;
+var dbg_firstMusic = -1; // ex. 7 plays "sounds/S_23_Cognizant.mp3" first (-1 = none)
 var totalMsElapsed = 0; // ms elapsed since the loop started (used for rendering sin waves, etc.)
 var globalScale = 2.0;
 var blockWidth = 16;
@@ -150,6 +152,11 @@ var display_skipFrames = true;
 var entities = [];
 var projectiles = [];
 var floatingItems = [];
+var timers = { // Game timers
+    "timer_mining": 0,
+    "timer_shooting": 0
+};
+// UI defs
 var ui_messages = [/*{
     loc: 0, // Location (0=top left)
     color: 0, // Color (0=white)
@@ -166,8 +173,11 @@ var ui_dmgMessages = [/*{
     msg: "2",
     duration: 1000 // Duration in ms (fades out the last 700ms)
 }*/];
+var ui_anitimers = { // UI animation timers
+    "planetfade": 1000
+};
 const PauseModes = Object.freeze({ None: Symbol(0), Paused: Symbol(1), Title: Symbol(2) });
-var ui_pauseMode = PauseModes.None; // None, Paused, or Title
+var ui_pauseMode = PauseModes.Title; // None, Paused, or Title
 
 // Load game defs: load/generate map and world states
 function mapRegen(inGenerateWorld) {
@@ -230,10 +240,14 @@ function playSoundOnce(soundin) {
     } catch(err) { console.log('err: playSoundOnce() failed'); }
 }
 function randomMusics() {
-    if(!hasMusicStarted) { hasMusicStarted = true; }
-    var choseni = Math.floor(Math.random() * gameMusics.length);
+    if (!hasMusicStarted) { hasMusicStarted = true; }
+    let choseni = Math.floor(Math.random() * gameMusics.length);
+    if (dbg_firstMusic != -1) {
+        choseni = dbg_firstMusic;
+        dbg_firstMusic = -1;
+    }
     console.log('music: now playing: '+MUSICS[choseni]);
-    var chosen = gameMusics[choseni];
+    let chosen = gameMusics[choseni];
     playSoundOnce(chosen);
 }
 
@@ -692,6 +706,8 @@ function gameInput() {
     if (inputs.includes('jump') && ui_pauseMode == PauseModes.Title) {
         // Exit title and start game
         ui_pauseMode = PauseModes.None;
+        // Start music (can only start once you interact by jumping)
+        randomMusics();
     }
 
     // Use controls (if not paused)
@@ -808,12 +824,11 @@ function gameInput() {
             else {
                 // None: block is not known
             }
-            // Random other click stuff
-            if(!hasMusicStarted) randomMusics(); // Sounds can only play when the user has clicked
         }
         else { mychar.justPlacedBlock = false; mychar.justMinedBlock = false; }
     }
 
+    // Dbg controls
     if(dbgm && inputs.includes('save')) {
         // Save world (only allowed in debug mode)
         download('landform_world.ccdata', JSON.stringify(worldMap));
@@ -835,12 +850,6 @@ function gameStart() {
     // Set player inv, defaults, etc.
 }
 gameStart(); // call
-
-// Timers
-var timers = {
-    "timer_mining": 0,
-    "timer_shooting": 0
-};
 
 // Game loop
 function gameLoop() {
@@ -871,6 +880,9 @@ function gameLoop() {
         for (let i = 0; i < Object.keys(timers).length; i++) {
             timers[Object.keys(timers)[i]] -= gameInterval;
         }
+    }
+    for (let i = 0; i < Object.keys(ui_anitimers).length; i++) {
+        ui_anitimers[Object.keys(ui_anitimers)[i]] -= gameInterval;
     }
 
     // HANDLE INPUT (if not dead)
