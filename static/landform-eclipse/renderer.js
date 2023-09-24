@@ -326,7 +326,8 @@ function render(indbgm = false) {
             if (ui_anitimers["planetfade"] > 0) {
                 ctx.globalAlpha = (1 - Math.pow(ui_anitimers["planetfade"] / 1000, 2)) * 0.4;
             }
-            ctx.drawImage(allimgs['images/LandformEclipse_Icon_Resiz.png'], 0, 0, 320, 320, c.width / 2 - 160, c.height / 2 - 160, 320, 320);
+            let planetPosOffs = Math.sin(ui_anitimers["planetfade"] / 1000) * 5;
+            ctx.drawImage(allimgs['images/LandformEclipse_Icon_Resiz.png'], 0, 0, 320, 320, c.width / 2 - 160, c.height / 2 - 160 + planetPosOffs, 320, 320);
             ctx.globalAlpha = ctx.globalAlpha / 0.4;
             let titleLogoPos = -100;
             if (ui_anitimers["planetfade"] > 0) {

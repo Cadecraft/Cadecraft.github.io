@@ -52,7 +52,8 @@ TO ADD (also search: `toadd`~):
 > Water source generation (on destroy done, on place)
 > Water physics
 > Place blocks on top to destroy grass
-> Prevent grass/(contains "groundPlant" key) from being placed midair
+> Fix: Prevent grass/(contains "groundPlant" key) from being placed midair
+> Fix: adding blocks beyond inventory capacity breaks their click-selection in inv menu
 > BG blocks ? (/cave bg)
 > Refactor worldMap and its functions (getMapBlock, etc.) into WorldMap class (obj called 'wmap') ?
 > Worldgen smoothen cliffs
