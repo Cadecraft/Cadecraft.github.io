@@ -323,15 +323,19 @@ function render(indbgm = false) {
             ctx.fillRect(0, 0, c.width, c.height);
             // Icon and title logo
             ctx.globalAlpha = 0.4;
+            let newGlobalAlpha = ctx.globalAlpha;
             if (ui_anitimers["planetfade"] > 0) {
-                ctx.globalAlpha = (1 - Math.pow(ui_anitimers["planetfade"] / 1000, 2)) * 0.4;
+                newGlobalAlpha = (1 - Math.pow(ui_anitimers["planetfade"] / 1000, 2)) * 0.4;
+                ctx.globalAlpha = newGlobalAlpha;
             }
             let planetPosOffs = Math.sin(ui_anitimers["planetfade"] / 1000) * 5;
             ctx.drawImage(allimgs['images/LandformEclipse_Icon_Resiz.png'], 0, 0, 320, 320, c.width / 2 - 160, c.height / 2 - 160 + planetPosOffs, 320, 320);
-            ctx.globalAlpha = ctx.globalAlpha / 0.4;
+            ctx.globalAlpha = newGlobalAlpha / 0.4;
             let titleLogoPos = -100;
             if (ui_anitimers["planetfade"] > 0) {
                 titleLogoPos = -100 + 100 * Math.pow(ui_anitimers["planetfade"] / 1000, 2);
+            } else {
+                ctx.globalAlpha = 1.0;
             }
             ctx.drawImage(allimgs['images/LandformEclipse_TitleLogo.png'], 0, 0, 1330, 395, c.width / 2 + titleLogoPos, c.height / 2 - 100, 1330/4, 395/4);
             // Start game prompt
