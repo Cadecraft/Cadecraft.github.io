@@ -54,6 +54,7 @@ TO ADD (also search: `toadd`~):
 > Place blocks on top to destroy grass
 > Fix: Prevent grass/(contains "groundPlant" key) from being placed midair
 > Fix: adding blocks beyond inventory capacity breaks their click-selection in inv menu
+> Feat: allow weapons to destroy grass ?
 > BG blocks ? (/cave bg)
 > Refactor worldMap and its functions (getMapBlock, etc.) into WorldMap class (obj called 'wmap') ?
 > Worldgen smoothen cliffs

@@ -1,10 +1,10 @@
-@font-face { font-family: Starbase Disconnect;
-    src: url('cadecraft.github.io/static/fonts/starbase-disconnect.woff2') format(woff2),
-    url('cadecraft.github.io/static/fonts/starbase-disconnect.woff') format(woff);
+@font-face { font-family: 'Starbase Disconnect';
+    src: url('/static/fonts/starbase-disconnect.woff2') format(woff2),
+    url('/static/fonts/starbase-disconnect.woff') format(woff);
 }
-@font-face { font-family: Starbase Disconnect; font-weight:bold;
-    src: url('cadecraft.github.io/static/fonts/starbase-disconnect.woff2') format(woff2),
-    url('cadecraft.github.io/static/fonts/starbase-disconnect.woff') format(woff);
+@font-face { font-family: 'Starbase Disconnect'; font-weight:bold;
+    src: url('/static/fonts/starbase-disconnect.woff2') format(woff2),
+    url('/static/fonts/starbase-disconnect.woff') format(woff);
 }
 /* Body */
 body {
