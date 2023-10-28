@@ -140,7 +140,14 @@ function wgenMain() {
                         worldMap[y].push(11);
                         let treeHeight = Math.floor(Math.random()*4)+2;
                         for(let i = 0; i < treeHeight; i++) { worldMap[y-i-1][x] = 11; }
-                        for(let i = 0; i < 5; i++) { worldMap[y-treeHeight-1][x+i-2] = 12; }
+                        for(let i = 0; i < 5; i++) {
+                            if (i >= 1 && i < 4) {
+                                worldMap[y-treeHeight-1][x+i-2] = 35;
+                                worldMap[y-treeHeight-2][x+i-2] = 12;
+                            } else {
+                                worldMap[y-treeHeight-1][x+i-2] = 12;
+                            }
+                        } // Improve leaves (12 = partial, 35 = full)
                     }
                     else if(worldgenMap_features[x] == "dune cacti") { worldMap[y].push(23); }
                     else if(worldgenMap_features[x] == "dune lily") {

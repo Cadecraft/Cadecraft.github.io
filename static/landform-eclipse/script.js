@@ -2,7 +2,7 @@
 
 /*
 TO ADD (also search: `toadd`~):
-> Title screen
+> Style: space between if and parentheses; change var to let
 > Controls tutorial
 > Refactor: replace some stuff with enums
 > Velocity correction veleq for time (?)

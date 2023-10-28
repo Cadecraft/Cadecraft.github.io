@@ -225,7 +225,7 @@ const BLOCKS = {
         destroyByWater: false
     },
     12: {
-        iname: "Highland Leaves",
+        iname: "Highland Leaves Partial",
         idescr: "These leaves are rigid and covered in a thin layer of frost.",
         irarity: 0,
         img: 'images/blocks/Block_Leaves_Grasslands_2.png',
@@ -233,7 +233,7 @@ const BLOCKS = {
         collision: 'platform',
         hardness: 1,
         hp: 4,
-        drops: [12],
+        drops: [35],
         destroyByWater: false
     },
     13: {
@@ -445,7 +445,7 @@ const BLOCKS = {
         destroyByWater: false
     },
     30: {
-        iname: 'Gun',
+        iname: 'Laser',
         idescr: 'A simple blaster. You forgot where you acquired it.',
         irarity: 1,
         img: 'images/items/item_gun_0.png',
@@ -491,6 +491,18 @@ const BLOCKS = {
         hardness: 1,
         hp: 10,
         drops: [34],
+        destroyByWater: false
+    },
+    35: {
+        iname: "Highland Leaves",
+        idescr: "These leaves are rigid and covered in a thin layer of frost.",
+        irarity: 0,
+        img: 'images/blocks/Block_Leaves_Grasslands_2_Full.png',
+        placeable: true,
+        collision: 'platform',
+        hardness: 1,
+        hp: 4,
+        drops: [35],
         destroyByWater: false
     },
 };
@@ -552,7 +564,8 @@ const PROJECTILE_TYPES = {
         gravity: 0.005,
         canPierce: false,
         baseDmg: 5,
-        width: 4
+        width: 4,
+        height: 2
     },
     "blaster": {
         velinitial: 0.6,
@@ -560,7 +573,8 @@ const PROJECTILE_TYPES = {
         gravity: 0.002,
         canPierce: false,
         baseDmg: 15,
-        width: 6
+        width: 6,
+        height: 3
     },
     "decimbolt": {
         velinitial: 0.8,
@@ -568,7 +582,8 @@ const PROJECTILE_TYPES = {
         gravity: 0,
         canPierce: true,
         baseDmg: 5,
-        width: 9
+        width: 9,
+        height: 9
     },
     "gravitractor": {
         velinitial: 0.17,
@@ -576,7 +591,8 @@ const PROJECTILE_TYPES = {
         gravity: 0.004,
         canPierce: false,
         baseDmg: 19,
-        width: 4
+        width: 4,
+        height: 4
     }
 };
 

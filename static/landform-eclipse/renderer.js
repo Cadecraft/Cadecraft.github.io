@@ -133,6 +133,19 @@ function render(indbgm = false) {
             // Render player based on textures
             var toDrawImg = allimgs[mychar.getTextureFilename()];
             ctx.drawImage(toDrawImg, 0, 0, toDrawImg.naturalWidth, toDrawImg.naturalHeight, Math.floor(drawx), Math.floor(drawy-((1-0.37)*iwidth)), Math.floor(toDrawImg.naturalWidth*globalScale), Math.floor(toDrawImg.naturalHeight*globalScale));
+            // Render player holding item
+            let holdingItemId = mychar.invGetSelected()[0];
+            if (BLOCKS[holdingItemId].img != 'none') {
+                let toDrawImg2 = allimgs[BLOCKS[holdingItemId].img];
+                /*ctx.save();
+                if (!mychar.facingRight) {
+                    ctx.translate(ctx.width, 0); // todo: implement item rotation
+                    ctx.scale(-1, 1);
+                }*/
+                let toDrawImg2Scale = ('isitem' in BLOCKS[holdingItemId]) ? (1.0) : (0.5);
+                ctx.drawImage(toDrawImg2, 0, 0, toDrawImg2.naturalWidth, toDrawImg2.naturalHeight, Math.floor(drawx), Math.floor(drawy-((0.1)*iwidth)), Math.floor(toDrawImg2.naturalWidth*globalScale * toDrawImg2Scale), Math.floor(toDrawImg2.naturalHeight*globalScale * toDrawImg2Scale));
+                //ctx.restore();
+            }
         }
     } catch(err) { console.log('err: rendering PLAYER'); }
     // Render entities
@@ -170,9 +183,10 @@ function render(indbgm = false) {
         var pdrawx = (thisprojectile.locx+offsetx)*iwidth;
         var pdrawy = (thisprojectile.locy+offsety)*iwidth;
         var pdrawwidth = PROJECTILE_TYPES[thisprojectile.type].width*globalScale;
+        let pdrawheight = PROJECTILE_TYPES[thisprojectile.type].height*globalScale;
         if(!isPointVisible(pdrawx, pdrawy, iwidth)) continue; // Projectile is not visible
         ctx.fillStyle = PROJECTILE_TYPES[thisprojectile.type].color;
-        ctx.fillRect(pdrawx-pdrawwidth/2, pdrawy-pdrawwidth/2, pdrawwidth, pdrawwidth);
+        ctx.fillRect(pdrawx-pdrawwidth/2, pdrawy-pdrawheight/2, pdrawwidth, pdrawheight);
     }
     // Render floating items
     for(let i = 0; i < floatingItems.length; i++) {
