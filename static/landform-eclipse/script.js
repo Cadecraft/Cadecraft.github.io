@@ -3,6 +3,7 @@
 /*
 TO ADD (also search: `toadd`~):
 > Style: space between if and parentheses; change var to let
+> Graphics: render below the world as pure black
 > Controls tutorial
 > Refactor: replace some stuff with enums
 > Velocity correction veleq for time (?)
