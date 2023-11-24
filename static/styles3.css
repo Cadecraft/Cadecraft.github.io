@@ -1,6 +1,6 @@
 /*
 CADECRAFT DEFINITIVE STYLES
-v3.0.1; 2023/11/24
+v3.1.0; 2023/11/24
 
 SOMEWHAT BASED ON CADECRAFT DEFINITIVE STYLES 1
 v1.0.2 (2022/11/26)
@@ -12,11 +12,11 @@ RE-WRITTEN AND MODIFIED FOR IMPROVED STYLE (2023/11/24)
 body {
     background-color: rgb(11, 14, 17);
     font-family: Arial;
-    font-size: 13px; /* todo: bigger text ? */
+    font-size: 14px; /* todo: bigger text ? */
     color: rgb(191, 196, 204);
-    padding: 8px;
+    padding: 0px; /* Normally 8px, but 0px for Cadecraft homepage */
     text-align: center; /* For Cadecraft homepage */
-}
+} /* todo: body no scroll bar */
 
 /* Text */
 h1 { /* Main page title header (blue) */
@@ -40,6 +40,9 @@ h3 { /* Dark header */
 .emphwarn {
     color: rgb(230, 157, 0);
     font-weight: bold;
+}
+.emphbg {
+    background-color: rgba(0, 0, 0, 0.5);
 }
 .error {
     color: rgb(230, 12, 12);
@@ -66,7 +69,7 @@ a:active {
 
 /* Misc */
 hr {
-    border-color: rgb(50, 59, 71);
+    border: solid 1px rgb(50, 59, 71);
 }
 
 /* Dividers */
@@ -151,17 +154,18 @@ input[type=text].wideChatbox {
 }
 
 /* Misc */
-img.socialLink {
+img.socialLink { /* todo: eliminate underline on socialLink inside an a */
+    width: 30px;
+    height: 30px;
+}
+img.socialLinkSmall { /* todo: eliminate underline on socialLink inside an a */
     width: 24px;
     height: 24px;
-}
-img.socialLink:hover {
-    cursor: pointer;
 }
 
 /* Cadecraft Homepage specific features */
 @font-face { font-family: 'Starbase Disconnect';
-    src: url('/static/fonts/starbase-disconnect.woff2') format(woff2),
+    src: url('/static/fonts/starbase-disconnect.woff2') format(woff2), /* todo: re-add initial / */
     url('/static/fonts/starbase-disconnect.woff') format(woff);
 }
 @font-face { font-family: 'Starbase Disconnect'; font-weight:bold;
@@ -178,14 +182,16 @@ div.maindiv {
 }
 div.headerdiv {
     position: sticky; /* todo: good ? */
-    top: 8px;
-    box-shadow: rgb(21, 25, 31) 0px -8px 0px; /* todo: good ? */
+    top: 0px;
+    margin:0px;
+    box-shadow: rgb(0, 0, 0) 0px 4px 20px; /* todo: remove (was for hiding top) */
     z-index: 5;
     background-blend-mode: multiply;
     background-color: rgb(170, 170, 170);
     background-size: 200px;
+    height: 50px;
 }
-div.flex-item-news-div {
+div.flex-item-news-div { /* todo: improve style (ask for advice ?) */
     width: 150px;
     height: 160px;
     background-color: rgba(0, 0, 0, 0.4);
@@ -193,18 +199,26 @@ div.flex-item-news-div {
     box-shadow: 0px 2px 5px black;
     background-blend-mode: multiply;
     position: relative;
+    transition: all 0.2s;
+    text-align: center;
 }
-div.flex-item-news-div:hover { /* todo: improve animation ? */
+div.flex-item-news-div:hover {
     background-color: rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     outline: solid 1px rgb(28, 160, 203);
+    color: white;
     transition: all 0.2s;
 }
-.news-button {
+button.news-button {
     position: absolute;
     bottom: 12px;
     left: 12px;
     width: 150px; /* todo: include shadow on these ? */
+    box-shadow: 0px 2px 5px black;
+}
+button.menuround {
+    border-radius:0px;
+    width: 17%;
 }
 
 /* Tardigrade Chat specific features */
