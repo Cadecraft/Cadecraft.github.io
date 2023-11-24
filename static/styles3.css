@@ -1,0 +1,273 @@
+/*
+CADECRAFT DEFINITIVE STYLES
+v3.0.1; 2023/11/24
+
+SOMEWHAT BASED ON CADECRAFT DEFINITIVE STYLES 1
+v1.0.2 (2022/11/26)
+RE-WRITTEN AND MODIFIED FOR CLEANLINESS/ORGANIZATION (2023/11/04)
+RE-WRITTEN AND MODIFIED FOR IMPROVED STYLE (2023/11/24)
+*/
+
+/* Body and normal text */
+body {
+    background-color: rgb(11, 14, 17);
+    font-family: Arial;
+    font-size: 13px; /* todo: bigger text ? */
+    color: rgb(191, 196, 204);
+    padding: 8px;
+    text-align: center; /* For Cadecraft homepage */
+}
+
+/* Text */
+h1 { /* Main page title header (blue) */
+    color: rgb(28, 160, 203);
+    font-size: 18px;
+    margin:0px;
+}
+h3 { /* Dark header */
+    color: rgb(191, 196, 204); /* Formerly: rgb(90, 92, 95) or rgb(92, 96, 102) or rgb(127, 130, 134); */
+    transition: all 0.1s;
+    margin-top:4px;
+    margin-bottom:4px;
+}
+.emph1 {
+    font-weight: bold;
+}
+.emph2 {
+    color: rgb(28, 160, 203);
+    font-weight: bold;
+}
+.emphwarn {
+    color: rgb(230, 157, 0);
+    font-weight: bold;
+}
+.error {
+    color: rgb(230, 12, 12);
+    font-weight: bold;
+}
+
+/* Link */
+a {
+    color: rgb(23, 122, 180); /* Formerly: rgb(28, 160, 203) */
+    background-color: transparent;
+    text-decoration: underline;
+    font-weight: bold;
+    cursor: pointer;
+}
+a:visited {
+    color: rgb(23, 122, 180);
+}
+a:hover {
+    color: rgb(14, 71, 131);
+}
+a:active {
+    color: rgb(12, 55, 121);
+}
+
+/* Misc */
+hr {
+    border-color: rgb(50, 59, 71);
+}
+
+/* Dividers */
+div {
+    margin: 4px;
+    margin-bottom: 8px;
+    padding: 12px;
+}
+div.pagediv {
+    margin: 0px;
+    padding: 0px;
+}
+div.section {
+    background-color: rgb(21, 25, 31);
+    border-radius: 2px;
+    border: solid 1px rgb(32, 39, 48);
+    margin: 4px;
+    margin-bottom: 8px;
+    padding: 12px;
+}
+.flex-container-div {
+    margin: 0px;
+    padding: 0px;
+    background-color: transparent;
+    display: flex;
+}
+.flex-item-div {
+    margin: 0px;
+    padding: 0px;
+    margin-right: 8px;
+    background-color: transparent;
+}
+
+/* Buttons */
+button {
+    background-color: rgb(18, 100, 158);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    /* outline: solid 1px rgb(32, 39, 48); */ /* todo: remove ? */
+    padding: 4px 2px;
+    /* box-shadow: 0px 0px 3px black; */
+    width: 200px;
+    height: 24px;
+    cursor: pointer;
+    margin-top: 4px;
+}
+button:hover {
+    background-color: rgb(14, 71, 131);
+}
+button:active {
+    background-color: rgb(12, 55, 121);
+}
+button:disabled {
+    background-color: rgb(90, 92, 95);
+    cursor: default;
+}
+
+/* Inputs */
+input[type=text], input[type=password] {
+    background-color: rgb(57, 64, 74); /*rgb(54, 56, 59);*/
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 4px;
+    box-shadow: 0px 0px 3px black;
+    width: 200px;
+    height: 24px;
+    box-sizing: border-box;
+    margin-top: 4px;
+}
+input[type=text]:focus, input[type=password]:focus {
+    outline: 1px solid rgb(28, 160, 203);
+}
+input[type=text].wideChatbox {
+    padding: 4px;
+    height: 30px;
+    box-sizing: border-box;
+    width: 100%;
+    border-radius: 0px;
+    box-shadow: none;
+}
+
+/* Misc */
+img.socialLink {
+    width: 24px;
+    height: 24px;
+}
+img.socialLink:hover {
+    cursor: pointer;
+}
+
+/* Cadecraft Homepage specific features */
+@font-face { font-family: 'Starbase Disconnect';
+    src: url('/static/fonts/starbase-disconnect.woff2') format(woff2),
+    url('/static/fonts/starbase-disconnect.woff') format(woff);
+}
+@font-face { font-family: 'Starbase Disconnect'; font-weight:bold;
+    src: url('/static/fonts/starbase-disconnect.woff2') format(woff2),
+    url('/static/fonts/starbase-disconnect.woff') format(woff);
+}
+div.maindiv {
+    width: 850px;
+    padding: 0px;
+    margin: 0 auto; /* Formerly: 0 auto */
+    text-align: left;
+    background-color: transparent; /* todo: necessary ? */
+    display: inline-block;
+}
+div.headerdiv {
+    position: sticky; /* todo: good ? */
+    top: 8px;
+    box-shadow: rgb(21, 25, 31) 0px -8px 0px; /* todo: good ? */
+    z-index: 5;
+    background-blend-mode: multiply;
+    background-color: rgb(170, 170, 170);
+    background-size: 200px;
+}
+div.flex-item-news-div {
+    width: 150px;
+    height: 160px;
+    background-color: rgba(0, 0, 0, 0.4);
+    outline: solid 1px rgb(32, 39, 48);
+    box-shadow: 0px 2px 5px black;
+    background-blend-mode: multiply;
+    position: relative;
+}
+div.flex-item-news-div:hover { /* todo: improve animation ? */
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    outline: solid 1px rgb(28, 160, 203);
+    transition: all 0.2s;
+}
+.news-button {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    width: 150px; /* todo: include shadow on these ? */
+}
+
+/* Tardigrade Chat specific features */
+button.colorpick {
+    background-color: red;
+    border-radius: 0px;
+    padding: 0px;
+    height: 24px;
+    width: 24px;
+}
+div.chatcontainer {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    min-height: 100px;
+    max-height: calc(100vh - 400px);
+    margin: 0px;
+    padding: 0px;
+    border: none;
+}
+div.messagecontainer {
+    border-radius: 0px;
+    padding: 2px;
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+    background-color: transparent;
+    white-space: pre-wrap; /* Display all spaces */
+    border: none;
+}
+div.messagecontainer:hover {
+    background-color: black;
+    /*text-decoration: underline;*/
+}
+button.miniop {
+    background-color: rgb(11, 14, 17);
+    color: rgb(127, 130, 134);;
+    border: 2px solid rgb(54, 56, 59);
+    border-radius: 4px;
+    padding: 0px;
+    box-shadow: 0px 3px 5px black;
+    width: 45px;
+    height: 18px;
+    cursor: pointer;
+    margin-top: 0px;
+    float: right;
+    display: none;
+}
+button.miniop:hover {
+    background-color: rgb(21, 25, 31);
+}
+button.miniop:active {
+    background-color: rgb(32, 37, 46);
+}
+button.miniop:disabled {
+    background-color: rgb(90, 92, 95);
+    cursor: default;
+}
+div.messagecontainer:hover button.miniop {
+    display: inline;
+}
+span.minitime {
+    color: rgb(90, 92, 95);
+    display: none;
+}
+div.messagecontainer:hover span.minitime {
+    display: inline;
+}
