@@ -23,10 +23,14 @@
     <!-- todo: add license to this repo -->
 
     <!-- UPPER BAR (important info) -->
-    <div style="display:inline; margin:0px; padding:0px;">
+    <div style="display:inline; margin:0px; padding:0px; z-index: 6;">
         <span class="emphwarn" style="display:none;">
             Note: I just moved my website here! Please bookmark this address so you don't forget.
             If you cannot find a download link, please head to <a href="https://cadendotlee.wixsite.com/awesomecadecraft">my old page</a>.
+        </span>
+        <span class="emphwarn" style="display:inline;">
+            Note: I'm still working on this new version!
+            Please head to <a href="https://cadecraft.github.io/">the current page</a> for now.
         </span>
         <span id="jswarning" class="emphwarn" style="display:none;">
             WARNING: This page requires JavaScript to be enabled.
@@ -45,11 +49,11 @@
             </span>
             <br>
             <div style="display:inline;">
-                <button class="menuround">Home</button>
-                <button class="menuround">Play Games</button>
-                <button class="menuround">Projects</button>
-                <button class="menuround">Music</button>
-                <button class="menuround">Chrome Extensions</button>
+                <button class="menu blue roundl">Home</button>
+                <button class="menu">Play Games</button>
+                <button class="menu">Projects</button>
+                <button class="menu">Music</button>
+                <button class="menu roundr">Chrome Extensions</button>
             </div>
         </div>
     </div>
@@ -69,6 +73,8 @@
                 I make games, software, and music. Welcome to my site! <!-- todo: substance -->
                 <hr>
                 <!-- todo: more social links, download images, and actual stuff -->
+                <a href="https://github.com/Cadecraft"><img class="socialLinkSmall" alt="GitHub" title="GitHub" src="https://cdn.icon-icons.com/icons2/2429/PNG/512/github_logo_icon_147285.png"></a>
+                &nbsp;
                 <a href="https://youtube.com/@AwesomeCadecraft"><img class="socialLinkSmall" alt="YouTube" title="YouTube" src="https://cdn2.iconfinder.com/data/icons/social-media-2285/512/1_Youtube_colored_svg-512.png"></a>
             </div>
             <!-- News / My Recent Projects preview -->
@@ -109,9 +115,11 @@
                 <a style="float:right;">Listen to more ➔</a> <!-- todo: create link -->
                 <hr>
                 <!-- todo: embed yt videos OR create a custom music player?? -->
-                <iframe width="200" height="200" style="display:inline; margin-left:50px;" src="https://www.youtube.com/embed/mRhet0tfL3I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                <iframe width="200" height="200" style="display:inline; margin-left:50px;" src="https://www.youtube.com/embed/uERZj5-O47c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                <iframe width="200" height="200" style="display:inline; margin-left:50px;" src="https://www.youtube.com/embed/ZVw52b9u5fA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <div class="flex-container-div">
+                    <iframe width="200" height="200" style="margin: auto;" src="https://www.youtube.com/embed/mRhet0tfL3I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe width="200" height="200" style="margin: auto;" src="https://www.youtube.com/embed/uERZj5-O47c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe width="200" height="200" style="margin: auto;" src="https://www.youtube.com/embed/ZVw52b9u5fA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
             </div>
             <!-- My interests -->
             <div class="section">
@@ -131,21 +139,22 @@
                 <a href="https://en.wikipedia.org/wiki/Rust_(programming_language)"><img class="socialLink" alt="Rust" title="Rust" src="https://rust-lang.org/logos/rust-logo-256x256.png"></a>
                 <a href="https://en.wikipedia.org/wiki/X86_assembly_language"><img class="socialLink" alt="x86 Assembly" title="x86 Assembly" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAe1BMVEX///8AAADs7OympqbT09OBgYHX19ezs7Px8fHc3Nz39/dra2tvb2/Ly8vAwMD6+vqbm5vk5OSKioqtra3ExMQNDQ3n5+d6enpLS0tCQkI2NjaUlJR0dHQTExO6urqYmJhXV1cnJycdHR1fX18zMzNQUFA8PDwlJSUtLS3neKlTAAAIi0lEQVR4nO2d6XbqOgxGSZjCUBIoU6GlcKAt7/+EF5xJ8kRILJx1l/afs5qgHH94khXZdDoMwzAMwzAMwzAMwzAMwzAMw/z/mA/7P4F/fvrDOYW8KDn5lga4JpFjfeHGtyaFvlONe99ytCTO9IW/vrUY+HBUjW++hVgYuBC49K3CSq+5wDbX4J1RU4GhbwUPGTdUeIUPW21mJHPtU8xneOb6aPa4BdR3cFNEBwyhxG6TJ63BgzauiueET0ftdFI+5t1Z4dzQLYu2qP+UsL0CkcS49kPKXth3WDRXlANO/Z74lT/in8OCuaNQ+Fv3CYPiETOXBXNGOaKGNZ+Q5A/4clowdxQK685jxUjaYLAiZdO0gEU3fHNaLnfM8gKeaz6gcTOnZp4X8FTzAYVCp8VySNy0hK1X2LiErNA/rJDanh5WSG1PDyuktqeHFVLb08MKqe3pYYXU9vSwQmp7elghtT09rJDanh5WSG1PDyuktqeHFVLb08MKqe3pYYXU9vSwQmr7jHEUjWsmZsUPDL0rDA+L8yXNBjh9bJLq2a7r5ffn9vK3uhmuvk6X896QRepXYTzcBjLTKiJnn4qdKevJq0JDev/vg7yOuX7bQ/sUWpLDj5YE+5FpT07rFC50pSwwJtj3jSZtUzi1CjQl2I/+mS1aptBeg3d0KUgzm0G7FFbYv6DJPn+3GrRLoaWxFSjJhAf751ulUG5tk+QwO/S/8MWdZDQP7LRK4RkVrZ+7XUtctdK+DekLuPlA0+5ytB7H42g+miXHocsSNrVHBYWtcQdv4Mx4eZrfV9y44kUham8oAX5tvDMIEHvaEja1R6XFswLYvYFzXtH+xt0T2axeFPZAYf/wLbBDIvgB19H08lS6r/c6lKY9uFvpCK5vDdeJStjUfgSKK23TgHX4abB4bvuLF4VoLMXLCOiuggkO+ttP5sz7UQgnBbTbOgY3oPMNrm5fUsKm9t+mSkQOeXkZdtzlS0rY1B5NiGBHEloUgykPBgNeU8LG9shtO+WzG147gBDaR3n1U/s89yVsao98lyAQLmWEvVUwzozlj9467GxxPK2C1XW6X7Yzmoh6YhBc3uSwFBxQYDcUMcM1DrVNbOE5Xwo7x8AK2i4I3YD732qs5sfsxnlT2LnYBGJPByi63NrsTmdhHGL9KYwtZ4VIe8JBBz13xiu9jWkXsj+F8joYIMcv/spbUziuYlq1As5IdAUNForfCW7uu1obgX5J7FVhJ9R0RnVchK6cLYQlB3ZclLChfagNCyvL97XuUzq07dSnQn0jDZTVw8D0ORnthnkShePBaDSS3zyIa8D9sJ27hA8v6KkfWAyiOI4GcuRct7AiUZgGVfCQLwoDeor9WKI/OIMrCstt2WM8sk5fpjBSvtF0kV4ulKxvIO6AN7qyQnS2AZKoOxSARmEmAAz7/3DR5PcWk4HiiZUSJYXYe8EHHGkmDCKFaTSibDR9/GeEy7y7q1nLnmrRULFC+Qwc9NVoDk6gUtgRvlVeaaKMYKTDYvI4hvTm5aRXKL8eRiPt9wsVpsXKxk7xyqEcXHEbLaf4MVaeT4xIAwyiSkUItIcckSlMB880druB5e1Io8NAMZKrC8U81HD+CdydvFJhujy6uxmiysB6CAY/ZT8ESczUoACc2g5h5oImGk6oMHW2wuwz6/IGXM0rsUGUaSH/J9o6hK861DZM6rW9pxKmclVBZ0bxQtDon80YsFWrZzXBRdhr6zAbMifK/wxKtFKNYJVkq1rooKuv9+EX9tp+CGNkMBwGa0kTwIYLwKxJoiijbfX42rH0Tu58IjcEDo2afgMd1qzAaGiSAzKoWWsOZKVVmDkcuO9AhZqUEhhYy6sEipC7GvITNMdxEStMexB2+dGCVjWB80U+cKLwqLQsQ4OvJqhIqzCvDzTpoelNXdHBOEUeP0NO0Al9HLl0f8rTiBWWXWSttQk0B8WhUaVw6FB45gg+HqM7uvO8SBWKeWyvCEHRGWn0Q4NK+VAcYSslRjiUpctopFQotE3Tf+C3i04WDc6h8RZ4zxRg3oXLGkmRHm2wjVChWBKs4uyMWhAkjHG5guksdbEHiRRcBOv8oWQTXLbbq3xNe7AhocIgF5ZOD2Cmfpx6KUAOipoQrqA/S5dOoehtaeMUjQnMY3IlGkBr3ejx518c8xYT8TX7Qww5YMqodP635Lw8TEk1vJqhUhihbzWdNsCUYQwGlygBbKUrYkwHxFIpFN2m9BLFLAeHOssLlhTNqGHNoDWegEukUNQR7PliIQWnjIE1TXi37miw5LGbzzCmUZjO23CiS1steq9k+bkI46G/hlH4V/uF2EpYHb29CCXijpQ2MZQ2Me4qM9qda9eSuBZq9lt8WA/4JVH4fp5MJnLHWNyuneXK6SXSi+Bj8ij1Nx4ir+/YtdSfsYRP0NT+xnow6ybf30n30Kt6In/YO3RvFu9vFX71oAUKiWGF1Pb0sEJqe3pYIbU9PayQ2p4eVkhtTw8rpLanhxVS29PDCqnt6WGF1Pb0sEJqe3pYIbU9PayQ2p4eVkhtTw8rpLanhxVS29PDCivbP3gT6415U4VFGv2zB3K8iiI5qe7vqxfZu238Rec7RWZD3V9FLxJeNfsKWkHRSA2b2R9SNvO6vyhMS5kqVjULQqE4DaCdP+pcHMBwffxZA2VmUxt7YnlQn2YnRkVA3qc5t8wXID+w5lnadz7bKxEIbNLA4K6cuiMyDXAfiuXo5cfAHMNVe0ZUlHBbvxcKUIb9qr+sPS47Yz7DZ4HW9Wdy8Jb4NtJgmEnRHFzRKipkMD6iUu69N6r/GoGFCqdXe8N4vPtzhNoDuFrAtnEfLKiwhcIDTp2QUP+jDD7pu6vATON3lbPWX8Wl61qfYDTcVNhlRs6xP/TvdzAMwzAMwzAMwzAMwzAMwzAM457/AFncWJYqlDp0AAAAAElFTkSuQmCC"></a>
                 <br><br>
-                Here is some of my favorite open source software!
+                <!--Here is some of my favorite open source software!
                 <br>
+                <a href="https://blender.org/"><img class="socialLink" alt="Blender" title="Blender" src="https://icons.iconarchive.com/icons/dakirby309/simply-styled/256/Blender-icon.png"></a>
                 <a href="https://lmms.io/"><img class="socialLink" alt="LMMS" title="LMMS" src="data:image/png;base64,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"></a>
-                <br><br>
+                <br><br>-->
                 Besides programming and music production, I enjoy writing, 3d modeling, drawing, and playing Tetr.io.
             </div>
             <!-- Gallery -->
             <div class="section">
                 <h3>Gallery</h3>
                 <hr>
-                <img title="FishWars 5, one of my first 3d games in Unreal Engine" src="static/images/ss_fw5.png" width="640px;">
-                <img title="Tetrome, a browser extension" src="static/images/ss_tetr.png" width="153px;">
-                <img title="Landform: Eclipse, a web game and rendering engine" src="static/images/ss_landform_wide.png" width="796px;">
-                <img title="Platypode, a 3d rendered world" src="static/images/ss_plat.png" width="462px;">
-                <img title="A promotional image for Landform: Eclipse" src="static/images/promo_Landform_v0.png" width="330px;">
+                <img class="hoverimg" title="FishWars 5, one of my first 3d games in Unreal Engine" src="static/images/ss_fw5.png" width="640px;">
+                <img class="hoverimg" title="Tetrome, a browser extension" src="static/images/ss_tetr.png" width="153px;">
+                <img class="hoverimg" title="Landform: Eclipse, a web game and rendering engine" src="static/images/ss_landform_wide.png" width="796px;">
+                <img class="hoverimg" title="Platypode, a 3d rendered world" src="static/images/ss_plat.png" width="462px;">
+                <img class="hoverimg" title="A promotional image for Landform: Eclipse" src="static/images/promo_Landform_v0.png" width="330px;">
             </div>
         </div>
 
@@ -158,10 +167,10 @@
             <a href="https://youtube.com/@AwesomeCadecraft">YouTube</a>
             <br><a href="https://discord.gg/invite/wahdQHBs4Z">Discord Server</a>
             <br><a href="https://github.com/Cadecraft">GitHub</a>
-                <br><a href="https://soundcloud.com/cadecraft/albums">Soundcloud</a>
-                <br><a href="https://www.audiotool.com/user/cadecraft">Audiotool</a>
-                <br><a href="https://cadecraft.github.io/">My Website (here)</a>
-                <br><a href="https://cadendotlee.wixsite.com/awesomecadecraft">Cadecraft Games (old site)</a>
+            <br><a href="https://soundcloud.com/cadecraft/albums">Soundcloud</a>
+            <br><a href="https://www.audiotool.com/user/cadecraft">Audiotool</a>
+            <br><a href="https://cadecraft.github.io/">My Website (here)</a>
+            <br><a href="https://cadendotlee.wixsite.com/awesomecadecraft">Cadecraft Games (old site)</a>
         </div>
     </div>
 </body>
