@@ -1,6 +1,6 @@
 /*
 CADECRAFT DEFINITIVE STYLES
-v3.1.0; 2023/11/24
+v3.1.1; 2023/11/24
 
 SOMEWHAT BASED ON CADECRAFT DEFINITIVE STYLES 1
 v1.0.2 (2022/11/26)
@@ -217,7 +217,7 @@ button.news-button {
     box-shadow: 0px 2px 5px black;
 }
 button.menuround {
-    border-radius:0px;
+    border-radius: 0px;
     width: 17%;
 }
 
