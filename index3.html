@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta property="og:site_name" content="Cadecraft: Games, Software, Music">
     <meta property="og:url" content="https://cadecraft.github.io/">
-    <meta property="og:title" content="Cadecraft - Homepage">
-    <meta property="og:description" content="The official Cadecraft website.">
+    <meta property="og:title" content="Cadecraft - Homepage"> <!-- todo: SEO -->
+    <meta property="og:description" content="The official website homepage for Awesome Cadecraft.">
     <meta property="og:image" content="/static/images/logo_cadecraft_pfp.png">
     <title>
         Cadecraft: Games, Software, Music
@@ -20,6 +20,7 @@
     <!-- todo: add forward slashes EVERYWHERE, or confirm that they are not needed -->
     <!-- todo: some more fun features/animations/site decorations (ex. pixel squares around divs ?) -->
     <!-- todo: impl this page as the main page -->
+    <!-- todo: update styles/etc of 404.html as well -->
     <!-- todo: all other todos -->
     <!-- todo: add license to this repo -->
 
@@ -85,32 +86,32 @@
                         <span class="emph1">Tetrome</span>
                         <br><br>
                         <span class="emphbg">The best ADVANCED stacker popup game extension for Chrome!<br>(v1.1.6)</span>
-                        <button class="news-button blue">Add to Chrome ➔</button>
+                        <button class="news-button blue" onclick="showPage('chrome-extensions')">Add to Chrome ➔</button>
                     </div>
                     <div class="flex-item-news-div" style="background-image:url('static/images/ss_voltaire_newsblur.png'); background-size:160px;">
                         <span class="emph1">Voltaire Browser</span> <!-- todo: replace ? -->
                         <br><br>
                         <span class="emphbg">A fully functional / customizable Chromebook browser<br>(v0.0.9.8)</span>
-                        <button class="news-button blue">Download ➔</button>
+                        <button class="news-button blue" onclick="showPage('chrome-extensions')">Download ➔</button>
                     </div>
                     <div class="flex-item-news-div" style="background-image:url('static/images/ss_regnatural_blur.png'); background-size:500px;">
                         <span class="emph1">Re:Gnatural</span>
                         <br><br>
                         <span class="emphbg">A new time- and physics-based survival game coming soon</span>
-                        <button class="news-button blue">Coming Soon ➔</button>
+                        <button class="news-button blue" onclick="showPage('games')">Coming Soon ➔</button>
                     </div>
                     <div class="flex-item-news-div" style="background-image:url('static/images/ss_landform_newsblur.png'); background-size:200px;">
                         <span class="emph1">Landform: Eclipse</span>
                         <br><br>
                         <span class="emphbg">A 2d open-world exploration browser game and rendering engine</span>
-                        <button class="news-button blue">Play Now ➔</button>
+                        <button class="news-button blue" onclick="showPage('games')">Play Now ➔</button>
                     </div>
                 </div>
             </div>
             <!-- Music preview -->
             <div class="section">
                 <h3 style="display:inline;">Music</h3>
-                <a style="float:right;">Listen to more ➔</a> <!-- todo: create link -->
+                <a style="float:right;" onclick="showPage('music')">Listen to more ➔</a> <!-- todo: create link -->
                 <hr>
                 <!-- todo: embed yt videos OR create a custom music player?? -->
                 <div class="flex-container-div">
@@ -122,8 +123,7 @@
             <!-- My interests -->
             <div class="section">
                 <h3 style="display:inline;">Skills & Interests</h3>
-                <a style="float:right;">Check out my various projects ➔</a> <!-- todo: create link -->
-                
+                <a style="float:right;" onclick="showPage('misc-projects')">Check out my various projects ➔</a> <!-- todo: create link -->
                 <!-- todo: add links/substance/images/find credit -->
                 <p>
                     I'm familiar with many languages and technologies, including these
@@ -164,7 +164,7 @@
             <div class="section">
                 <h3>Web Games</h3>
                 <p>You can play some of my games right in your browser!</p>
-                <hr> <!-- todo: seriously improve this section -->
+                <hr> <!-- todo: seriously improve this section (HEADER COLORS?) -->
                 <div class="container-div">
                     <!-- Landform: Eclipse -->
                     <div class="project-wide-div" style="background-image:url('static/images/ss_landform_wide_blur.png');">
@@ -204,7 +204,10 @@
             <div class="section">
                 <h3>Download Games</h3>
                 <!-- todo: add Cpptris ? -->
-                <p>Using C++ and OpenGL, I am working on simple, fun desktop games you can quickly download and play.</p>
+                <p>
+                    Using C++ and OpenGL, I am working on simple, fun desktop games you can quickly download and play.
+                    <br>I've also created games in Unreal Engine, including a series of longer first-person shooters/RPGs.
+                </p>
                 <hr>
                 <div class="container-div">
                     <!-- Re:Gnatural -->
@@ -218,6 +221,24 @@
                                 </p>
                                 <button disabled="true">Coming Soon</button>
                             </div>
+                        </div>
+                    </div>
+                    <!-- FishWars 5 -->
+                    <div class="project-wide-div" style="background-image:url('static/images/ss_fw5_blur.png'); background-size:850px;">
+                        <div class="flex-container-div">
+                            <div class="container-div">
+                                <h3 style="color:rgb(150, 197, 96);">FishWars 5: Aftermath</h3>
+                                <p>
+                                    In this first-person shooter, it is up to you to save the FishStar System as you journey
+                                    across the vast and adventure-filled landscape of FishWorld Alpha. With countless quests, enemies, and
+                                    upgrades, you'll enjoy multiple hours of quality gameplay.
+                                </p>
+                                <button class="blue doubleWidth" onclick="location.href='https://drive.google.com/file/d/10ttPtt-LfIiyehn2aJ_mPuLfU0oPCtgu/view?usp=sharing';">Download v0.2.0 - Windows (latest)</button>
+                                <br><button onclick="location.href='https://drive.google.com/file/d/1i9JNuajH4oxo0DPJPRQrEuAAsWCWT-em/view?usp=sharing';">Download v0.1.2 - Windows</button>
+                                <button disabled="true">v0.2.1 Coming Soon</button>
+                                <br><button onclick="location.href='https://docs.google.com/spreadsheets/d/10MtVY0ZCHiAg1vREWpx-ZH2KsLe_r1LB_H5sNU7p7v4/'">Changes & Issues</button>
+                            </div>
+                            <iframe width="330" height="200" style="margin: auto;" src="https://www.youtube.com/embed/J5L_j33ur5A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
                     </div>
                 </div>

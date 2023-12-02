@@ -1,5 +1,9 @@
 // Cadecraft: script (v3)
 
+// Version info
+const recentVersion = "3.1.0";
+const editDate = "2023/12/2";
+
 // Remove JS warning (if JS is not enabled this will still appear)
 document.getElementById('jswarning').style.display = 'none';
 
