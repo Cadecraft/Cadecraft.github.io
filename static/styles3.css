@@ -1,6 +1,6 @@
 /*
 CADECRAFT DEFINITIVE STYLES
-v3.1.2; 2023/11/25
+v3.1.5; 2023/12/02
 
 SOMEWHAT BASED ON CADECRAFT DEFINITIVE STYLES 1
 v1.0.2; 2022/11/26
@@ -16,7 +16,13 @@ body {
     color: rgb(191, 196, 204);
     padding: 0px; /* Normally 8px, but 0px for Cadecraft homepage */
     text-align: center; /* For Cadecraft homepage */
-} /* todo: body no scroll bar */
+}
+::-webkit-scrollbar {
+    display: none;
+}
+:root{
+    scrollbar-width: none;
+}
 
 /* Text */
 h1 { /* Main page title header (blue) */
@@ -42,7 +48,8 @@ h3 { /* Dark header */
     font-weight: bold;
 }
 .emphbg {
-    background-color: rgba(0, 0, 0, 0.5);
+    color: rgb(219, 224, 231);
+    text-shadow: 0px 1px 5px rgba(0, 0, 0, 1);
 }
 .error {
     color: rgb(230, 12, 12);
@@ -90,14 +97,19 @@ div.section {
     margin-bottom: 8px;
     padding: 12px;
 }
-.flex-container-div {
+div.container-div {
+    margin: 0px;
+    padding: 0px;
+    background-color: transparent;
+}
+div.flex-container-div {
     margin: 0px;
     padding: 0px;
     background-color: transparent;
     display: flex;
     justify-content: center;
 }
-.flex-item-div {
+div.flex-item-div {
     margin: 0px;
     padding: 0px;
     margin-right: 8px;
@@ -119,26 +131,26 @@ button {
     font-weight: normal;
 }
 button:hover {
-    background-color: rgb(61 69 83);
-    outline: solid 1px rgb(101 110 122);
+    background-color: rgb(61, 69, 83);
+    outline: solid 1px rgb(101, 110, 122);
 }
 button:active {
-    background-color: rgb(72 81 97);
+    background-color: rgb(72, 81, 97);
 }
 button:disabled {
-    background-color: rgb(33 38 47);
-    outline: solid 1px rgb(43 50 62);
-    color: rgb(101 110 122);
+    background-color: rgba(33, 38, 47, 0.9);
+    outline: solid 1px rgb(43, 50, 62);
+    color: rgb(118, 128, 141);
     cursor: default;
 }
 button.blue {
     background-color: rgb(18, 100, 158);
     color: white;
-    outline: solid 1px rgb(25 125 181);
+    outline: solid 1px rgb(25, 125, 181);
 }
 button.blue:hover {
-    background-color: rgb(33 122 175);
-    outline: solid 1px rgb(37 149 200);
+    background-color: rgb(33, 122, 175);
+    outline: solid 1px rgb(37, 149, 200);
 }
 button.blue:active {
     background-color: rgb(28, 160, 203);
@@ -146,12 +158,12 @@ button.blue:active {
 
 /* Inputs */
 input[type=text], input[type=password] {
-    background-color: rgb(49 55 67); /* Formerly: rgb(57, 64, 74); */
+    background-color: rgb(49, 55, 67); /* Formerly: rgb(57, 64, 74); */
     color: white;
     border: none;
     border-radius: 4px;
     padding: 4px;
-    outline: solid 1px rgb(66 74 84);
+    outline: solid 1px rgb(66, 74, 84);
     box-shadow: 0px 0px 3px black;
     width: 200px;
     height: 24px;
@@ -185,6 +197,8 @@ img.socialLinkSmall { /* todo: eliminate underline on socialLink inside an a */
     height: 24px;
 }
 img.hoverimg {
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
     transition: all 0.1s;
 }
 img.hoverimg:hover {
@@ -236,12 +250,30 @@ div.flex-item-news-div { /* todo: improve style (ask for advice ?) */
 }
 div.flex-item-news-div:hover {
     background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
     outline: solid 1px rgb(28, 160, 203);
     color: white;
     transition: all 0.2s;
 }
-button.news-button {
+div.project-wide-div { /* todo: improve style (ask for advice ?) */
+    width: 100%;
+    min-height: 120px;
+    background-color: rgba(0, 0, 0, 0.6);
+    outline: solid 1px rgb(32, 39, 48);
+    border-radius: 4px;
+    box-shadow: 0px 2px 5px black;
+    color: white;
+    background-blend-mode: multiply;
+    transition: all 0.2s;
+    margin: 0px;
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+div.project-wide-div:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    outline: solid 1px rgb(28, 160, 203);
+    transition: all 0.2s;
+}
+button.news-button { /* todo: hover animation (maybe start as squarish then transition to round) */
     position: absolute;
     bottom: 12px;
     left: 12px;
