@@ -130,6 +130,7 @@ button {
     cursor: pointer;
     margin-top: 4px;
     font-weight: normal;
+    transition: all 50ms;
 }
 button:hover {
     background-color: rgb(61, 69, 83);
