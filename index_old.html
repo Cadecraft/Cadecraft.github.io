@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta property="og:site_name" content="Cadecraft: Games, Software, Music">
+    <meta property="og:url" content="https://cadecraft.github.io/">
+    <meta property="og:title" content="Cadecraft - Homepage">
+    <meta property="og:description" content="The official Cadecraft website.">
+    <meta property="og:image" content="/static/images/logo_cadecraft_pfp.png">
+    <title>
+        Cadecraft: Games, Software, Music
+    </title>
+    <!--<script defer src="http://192.168.0.131:5500/socket.io/socket.io.js"></script>-->
+    <!-- <script defer src="https://cadecraft.herokuapp.com/socket.io/socket.io.js"></script> -->
+    <script defer src="static/script.js"></script>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="shortcut icon" href="/static/images/favicon.ico">
+</head>
+<body class="noscrollbar" style="text-align:center;">
+    <!-- Important info upper bar -->
+    <div style="display:inline; margin:0;">
+        <h2 style="color:rgb(230, 157, 0); display:none;">
+            Note: I just moved my website here! Please bookmark this address so you don't forget.
+            <!-- If you cannot find a download link, please head to <a href="https://cadendotlee.wixsite.com/awesomecadecraft">my old page</a>. -->
+        </h2>
+        <h2 id="jswarning" style="color:rgb(230, 157, 0);">
+            WARNING: This page requires JavaScript to be enabled.
+            Please head to <a href="https://enable-javascript.com">enable-javascript.com</a> to learn how.
+        </h2>
+        <h2 style="color:rgb(230, 157, 0); display:inline;">
+            Note: I've updated this page: please check the <a href="https://cadecraft.github.io/">new version</a>.
+            <!-- If you cannot find a download link, please head to <a href="https://cadendotlee.wixsite.com/awesomecadecraft">my old page</a>. -->
+        </h2>
+    </div>
+    <!-- MAIN DIV - CENTERED ON PAGE -->
+    <div style="width: 850px; margin:0 auto; text-align:left; background-color:rgb(0,0,0,0);">
+        <!-- Header (all pages) (sticky) -->
+        <!-- margin-top:8px; padding:3px; position:sticky; top:8px; box-shadow: rgb(21, 25, 31) 0px -8px 0px; z-index:5; -->
+        <div class="maindiv" style="position:sticky; top:8px; box-shadow: rgb(21, 25, 31) 0px -8px 0px; z-index:5;
+        background-image:url('/static/images/ss_LandE.png'); background-blend-mode:multiply; background-color:rgb(170, 170, 170); background-size:200px;">
+            <div>
+                <img src="/static/images/logo_cadecraft_pfp.png"
+                width="auto" height="55px" style="margin-left:6px; margin-bottom:3px; float:left;">
+                <span class="pgtitle" style="margin-bottom:8px;">Cadecraft <span class="h4min">Games. Software. Music.</span></h4>
+            </div>
+            <div>
+                <button id="b_home" class="button2" style="margin-left:8px;" onclick="to_home();">Home</button>
+                <button id="b_webgames" class="button2" onclick="to_webgames();">Play Games</button>
+                <button id="b_ungames" class="button2" onclick="to_ungames();">Projects</button>
+                <button id="b_music" class="button2" onclick="to_music();">Music</button>
+                <button id="b_extensions" class="button2" onclick="to_extensions();">Chrome Extensions</button>
+            </div>
+        </div>
+        <hr>
+
+        <!-- HOME PAGE -->
+        <div id="pg_home" style="display:inline; margin:0;">
+            <!-- Welcome -->
+            <div class="maindiv">
+                <h3 style="font-size:16px;">Welcome to my site!</h3>
+                <h2>
+                    I make <a href="#" onclick="to_webgames();return false;">browser games</a>,
+                    <a href="#" onclick="to_webgames();return false;">downloadable games</a> for windows,
+                    chrome <a href="#" onclick="to_extensions();return false;">utility or game extensions</a>, and more.
+                    <br>All of my content is avaiable for <span class="emph">FREE</span> on this website, either by link or download.
+                    <br>Check out my best <a href="#" onclick="to_music();return false;">music</a> here on the website or on the <a href="https://www.youtube.com/playlist?list=PLbN2H2xs0W6tlWWImF9bK6xp-U0PCpN7a">YouTube playlist</a>.
+                    <br><br>Also feel free to <a href="https://discord.gg/wahdQHBs4Z">join the Discord server</a> to give me feedback or suggestions on my games and tools (or just if you're bored).
+                    <br><br>My other interests include <a href="#" onclick="to_ungames();return false;">writing</a>, 3d animation, drawing,<!--<span style="text-decoration: line-through"> anime,</span>--> and tetris.
+                    <br><br>I'm currently working on a new version of this page: <a href="https://cadecraft.github.io/index3.html">try it here</a>!
+                </h2>
+            </div>
+            <hr>
+            <!-- News -->
+            <div class="maindiv">
+                <h3 style="font-size:16px; margin-bottom:0px;">News</h3>
+                <!-- <div class="newsdiv">
+                    <h2 style="font-size:11px; margin-left:8px; color:white;">
+                        Voltaire Browser v0.0.9.2 added <span class="emph1">bookmark naming</span>, <span class="emph1">fullscreen</span>, and more (also fixed new tab bug).
+                    </h2>
+                </div> -->
+                <div class="newsdiv" style="background-image:url('/static/images/ss_tetr_v2.png'); background-size:160px;">
+                    <h2 style="font-size:11px; color:white;">
+                        Tetrome v1.1.6:<br>the best ADVANCED stacker popup game extension for Chrome!
+                        <br><br><button href="#" class="button1" style="width:90%" onclick="to_extensions();return false;">Add to Chrome</button>
+                    </h2>
+                </div>
+                <div class="newsdiv" style="background-image:url('/static/images/ss_voltaire.png'); background-size:160px;">
+                    <h2 style="font-size:11px; color:white;">
+                        Voltaire Browser v0.0.9.8:<br>a fully functional/customizable Chromebook browser
+                        <br><br><button href="#" class="button1" style="width:90%" onclick="to_extensions();return false;">Download</button>
+                    </h2>
+                </div>
+                <div class="newsdiv" style="background-image:url('/static/images/ss_regnatural.png'); background-size:160px;">
+                    <h2 style="font-size:11px; color:white;">
+                        Re:Gnatural:<br>a new time- and physics-based survival game coming soon
+                        <br><br><button href="#" class="button1" style="width:90%" onclick="to_webgames();return false;">Download</button>
+                    </h2>
+                </div>
+                <div class="newsdiv" style="background-image:url('/static/images/ss_Landform_plainsbg.png'); background-size:160px;">
+                    <h2 style="font-size:11px; color:white;">
+                        Landform Elcipse:<br>a 2d open-world exploration browser game and rendering engine
+                        <br><br><button href="#" class="button1" style="width:90%" onclick="to_webgames();return false;">Play now</button>
+                    </h2>
+                </div>
+                <!-- <h2 style="font-size:13px; margin-left:8px;">
+                    Recently released or upcoming content will appear here.
+                </h2> -->
+            </div>
+            <hr>
+            <!-- YouTube Videos -->
+            <div class="maindiv">
+                <h3 style="font-size:16px;">Videos</h3>
+                <h2>
+                    My YouTube Channel, <a href="https://youtube.com/c/AwesomeCadecraft">Awesome Cadecraft</a>, has gaming, music, tutorials, memes, game trailers, and more.
+                    <br>Here is some of my content.
+                </h2>
+                <!-- Recent Music (oceanic galaxies; driftwood = uERZj5-O47c) -->
+                <iframe width="350" height="200" src="https://www.youtube.com/embed/XUJ2iCkmNvI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <!-- FishWars 4 Trailer (change to Cadecraft About Me video) -->
+                <iframe width="350" height="200" src="https://www.youtube.com/embed/SjvuHvjC8s4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <!-- Tetrome (Formerly lab check meme) -->
+                <iframe width="350" height="200" src="https://www.youtube.com/embed/2OD1AvhZw8c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <!-- LiWOl Early Access -->
+                <iframe width="350" height="200" src="https://www.youtube.com/embed/p2dG5w1GUlk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <!-- Gallery -->
+            <div class="maindiv">
+                <h3 style="font-size:16px;">Gallery</h3>
+                <img class="hoverimg" src="/static/images/ss_fw5.png"
+                width="auto" height="300px;" style="margin-left:8px; display:block;">
+                <img class="hoverimg" src="/static/images/art_tivect_sky_islands.png"
+                width="auto" height="300px;" style="margin-left:8px; display:block;">
+                <img class="hoverimg" src="/static/images/ss_fkr4.png"
+                width="auto" height="300px;" style="margin-left:8px; display:block;">
+                <img class="hoverimg" src="/static/images/ss_plat.png"
+                width="auto" height="300px;" style="margin-left:8px; display:block;">
+            </div>
+        </div>
+        <!-- WEB GAMES PAGE -->
+        <div id="pg_webgames" style="display:none; margin:0;">
+            <!-- About: Web -->
+            <div class="maindiv">
+                <h3 style="font-size:16px;">Web Games</h3>
+                <h2>
+                    I am currently working on several games that you can play right in your <span class="emph1">browser</span>!
+                </h2>
+            </div>
+            <!-- Landform Eclipse -->
+            <div class="maindiv" style="background-image:url('static/images/ss_Landform_plainsbg.png');
+            background-size:700px; background-color:gray; background-blend-mode:multiply;">
+                <h3
+                style="font-size:16px; color:rgb(255,255,255);">Landform Eclipse</h3>
+                <div class="row" style="background-color:rgb(11, 14, 17, 0.8); padding:3px;">
+                    <h2 style="font-size:11px;">
+                        A 2d open-world exploration browser game and rendering engine by Cadecraft.
+                        <br><br>Discover the ruins of an
+                        ancient civilization here, in the Eastern Highlands, or venture towards the plains
+                        to the west and seek answers among the farming settlements--the path you follow
+                        is your choice.
+                        <br><br>(Currently IN DEVELOPMENT; the game is far from finished)
+                    </h2>
+                    <div style="width:40%; float:left; background-color:rgb(11, 14, 17, 0); padding:3px;">
+                        <button class="button1" style="display:block; width:100%; margin-top:8px;" onclick="location.href='https://cadecraft.github.io/landform-eclipse';">Play now (early access)</button>
+                    </div>
+                    <div style="display:inline; background-color:rgb(11, 14, 17, 0);">
+                        <img class="hoverimg" src="static/images/promo_Landform_v0.png"
+                        width="50%" height="auto;" style="margin-left:8px; display:block;">
+                        <!-- <iframe width="350px" height="200px" src="https://www.youtube.com/embed/p2dG5w1GUlk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+                        <!-- <iframe width="50%" height="auto" src="https://www.youtube.com/embed/J5L_j33ur5A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+                    </div>
+                </div>
+                </h3>
+            </div>
+            <!-- Lithium Wars -->
+            <div class="maindiv" style="background-image:url('static/images/SS_LiWOl2.png');
+            background-size:450px; background-color:gray; background-blend-mode:multiply;">
+                <h3
+                style="font-size:16px; color:rgb(255, 255, 255);">Lithium Wars Online</h3>
+                <div class="row" style="background-color:rgb(11, 14, 17, 0.8); padding:3px;">
+                    <h2 style="font-size:11px;">
+                        A chaotic 2d open-world multiplayer pvp platformer game that you can play right in your browser!
+                        Over time, you will find Lithium chunks and weapons across the map that can increase your power.
+                        Once you are strong enough, you can fight other players and compete for the leaderboard.
+                        But if you die, you start over with nothing. So the question is: how long will you last?
+                        <br><br>(CURRENTLY DEPRECATED: the website is offline due to hosting issues).
+                    </h2>
+                    <div style="width:40%; float:left; background-color:rgb(11, 14, 17, 0); padding:3px;">
+                        <button class="button1" style="display:block; width:100%; margin-top:8px;" onclick="location.href='https://lithiumwars.herokuapp.com/';" disabled>No longer available</button>
+                    </div>
+                    <div style="display:inline; background-color:rgb(11, 14, 17, 0);">
+                        <!-- <img class="hoverimg" src="https://cadecraft.github.io/static/images/ss_LiWOlIngame.png"
+                        width="50%" height="auto;" style="margin-left:8px; display:block;"> -->
+                        <iframe width="350px" height="200px" src="https://www.youtube.com/embed/p2dG5w1GUlk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <!-- <iframe width="50%" height="auto" src="https://www.youtube.com/embed/J5L_j33ur5A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+                    </div>
+                </div>
+            </div>
+            <!-- About: C++ -->
+            <div class="maindiv">
+                <h3 style="font-size:16px;">Download Games</h3>
+                <h2>
+                    Using C++ and OpenGL, I am working on
+                    <span class="emph1">simple, fun desktop games</span>
+                    you can quickly download and play.
+                </h2>
+            </div>
+            <!-- Re:Gnatural -->
+            <div class="maindiv" style="background-image:url('static/images/ss_regnatural.png');
+            background-size:700px; background-color:gray; background-blend-mode:multiply;">
+                <h3
+                style="font-size:16px; color:rgb(255,255,255);">Re:Gnatural</h3>
+                <div class="row" style="background-color:rgb(11, 14, 17, 0.8); padding:3px;">
+                    <h2 style="font-size:11px;">
+                        A 2d time- and physics-based survival game
+                        <br><br>You're just a gnat in a vast desert of sand, pursued by frogs,
+                        birds, and spiders that want to eat you--but with the power of
+                        friendship, will you be able to survive, grow your swarm, and shape mountains?
+                        <br><br>(Currently IN DEVELOPMENT; the game is far from finished. A test of v0.2.0 for Windows may be released by mid-summer 2023)
+                    </h2>
+                    <div style="width:40%; float:left; background-color:rgb(11, 14, 17, 0); padding:3px;">
+                        <button class="button1" style="display:block; width:100%; margin-top:8px;" onclick="location.href='https://cadecraft.github.io';" disabled>Download v0.2.0 - Windows (coming soon)</button>
+                    </div>
+                    <div style="display:inline; background-color:rgb(11, 14, 17, 0);">
+                        <img class="hoverimg" src="static/images/promo_ReGnatural.png"
+                        width="50%" height="auto;" style="margin-left:8px; display:block;">
+                    </div>
+                </div>
+                </h3>
+            </div>
+            <!-- About: Unreal -->
+            <div class="maindiv">
+                <h3 style="font-size:16px;">Download Unreal Games</h3>
+                <h2>
+                    I have used Unreal Engine and Blender to create <span class="emph1">quality single-player experiences</span>, available to download and play for <span class="emph1">free</span>.
+                    <br>Most of these only work on <span class="emph1">Windows 64bit</span>.
+                    <br><br>Only the <span class="emph1">best games</span> are included here; for the full list, head to <a href="https://cadendotlee.wixsite.com/awesomecadecraft">my old page</a>.
+                </h2>
+            </div>
+            <!-- Instructions -->
+            <div class="maindiv">
+                <img src="/static/images/ic-help.png" title="Check this link for help." width="40px" height="40px" style="float:right;">
+                <h2 style="color:rgb(230, 157, 0);">
+                    If you need help installing these games,
+                    read <a href="https://cadecraft.github.io/static/texts/Install_Cadecraft_Games.pdf">this guide document</a> or <a href="https://discord.gg/wahdQHBs4Z">join the Discord server</a>.
+                    <br>Remember that they only work on Windows 64bit.
+                </h2>
+            </div>
+            <!-- FW5 -->
+            <div class="maindiv" style="background-image:url('/static/images/ss_fw5.png'); background-size:900px;">
+                <h3
+                style="font-size:16px; color:rgb(255, 255, 255)">FishWars 5: Aftermath</h3>
+                <div class="row" style="background-color:rgb(11, 14, 17, 0.8); padding:3px;">
+                    <h2 style="font-size:11px;">
+                        In this exciting and epic first-person shooter, it is up to you to save the FishStar System as you journey across the vast and adventure-filled landscape of Fishworld Alpha.
+                        With countless quests, enemies, and upgrades, you will enjoy multiple hours of quality gameplay.
+                        Note: 0.2.0 was the last planned, but in the future I may return to this game.</h2>
+                    <div style="width:40%; float:left; background-color:rgb(11, 14, 17, 0); padding:3px;">
+                        <button class="button1" style="display:block; width:100%; margin-top:8px;" onclick="location.href='https://drive.google.com/file/d/10ttPtt-LfIiyehn2aJ_mPuLfU0oPCtgu/view?usp=sharing';">Download v0.2.0 - Windows (latest)</button>
+                        <button class="button1" style="display:block; width:100%; margin-top:8px;" onclick="location.href='https://drive.google.com/file/d/1i9JNuajH4oxo0DPJPRQrEuAAsWCWT-em/view?usp=sharing';">Download v0.1.2 - Windows</button>
+                        <button class="button1" style="display:block; width:100%; margin-top:8px;" disabled>v0.2.1 (coming in the future)</button>
+                        <button class="button1" style="display:block; width:100%; margin-top:8px;" onclick="location.href='https://docs.google.com/spreadsheets/d/10MtVY0ZCHiAg1vREWpx-ZH2KsLe_r1LB_H5sNU7p7v4/edit#gid=0';">Changes and Issues List</button>
+                    </div>
+                    <div style="display:inline; background-color:rgb(11, 14, 17, 0);">
+                        <!-- <img src="/static/images/ss_plat.png"
+                        width="50%" height="auto;" style="margin-left:8px; display:block;"> -->
+                        <iframe width="350px" height="200px" src="https://www.youtube.com/embed/J5L_j33ur5A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <!-- PROJECTS PAGE -->
+        <div id="pg_ungames" style="display:none; margin:0;">
+            <!-- About -->
+            <div class="maindiv">
+                <h3 style="font-size:16px;">Projects</h3>
+                <h2>
+                    I've made several coding projects, including <span class="emph1">websites</span> and <span class="emph1">github repositories</span>, as well as authored several <span class="emph1">novels, essays, and short stories</span>.
+                    <br>These span a wide range of content and purposes, both personal and public.
+                    <br><br>Find more content at my GitHub account, <a href="https://github.com/Cadecraft">Cadecraft</a>.
+                </h2>
+            </div>
+            <!-- Github projects -->
+            <!-- Written works (books) -->
+            <div class="maindiv">
+                <h3 style="font-size:16px;">Written works</h3>
+                <h2>
+                    Access PDFs or text files of my <span class="emph1">novels, essays, and short stories</span> here. This will be expanding as I complete more works.
+                    <br>Generally, the more recent ones are of higher caliber. Consider joining my Discord server (above) and asking me for the PDF versions,
+                    which include images and full formatting. (some of these are <span class="emph1">unfinished</span>)
+                    <br><br>
+                        Advent of Lungfish 1894 (2022) <span class="emph1">(Unfinished)</span>
+                    <br>
+                        Atoll Starboard (Science fiction) (2022) <span class="emph1">(Unfinished)</span>
+                    <br><a href="https://cadecraft.github.io/static/texts/Tivect_Lore_Volume_1_Global_Rescale_RevisedEdition.pdf">
+                        TIVECT Volume 1: Global Rescale (Lore/short story) (2022)
+                    </a>
+                    <br><a href="https://cadecraft.github.io/static/texts/Tivect_Lore_Volume_2_OfWanderersAndMoonlight_RevisedEdition.pdf">
+                        TIVECT Volume 2: Of Wanderers and Moonlight (Lore/short story) (2022)
+                    </a>
+                    <br>
+                        TIVECT Volume 3: Reason and Coelacanth (Lore/short story) (2022-2023) <span class="emph1">(Unfinished)</span>
+                    <br>
+                        TIVECT Cyan Saga: An Anthology (Lore/short story) (2023) <span class="emph1">(Unfinished)</span>
+                    <br><a href="https://cadecraft.github.io/static/texts/The_Tales_Of_Bobbathin_And_Jeffrey_Volume_1_txt.txt">
+                        The Tales of Bobbathin and Jeffrey (Science Fiction) (2018)
+                    </a>
+                    <br><a href="https://cadecraft.github.io/static/texts/The_Monsters_Invasion_Of_Fanlintropac_txt.txt">
+                        The Monsters Invasion of Fanlintropac (Science Fiction) (2016)
+                    </a>
+                </h2>
+            </div>
+            <!-- Tivect -->
+            <div class="maindiv">
+                <h3 style="font-size:16px;">Tivect</h3>
+                <h2>
+                    I have been part of the team over at <a href="https://tivect.com/">Tivect</a>,
+                    an online web game, since late 2022. I am a web developer, music producer,
+                    and Project Manager, as well as the (unofficial) lore writer (see above).
+                    <br><a href="https://game.tivect.com/">Come check out the game!</a>
+                    <br><a href="https://www.youtube.com/@tivect">Subscribe to the official YouTube channel!</a>
+                    <br><a href="https://www.youtube.com/watch?v=QqytikZy7bA&list=PLbN2H2xs0W6tlWWImF9bK6xp-U0PCpN7a&index=29">Listen to the soundtrack!</a>
+                </h2>
+            </div>
+            <!-- Tardigrade Chat -->
+            <div class="maindiv" style="background-image:url('https://i.guim.co.uk/img/media/39669fd0fa5c0193955cba565e89aa1f29cec180/0_1063_3511_2105/master/3511.jpg?width=465&quality=45&auto=format&fit=max&dpr=2&s=71e4819d043defd64df9f5a795ea0512');
+            background-size:450px; background-color:gray; background-blend-mode:multiply;">
+                <h3
+                style="font-size:16px; color:rgb(255, 255, 255)">Tardigrade Chat</h3>
+                <div class="row" style="background-color:rgb(11, 14, 17, 0.8); padding:3px;">
+                    <h2 style="font-size:11px;">
+                        A simple multi-user online chat app supporting games, customization, etc.
+                        <br>Try now! (note: the website takes a while to load for the first time)
+                    </h2>
+                    <div style="width:40%; float:left; background-color:rgb(11, 14, 17, 0); padding:3px;">
+                        <button class="button1" style="display:block; width:100%; margin-top:8px;" onclick="location.href='https://cadecraft.github.io/tchat-loader.html';">Visit now</button>
+                    </div>
+                    <div style="display:inline; background-color:rgb(11, 14, 17, 0);">
+                        <!-- <img src="https://cadecraft.github.io/static/images/ss_tetr.png"
+                        width="50%" height="auto;" style="margin-left:8px; display:block;"> -->
+                        <!-- <iframe width="50%" height="auto" src="https://www.youtube.com/embed/J5L_j33ur5A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- MUSIC PAGE -->
+        <div id="pg_music" style="display:none; margin:0;">
+            <!-- About -->
+            <div class="maindiv" style="height:210px;">
+                <iframe width="200" height="200" style="float:right;" src="https://www.youtube.com/embed/videoseries?list=PLbN2H2xs0W6tlWWImF9bK6xp-U0PCpN7a" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <h3 style="font-size:16px;">Music</h3>
+                <h2>
+                    Trance, orchestral, electronic, and other music made in FL Studio and Audiotool.
+                    <br>See my best tracks on this page, or go to my <a href="https://www.youtube.com/playlist?list=PLbN2H2xs0W6tlWWImF9bK6xp-U0PCpN7a">YouTube channel playlist</a>, <a href="https://soundcloud.com/cadecraft/albums">SoundCloud</a> account or <br><a href="https://www.audiotool.com/user/cadecraft">Audiotool</a> account.
+                    <!-- https://www.youtube.com/c/AwesomeCadecraft -->
+                </h2>
+            </div>
+            <!-- Favorites (YouTube playlist) -->
+            <div class="maindiv">
+                <h3 style="font-size:16px;">Favorite Tracks</h3>
+                <iframe width="200" height="200" style="display:inline; margin-left:50px;" src="https://www.youtube.com/embed/mRhet0tfL3I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe width="200" height="200" style="display:inline; margin-left:50px;" src="https://www.youtube.com/embed/h_e0HDcMlWQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe width="200" height="200" style="display:inline; margin-left:50px;" src="https://www.youtube.com/embed/ZVw52b9u5fA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <br>
+                <iframe width="200" height="200" style="display:inline; margin-left:50px;" src="https://www.youtube.com/embed/iqKL_W9hAfc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe width="200" height="200" style="display:inline; margin-left:50px;" src="https://www.youtube.com/embed/uERZj5-O47c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe width="200" height="200" style="display:inline; margin-left:50px;" src="https://www.youtube.com/embed/IPnAREDi20U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <!-- Embeds -->
+            <div class="maindiv">
+                <h3 style="font-size:16px;">Albums/playlists (old; unfinished)</h3>
+                <h2>Discovery</h2>
+                <iframe width="100%" height="450" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1329946363&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/cadecraft" title="Cadecraft" target="_blank" style="color: #cccccc; text-decoration: none;">Cadecraft</a> · <a href="https://soundcloud.com/cadecraft/sets/discovery" title="Discovery" target="_blank" style="color: #cccccc; text-decoration: none;">Discovery</a></div>
+                <h2>Favorite Tracks (SoundCloud)</h2>
+                <iframe width="100%" height="450" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1339917184&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/cadecraft" title="Cadecraft" target="_blank" style="color: #cccccc; text-decoration: none;">Cadecraft</a> · <a href="https://soundcloud.com/cadecraft/sets/favorites" title="Cadecraft: Favorites" target="_blank" style="color: #cccccc; text-decoration: none;">Cadecraft: Favorites</a></div>
+                <!-- <h2 style="font-size:10px; margin-left:8px;">Provided by SoundCloud</h2> -->
+            </div>
+        </div>
+        <!-- EXTENSIONS PAGE -->
+        <div id="pg_extensions" style="display:none; margin:0;">
+            <!-- About -->
+            <div class="maindiv">
+                <h3 style="font-size:16px;">Chrome Extensions</h3>
+                <h2>
+                    Both <span class="emph1">tools and games</span> for chrome, available to download for <span class="emph1">free</span>.
+                    <br>They are available to download as <span class="emph1">zipped folders</span>.
+                    <br>To add them to your chrome/chromebook, follow the steps below.
+                </h2>
+            </div>
+            <!-- Instructions -->
+            <div class="maindiv">
+                <img src="/static/images/ic-help.png" title="Check this link for help." width="40px" height="40px" style="float:right;">
+                <h2 style="color:rgb(230, 157, 0);">
+                    My extensions are not yet on the Chrome Web Store.
+                    <br>To install them on your chrome/chromebook, follow the steps on
+                    <!-- <a href="https://docs.google.com/document/d/1JQmokOOMqgV5BFe61xBBSkH7UI06-6SHG1IeSalpvKo/edit?usp=sharing">this guide document</a> or <a href="https://discord.gg/wahdQHBs4Z">join the Discord server</a>. -->
+                    <a href="https://cadecraft.github.io/static/texts/Install_Chrome_Extension_Or_App.pdf">this guide document</a> or <a href="https://discord.gg/wahdQHBs4Z">join the Discord server</a>.
+                </h2>
+            </div>
+            <!-- Tetrome -->
+            <div class="maindiv" style="background-image:url('/static/images/ss_tetr_v2.png');
+            background-size:200px; background-color:gray; background-blend-mode:multiply;">
+                <h3 style="font-size:16px; color:rgb(255, 255, 255)">Tetrome</h3>
+                <div class="row" style="background-color:rgb(11, 14, 17, 0.8); padding:3px;">
+                    <h2 style="font-size:11px;">
+                        The best ADVANCED stacker popup game for chrome!
+                        <br>Control/handling options, T-spins, hold, kicks, bag generation, advanced stats, and more.
+                        <br><br>Latest download shortened: <a href="https://bit.ly/tetrome16">https://bit.ly/tetrome16</a>
+                    </h2>
+                    <div style="width:40%; float:left; background-color:rgb(11, 14, 17, 0); padding:3px;">
+                        <button class="button1" style="display:block; width:100%; margin-top:8px;" onclick="location.href='https://drive.google.com/file/d/1q_XpgWKqyzU8oQZqfO5MCUtSVneNJaEo/view?usp=sharing';">Download v1.1.6 unpacked (latest)</button>
+                        <button class="button1" style="display:block; width:100%; margin-top:8px;" onclick="location.href='https://drive.google.com/file/d/1EUwtJ0G-be5uGRPFBzClHKu1lC9_brBR/view?usp=sharing';">Download v1.1.5 unpacked</button>
+                        <!-- <button class="button1" style="display:block; width:100%; margin-top:8px;" onclick="location.href='https://drive.google.com/file/d/1INbc7DG3WRSKVUj1HFDr1tK0m_RvSrIU/view?usp=sharing';">Download v1.1.2 unpacked</button> -->
+                        <button class="button1" style="display:block; width:100%; margin-top:8px;" onclick="location.href='https://drive.google.com/file/d/1W3cmMiEG-UHQ1fXupuNexCZ_4EbkxbEG/view?usp=sharing';">Download v1.1.0 unpacked</button>
+                        <br>
+                        <button class="button1" style="display:block; width:100%; margin-top:8px;" onclick="location.href='https://github.com/Cadecraft/tetrome-source';">GitHub Repository</button>
+                    </div>
+                    <div style="display:inline; background-color:rgb(11, 14, 17, 0);">
+                        <!-- <img src="https://cadecraft.github.io/static/images/ss_tetr.png"
+                        width="50%" height="auto;" style="margin-left:8px; display:block;"> -->
+                        <iframe width="350" height="200" src="https://www.youtube.com/embed/2OD1AvhZw8c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+            <!-- Voltaire Browser -->
+            <div class="maindiv" style="background-image:url('/static/images/ss_voltaire.png');
+            background-size:200px;">
+                <h3 style="font-size:16px; color:rgb(255, 255, 255)">Voltaire Browser</h3>
+                <div class="row" style="background-color:rgb(11, 14, 17, 0.8); padding:3px;">
+                    <h2 style="font-size:11px;">
+                        A fully functional/customizable Chromebook browser for those who feel limited by Chrome.
+                        <br>Features bookmarks, tabs, backgrounds, efficient loading, quick google search, privacy features, etc.
+                        <br><br>Latest update: v0.0.9.8 (UI improvements, UI bug fixes, and updated website/repo links)
+                        <br>Coming soon: v0.0.10 (will add ctrl+F and other features) - release date likely 2024
+                        <!-- <br><br>If you have time, <a href="https://docs.google.com/forms/d/e/1FAIpQLSf-7Cunu1xQru9nr5dMjBWrS5mqCGDrGeEyru7i-wEzEd3CeQ/viewform?usp=sf_link">fill out this usage form</a> about your experience! -->
+                        <br><br>Latest download shortened: <a href="https://bit.ly/vbrowser98">https://bit.ly/vbrowser98</a>
+                    </h2>
+                    <div style="width:40%; float:left; background-color:rgb(11, 14, 17, 0); padding:3px;">
+                        <button class="button1" style="display:block; width:100%; margin-top:8px;" onclick="location.href='https://drive.google.com/file/d/1PDoVUb2DBpiq_ZXa-PNAWKPZm7z0xBpf/view?usp=sharing';">Download v0.0.9.8 unpacked (latest)</button>
+                        <button class="button1" style="display:block; width:100%; margin-top:8px;" onclick="location.href='https://drive.google.com/file/d/1WrTnL3ZMj34BKAuR4GCjTA-ApMxbHyyT/view?usp=sharing';">Download v0.0.9.7 unpacked</button>
+                        <button class="button1" style="display:block; width:100%; margin-top:8px;" onclick="location.href='https://drive.google.com/file/d/19PC1SfWcRK4xEMhUUCNlod06heasF2am/view?usp=sharing';">Download v0.0.9.6 unpacked</button>
+                        <button class="button1" style="display:block; width:100%; margin-top:8px;" onclick="location.href='https://drive.google.com/file/d/1utlh689Rvm-zZqo85V7nLzp1s11qgw6z/view?usp=sharing';">Download v0.0.8 unpacked</button>
+                        <button class="button1" style="display:block; width:100%; margin-top:8px;" onclick="location.href='https://drive.google.com/file/d/1b4TJW0X6AjA4QY3xafkfO_8B4P-MOAV9/view?usp=sharing';">Download v0.0.7 unpacked</button>
+                        <button class="button1" style="display:block; width:100%; margin-top:8px;" onclick="location.href='https://drive.google.com/file/d/1IA3AIskpEKAM8IdD6lnmunaoJq9ev9hF/view?usp=sharing';" disabled>v0.0.10 Coming soon</button>
+                        <br>
+                        <button class="button1" style="display:block; width:100%; margin-top:8px;" onclick="location.href='https://github.com/Cadecraft/voltaire-browser-source';">GitHub Repository</button>
+                    </div>
+                    <div style="display:inline; background-color:rgb(11, 14, 17, 0);">
+                        <img class="hoverimg" src="/static/images/ss_vbrowser_features_v3.png"
+                        width="40%" height="auto;" style="margin-left:8px; display:block;">
+                        <h2 style="font-size:11px;">Unparalleled features for a Chromebook browser (v0.0.9)</h2>
+                        <!-- <iframe width="50%" height="auto" src="https://www.youtube.com/embed/J5L_j33ur5A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+                    </div>
+                </div>
+            </div>
+            <!-- CcPiano -->
+            <div class="maindiv" style="background-image:url('/static/images/ss_ccpiano2.png');
+            background-size:350px;">
+                <h3 style="font-size:16px; color:rgb(255, 255, 255)">CcPiano</h3>
+                <div class="row" style="background-color:rgb(11, 14, 17, 0.8); padding:3px;">
+                    <h2 style="font-size:11px;">
+                        A simple piano popup extension for Chrome--play with your keyboard!
+                    </h2>
+                    <div style="width:40%; float:left; background-color:rgb(11, 14, 17, 0); padding:3px;">
+                        <button class="button1" style="display:block; width:100%; margin-top:8px;" onclick="location.href='https://drive.google.com/file/d/1zkqaE1UMja2jxEcfDV7FwFQFGFRWd_j3/view?usp=sharing';">Download v0.0.5 unpacked</button>
+                        <br>
+                        <button class="button1" style="display:block; width:100%; margin-top:8px;" onclick="location.href='https://github.com/Cadecraft/ccpiano';">GitHub Repository</button>
+                    </div>
+                    <div style="display:inline; background-color:rgb(11, 14, 17, 0);">
+                        <!-- <img src="/static/images/ss_tetr.png"
+                        width="50%" height="auto;" style="margin-left:8px; display:block;"> -->
+                        <!-- <iframe width="50%" height="auto" src="https://www.youtube.com/embed/J5L_j33ur5A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+                    </div>
+                </div>
+            </div>
+            <!-- CcTimeSave -->
+            <div class="maindiv" style="background-color:#2c343d;">
+                <h3 style="font-size:16px; color:rgb(255, 255, 255)">CcTimeSave</h3>
+                <div class="row" style="background-color:rgb(11, 14, 17, 0.8); padding:3px;">
+                    <h2 style="font-size:11px;">
+                        An extension for quickly saving named timestamps
+                    </h2>
+                    <div style="width:40%; float:left; background-color:rgb(11, 14, 17, 0); padding:3px;">
+                        <button class="button1" style="display:block; width:100%; margin-top:8px;" onclick="location.href='https://drive.google.com/file/d/1pMpBhoixWIQfA0PfA95CqhNNVeKqJY8-/view?usp=sharing';">Download v0.0.2 unpacked</button>
+                        <br>
+                        <button class="button1" style="display:block; width:100%; margin-top:8px;" onclick="location.href='https://github.com/Cadecraft/CcTimeSave';">GitHub Repository</button>
+                    </div>
+                    <div style="display:inline; background-color:rgb(11, 14, 17, 0);">
+                        <img src="/static/images/icon_cctimesave.png"
+                        width="100px" height="auto;" style="margin-left:8px; display:block;">
+                        <!-- <iframe width="50%" height="auto" src="https://www.youtube.com/embed/J5L_j33ur5A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+                    </div>
+                </div>
+            </div>
+            <!-- EdpOverdrive -->
+            <div class="maindiv" style="background-image:url('/static/images/icon_edpoverdrive.png');
+            background-size:200px;">
+                <h3 style="font-size:16px; color:rgb(255, 255, 255)">EdpOverdrive 10x</h3>
+                <div class="row" style="background-color:rgb(11, 14, 17, 0.8); padding:3px;">
+                    <h2 style="font-size:11px;">
+                        Increase the speed of EdPuzzle videos up to 10x.
+                        <br>(Some manual setup required; the instructions are linked in extension)</h2>
+                    <div style="width:40%; float:left; background-color:rgb(11, 14, 17, 0); padding:3px;">
+                        <button class="button1" style="display:block; width:100%; margin-top:8px;" onclick="location.href='https://drive.google.com/file/d/1YwPDVWMoiI-n9TKTOlybLL9jPngvMN_4/view?usp=sharing';">Download v1.0.3#2 unpacked</button>
+                    </div>
+                    <div style="display:inline; background-color:rgb(11, 14, 17, 0);">
+                        <!-- <img src="/static/images/ss_tetr.png"
+                        width="50%" height="auto;" style="margin-left:8px; display:block;"> -->
+                        <!-- <iframe width="50%" height="auto" src="https://www.youtube.com/embed/J5L_j33ur5A" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer (all pages) -->
+        <hr>
+        <div class="maindiv">
+            <h3 id = "footer-ver" style="font-size:13px;">©2021-2023 Cadecraft</h3>
+            <h3 style="font-size:13px;">
+                <a href="https://www.youtube.com/c/AwesomeCadecraft">YouTube</a>
+                <br><a href="https://discord.gg/invite/wahdQHBs4Z">Discord Server</a>
+                <br><a href="https://github.com/Cadecraft">GitHub</a>
+                <br><a href="https://soundcloud.com/cadecraft/albums">Soundcloud</a>
+                <br><a href="https://www.audiotool.com/user/cadecraft">Audiotool</a>
+                <br><a href="https://cadecraft.github.io/">My Website (here)</a>
+                <br><a href="https://cadendotlee.wixsite.com/awesomecadecraft">Cadecraft Games (old site)</a>
+            </h3>
+            <img src="/static/images/logo_cadecraft_v2.png"
+            width="auto" height="40px" style="margin-left:6px; margin-bottom:3px;">
+        </div>
+    </div>
+</body>
+</html>
