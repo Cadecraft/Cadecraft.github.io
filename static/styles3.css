@@ -78,6 +78,13 @@ a:active {
 hr {
     border: solid 1px rgb(50, 59, 71);
 }
+table {
+    border-collapse: collapse;
+}
+td, th {
+    border: solid 1px rgb(50, 59, 71);
+    padding: 8px;
+}
 
 /* Dividers */
 div {
