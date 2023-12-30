@@ -1,6 +1,6 @@
 /*
 CADECRAFT DEFINITIVE STYLES
-v3.1.5; 2023/12/02
+v3.1.6; 2023/12/18
 
 SOMEWHAT BASED ON CADECRAFT DEFINITIVE STYLES 1
 v1.0.2; 2022/11/26
@@ -10,7 +10,9 @@ RE-WRITTEN AND MODIFIED FOR IMPROVED STYLE (2023/11/24)
 
 /* Body and normal text */
 body {
-    background-color: rgb(11, 14, 17);
+    /*background-color: rgb(11, 14, 17);*/
+    /* Normally background color above, but gradient for Cadecraft homepage */
+    background-image: linear-gradient(to right, rgb(0, 0, 0), rgb(11, 14, 17), rgb(11, 14, 17), rgb(0, 0, 0));
     font-family: Arial;
     font-size: 14px; /* todo: bigger text ? */
     color: rgb(191, 196, 204);
@@ -98,7 +100,7 @@ div.pagediv {
 }
 div.section {
     background-color: rgb(21, 25, 31);
-    border-radius: 2px;
+    border-radius: 2px; /* 8px ? */
     border: solid 1px rgb(32, 39, 48);
     margin: 4px;
     margin-bottom: 8px;
@@ -139,7 +141,7 @@ button {
     font-weight: normal;
     transition: all 50ms;
 }
-button:hover {
+button:hover, button:focus {
     background-color: rgb(61, 69, 83);
     outline: solid 1px rgb(101, 110, 122);
 }
@@ -157,7 +159,7 @@ button.blue {
     color: white;
     outline: solid 1px rgb(25, 125, 181);
 }
-button.blue:hover {
+button.blue:hover, button.blue:focus {
     background-color: rgb(33, 122, 175);
     outline: solid 1px rgb(37, 149, 200);
 }
