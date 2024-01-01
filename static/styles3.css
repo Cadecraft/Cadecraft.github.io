@@ -57,6 +57,9 @@ h3 { /* Dark header */
     color: rgb(230, 12, 12);
     font-weight: bold;
 }
+.graytext {
+    color: rgb(101, 110, 122);
+}
 
 /* Link */ /* todo: improve consistency of hover/style/etc (lighter?) */
 a {
@@ -105,6 +108,14 @@ div.section {
     margin: 4px;
     margin-bottom: 8px;
     padding: 12px;
+}
+div.topcurve {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+div.bottomcurve {
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
 }
 div.container-div {
     margin: 0px;
