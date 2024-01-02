@@ -1,59 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Head -->
-    <title>Tardigrade Chat 2 by Cadecraft</title>
-    <meta property="og:url" content="https://cadecraft.github.io/tchat-loader.html">
-    <meta property="og:title" content="Tardigrade Chat 2 by Cadecraft">
-    <meta property="og:description" content="A simple chat app supporting games, customization, etc.">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta property="og:site_name" content="Cadecraft: Games, Software, Music">
+    <meta property="og:url" content="https://cadecraft.github.io/">
+    <meta property="og:title" content="Cadecraft - Homepage">
+    <meta property="og:description" content="The official website homepage for Awesome Cadecraft.">
+    <meta property="og:image" content="/static/images/logo_cadecraft_pfp.png">
+    <title>
+        Tardigrade Chat 2 is loading...
+    </title>
+    <link rel="stylesheet" href="static/styles3.css">
+    <!-- Meta to immediately redirect to Tardigrade Chat -->
     <meta http-equiv="refresh" content="0; url=https://tchat-2.onrender.com" />
-    <!-- Styles -->
-    <link rel="stylesheet" src="/static/styles.css">
 </head>
-<body class="noscrollbar" style="text-align:center;">
-    <!-- MAIN DIV - CENTERED ON PAGE -->
-    <div style="width: 850px; margin:0 auto; text-align:left; background-color:rgb(0,0,0,0);">
-        <!-- Header (all pages) -->
-        <div style='margin-top:8px; padding:3px; position:sticky;'>
-            <div>
-                <img src="/static/images/logo_cadecraft_pfp.png"
-                width="auto" height="55px" style="margin-left:6px; margin-bottom:3px; float:left;">
-                <span class="pgtitle" style="margin-bottom:8px;">Cadecraft <span class="h4min">Games. Software. Music.</span></h4>
-            </div>
-        </div>
-        <hr>
 
-        <!-- LOADING PAGE -->
-        <div id="pg_loading" style="display:inline; margin:0;">
-            <!-- Welcome -->
-            <div style="margin-top:8px; padding:3px;">
-                <h3 style="font-size:16px;">Loading Tardigrade Chat...</h3>
-                <h2 style="font-size:13px; margin-left:8px;">
-                    Due to the nature of free hosting, Tardigrade Chat can take around 30 seconds to
-                    <br>load after not being used.
-                    <br>You will soon be redirected to <a href="https://tchat-2.onrender.com">https://tchat-2.onrender.com</a>
-                    <!-- todo: "meanwhile, " <provide a clicking button or something> -->
-                    <br>
-                    <br>If you think this is a mistake, contact me in my <a href="https://discord.gg/invite/wahdQHBs4Z">Discord Server</a>.
-                </h2>
-            </div>
-        </div>
-
-        <!-- Footer (all pages) -->
-        <div style="margin-top:8px; padding:3px;">
-            <h3 id = "footer-ver" style="font-size:13px;">Cadecraft ● 2021-2022</h3>
-            <h3 style="font-size:13px;">
-                <a href="https://www.youtube.com/c/AwesomeCadecraft">YouTube</a>
-                <br><a href="https://discord.gg/invite/wahdQHBs4Z">Discord Server</a>
-                <br><a href="https://github.com/Cadecraft">GitHub</a>
-                <br><a href="https://soundcloud.com/cadecraft/albums">Soundcloud</a>
-                <br><a href="https://www.audiotool.com/user/cadecraft">Audiotool</a>
-                <br><a href="https://cadecraft.github.io/">My Website (here)</a>
-                <br><a href="https://cadendotlee.wixsite.com/awesomecadecraft">Cadecraft Games (old site)</a>
-            </h3>
-            <img src="/static/images/logo_cadecraft_v2.png"
-            width="auto" height="40px" style="margin-left:6px; margin-bottom:3px;">
+<body style="text-align:center;">
+    <!-- HEADER (all pages, sticky) -->
+    <div class="headerdiv" style="background-image:url('static/images/ss_LandE.png');">
+        <div style="width:800px; text-align:left; display:inline-block; padding:0px; margin:0px;">
+            <img style="float:left;" height="55px" src="static/images/logo_cadecraft_pfp.png">
+            <span style="font-family: 'Starbase Disconnect'">
+                <span style="display:inline; margin-left:16px; font-size:16px; color:rgb(28, 160, 203);">Cadecraft</span>
+                <div style="width:20px; display:inline;"></div>
+                <span style="display:inline; color:rgb(93, 102, 116); font-size:10px; float:right; margin-right:20px;">Games. Software. Music.</span>
+            </span>
         </div>
     </div>
+    <br>
+
+    <!-- MAIN DIV (centered on page) -->
+    <div class="maindiv">
+
+        <!-- HOME PAGE -->
+        <div id="pg_home" class="pagediv" style="display:inline;">
+            <!-- Welcome -->
+            <div class="section topcurve">
+                <h3>Loading Taridgrade Chat...</h3>
+                <p>
+                    Due to the nature of free hosting, Tardigrade Chat can take around 30 seconds to
+                    load if not being used.
+                    <br>You will soon be redirected to <a href="https://tchat-2.onrender.com">https://tchat-2.onrender.com</a>.
+                    <br>If you think this is a mistake, contact me in my <a href="https://discord.gg/invite/wahdQHBs4Z">Discord Server</a>.
+                </p>
+                <hr>
+                <div class="progress_bg">
+                    <div id="loadingProgress" class="progress_inner" style="width: 0%"></div>
+                </div>
+                <!-- <hr>
+                <button class="blue" id="clicker">Click me!</button> -->
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="section bottomcurve" id="footer">
+            <h3>© 2021-2023 Cadecraft</h3>
+            <p>
+                All content created by me, excluding some logos used.
+                <br>This website was made in pure JS/HTML/CSS.
+            </p>
+            <hr>
+            <a href="https://youtube.com/@AwesomeCadecraft">YouTube</a>
+            <br><a href="https://discord.gg/invite/wahdQHBs4Z">Discord Server</a>
+            <br><a href="https://github.com/Cadecraft">GitHub</a>
+            <br><a href="https://soundcloud.com/cadecraft/albums">Soundcloud</a>
+            <br><a href="https://www.audiotool.com/user/cadecraft">Audiotool</a>
+            <br><a href="https://cadecraft.github.io/">My Website (here)</a>
+            <br><a href="https://cadendotlee.wixsite.com/awesomecadecraft">Cadecraft Games (old site)</a>
+            <img title="Cadecraft logo" alt="Cadecraft logo" src="static/images/logo_cadecraft_v2.png" style="height:32px; float:right; position:relative; bottom:16px;">
+        </div>
+    </div>
+
+    <!-- Script for tchat loader -->
+    <script>
+        // Loading bar
+        const loadingProgress = document.getElementById("loadingProgress");
+        let startTime = Date.now();
+        setInterval(function() {
+            let currentTime = Date.now();
+            let differenceMs = currentTime - startTime;
+            let differenceS = differenceMs / 1000;
+            let percent = differenceS / 30;
+            loadingProgress.style.width = "" + Math.min(100, percent * 100) + "%";
+        }, 200);
+        // Clicker
+        /*const clicker = document.getElementById("clicker");
+        let clickCount = 0;
+        clicker.addEventListener("click", function() {
+            clickCount++;
+            clicker.innerText = "" + clickCount;
+        });*/
+    </script>
 </body>
 </html>

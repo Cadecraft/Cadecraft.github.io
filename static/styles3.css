@@ -234,6 +234,25 @@ iframe {
     border-radius: 8px;
     box-shadow: 0px 2px 16px rgb(0,0,0,0.3);
 }
+div.progress_bg {
+    padding: 0px;
+    height: 20px;
+    width: 300px;
+    background-color: rgb(49 55 67);
+    outline: solid 1px rgb(66 74 84);
+    border-radius: 4px;
+    box-sizing: border-box;
+    box-shadow: 0px 2px 16px rgb(0,0,0,0.3);
+    overflow: hidden;
+}
+div.progress_inner {
+    margin: 0px;
+    padding: 0px;
+    height: 20px;
+    background-color: rgb(37, 149, 200);
+    width: 50%; /* override */
+    box-sizing: border-box;
+}
 
 /* Cadecraft Homepage specific features */
 @font-face { font-family: 'Starbase Disconnect';
