@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta property="og:site_name" content="YZ! A game of skill">
+	<meta property="og:url" content="https://cadecraft.github.io/yz">
+	<meta property="og:title" content="YZ! A game of skill">
+	<meta property="og:description" content="A very skill-based game">
+	<title>
+	    YZ! A game of skill
+	</title>
+	<link rel="stylesheet" href="static/yz/styles.css">
+	<script defer src="static/yz/script.js"></script>
+</head>
+<body style="text-align:center;">
+	<div class="maindiv">
+		<!-- Header and menu -->
+		<h1>YZ! A game of skill</h1>
+
+		<hr>
+
+		<!-- Score sheet -->
+		<table id="maintable">
+			<tr>
+				<th style="background-color: gray; color: white;"><span>Type</span></th>
+				<th style="background-color: red; color: white;"><span>Player 1</span></th>
+				<th style="background-color: blue; color: white;"><span>Player 2</span></th>
+			</tr>
+		</table>
+
+		<hr>
+
+		<!-- Dice section -->
+		<div id="dicebox">
+			<img id="dice_1" src="static/yz/img_dice_6.png" class="diceimg diceimg_normal">
+			<img id="dice_2" src="static/yz/img_dice_6.png" class="diceimg diceimg_normal">
+			<img id="dice_3" src="static/yz/img_dice_6.png" class="diceimg diceimg_normal">
+			<img id="dice_4" src="static/yz/img_dice_6.png" class="diceimg diceimg_normal">
+			<img id="dice_5" src="static/yz/img_dice_6.png" class="diceimg diceimg_normal">
+			<img id="dice_6" src="static/yz/img_dice_6.png" class="diceimg diceimg_normal" style="display:none;">
+		</div>
+		<br>
+		<button id="mainbutton" class="button_p1">Player 1 Roll</button>
+	</div>
+</body>
