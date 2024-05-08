@@ -187,12 +187,11 @@ function render() {
 				newbutton.innerText = currentState.possibleMoves[i];
 				let thisi = i;
 				newbutton.addEventListener("click", () => {
-					// TODO: impl on click
 					currentState.scores_p1[thisi] = currentState.possibleMoves[thisi];
 					resetForNextTurn();
 					currentState.turnPlayerId = 3 - currentState.turnPlayerId;
 					render();
-					// TODO: endgame
+					// TODO: endgame, refactor this into a function?
 				});
 				document.getElementById("row_" + i + "_p1").appendChild(newbutton);
 			} else {
@@ -202,7 +201,6 @@ function render() {
 				newbutton.innerText = "0";
 				let thisi = i;
 				newbutton.addEventListener("click", () => {
-					// TODO: impl on click
 					currentState.scores_p1[thisi] = 0;
 					resetForNextTurn();
 					currentState.turnPlayerId = 3 - currentState.turnPlayerId;
@@ -212,9 +210,59 @@ function render() {
 				document.getElementById("row_" + i + "_p1").appendChild(newbutton);
 			}
 			// TODO: display the other player's current scores
+			document.getElementById("row_" + i + "_p2").innerHTML = "";
+			if (i in currentState.scores_p2) {
+				// Text: this many points earned
+				document.getElementById("row_" + i + "_p2").innerText = currentState.scores_p2[i];
+			} else {
+				// Text: blank
+				document.getElementById("row_" + i + "_p2").innerText = "-";
+			}
 		} else {
 			// Player 2
 			// TODO: copy from above, changing 1 to 2
+			document.getElementById("row_" + i + "_p2").innerHTML = "";
+			if (i in currentState.scores_p2) {
+				// Text: this many points earned
+				document.getElementById("row_" + i + "_p2").innerText = currentState.scores_p2[i];
+			} else if (i in currentState.possibleMoves) {
+				// Button: this many points possible
+				let newbutton = document.createElement("button");
+				newbutton.className = "button_p2";
+				newbutton.innerText = currentState.possibleMoves[i];
+				let thisi = i;
+				newbutton.addEventListener("click", () => {
+					currentState.scores_p2[thisi] = currentState.possibleMoves[thisi];
+					resetForNextTurn();
+					currentState.turnPlayerId = 3 - currentState.turnPlayerId;
+					render();
+					// TODO: endgame, refactor this into a function?
+				});
+				document.getElementById("row_" + i + "_p2").appendChild(newbutton);
+			} else {
+				// Button: zero points
+				let newbutton = document.createElement("button");
+				newbutton.className = "button_p2";
+				newbutton.innerText = "0";
+				let thisi = i;
+				newbutton.addEventListener("click", () => {
+					currentState.scores_p2[thisi] = 0;
+					resetForNextTurn();
+					currentState.turnPlayerId = 3 - currentState.turnPlayerId;
+					render();
+					// TODO: endgame
+				});
+				document.getElementById("row_" + i + "_p2").appendChild(newbutton);
+			}
+			// TODO: display the other player's current scores
+			document.getElementById("row_" + i + "_p1").innerHTML = "";
+			if (i in currentState.scores_p1) {
+				// Text: this many points earned
+				document.getElementById("row_" + i + "_p1").innerText = currentState.scores_p1[i];
+			} else {
+				// Text: blank
+				document.getElementById("row_" + i + "_p1").innerText = "-";
+			}
 		}
 	}
 }
