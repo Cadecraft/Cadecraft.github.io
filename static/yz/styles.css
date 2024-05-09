@@ -93,3 +93,15 @@ button.button_p2 {
 button.button_p2:active {
 	background-color: rgb(0, 0, 130);
 }
+button.button_p3 {
+	background-color: rgb(232, 123, 21);
+}
+button.button_p3:active {
+	background-color: rgb(179, 84, 7);
+}
+button.button_disabled {
+	background-color: rgb(138, 143, 158);
+}
+button.button_disabled:active {
+	background-color: rgb(96, 101, 115);
+}
