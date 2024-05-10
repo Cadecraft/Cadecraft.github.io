@@ -54,6 +54,13 @@ th {
 .diceimg_locked {
 	outline: 3px solid orange;
 }
+.diceimg_sixth {
+	outline: 6px solid rgb(212, 53, 190);
+	margin: 0px;
+}
+.diceimg_squeeze {
+	margin: 0px;
+}
 
 /* Misc */
 hr {

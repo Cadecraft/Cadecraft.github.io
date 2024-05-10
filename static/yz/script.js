@@ -63,7 +63,8 @@ let currentState = {
 	dice: [0, 0, 0, 0, 0, 0], // 1-6, or 0 for none
 	diceLocked: [false, false, false, false, false, false],
 	possibleMoves: {}, // Move ID: points that could be earned
-	winner: -1 // -1 (the game is not finished), 1, 2, or 3 (tie)
+	winner: -1, // -1 (the game is not finished), 1, 2, or 3 (tie)
+	usingSixth: false
 };
 
 // Reset the state to start a whole new game
@@ -76,7 +77,8 @@ function restartComplete() {
 		dice: [0, 0, 0, 0, 0, 0],
 		diceLocked: [false, false, false, false, false, false],
 		possibleMoves: {},
-		winner: -1
+		winner: -1,
+		usingSixth: false
 	};
 }
 
@@ -113,10 +115,19 @@ function calculatePossibilities() {
 	for (let i = 0; i < 5; i++) {
 		if (currentState.dice[i] != type1) type2 = currentState.dice[i];
 	}
-	if (type1 == type2) {
-		// YZ!
+	if (type1 == type2 && currentState.usingSixth && type1 == currentState.dice[5]) {
+		// 6 of a kind
 		currentState.possibleMoves[11] = 50;
-		// TODO: add in 6th dice
+		currentState.possibleMoves[13] = 60;
+		currentState.usingSixth = false;
+	} else if (type1 == type2 && currentState.usingSixth) {
+		// Multi-time YZ
+		currentState.possibleMoves[11] = 50;
+	}else if (type1 == type2 && !currentState.usingSixth) {
+		// First-time YZ!
+		currentState.possibleMoves[11] = 50;
+		currentState.usingSixth = true;
+		currentState.dice[5] = 0;
 	} else if ((countDice(type1) == 3 && countDice(type2) == 2) || (countDice(type1) == 2 && countDice(type2) == 3)) {
 		// Full house
 		currentState.possibleMoves[8] = 25;
@@ -155,6 +166,7 @@ function resetForNextTurn() {
 	currentState.diceLocked = [false, false, false, false, false, false];
 	currentState.possibleMoves = {};
 	currentState.turnRollNumber = 1;
+	currentState.usingSixth = false;
 }
 
 // Commit a move (from clicking a rendered move button for the thisi-th move type)
@@ -221,7 +233,6 @@ function render() {
 		// TODO: screen rotation
 		mainbutton.className = "bigmain button_p" + currentState.turnPlayerId;
 		if (currentState.turnRollNumber > MAX_ROLLS) {
-			// TODO: disable button (make gray?)
 			mainbutton.className = "bigmain button_disabled";
 			mainbutton.innerText =
 				"P" + currentState.turnPlayerId + " - Out of rolls";
@@ -232,12 +243,19 @@ function render() {
 
 		}
 	}
+	// 6th dice?
+	document.getElementById("dice_6").style.display = currentState.usingSixth ? "inline" : "none";
+	document.getElementById("dice_6").src = "static/yz/img_dice_" + currentState.dice[5] + ".png";
 	// Dice
+	// TODO: add question mark mid-roll (quick re-render)
 	for (let i = 0; i < 5; i++) {
 		let imgsrc = "static/yz/img_dice_" + currentState.dice[i] + ".png";
 		document.getElementById("dice_" + (i + 1)).src = imgsrc;
 		document.getElementById("dice_" + (i + 1)).className =
 			"diceimg " + (currentState.diceLocked[i] ? "diceimg_locked" : "diceimg_normal");
+		if (currentState.usingSixth) {
+			document.getElementById("dice_" + (i + 1)).className += " diceimg_squeeze";
+		}
 	}
 	// Moves/possible moves
 	for (let i = 0; i < MOVES.length; i++) {
@@ -327,6 +345,24 @@ for (let i = 0; i < 5; i++) {
 		render();
 	});
 }
+
+// 6th Dice roll
+document.getElementById("dice_6").addEventListener("click", () => {
+	if (currentState.winner != -1) {
+		// Winner already decided
+		return;
+	}
+	if (currentState.usingSixth) {
+		// Roll it
+		currentState.dice[5] = Math.floor(Math.random() * 6) + 1;
+		// Check if matches
+		calculatePossibilities();
+		// Render
+		render();
+		// Remove this dice next time
+		currentState.usingSixth = false;
+	}
+});
 
 // Update the state based on the click of the button and the current state
 mainbutton.addEventListener("click", () => {
