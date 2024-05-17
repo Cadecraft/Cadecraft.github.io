@@ -212,6 +212,22 @@ function commitMove(thisi) {
 	render();
 }
 
+// Render the dice temporarily rolling (display the side that is a value that is delta less)
+function renderDiceRolling(delta) {
+	// TODO: impl a better animation (in the roll code) ?
+	for (let i = 0; i < 5; i++) {
+		let currentDiceVal = currentState.dice[i];
+		if (!currentState.diceLocked[i]) currentDiceVal -= delta;
+		if (currentDiceVal <= 0) currentDiceVal += 6;
+		let imgsrc = "static/yz/img_dice_" + currentDiceVal + ".png";
+		document.getElementById("dice_" + (i + 1)).src = imgsrc;
+		document.getElementById("dice_" + (i + 1)).className =
+			"diceimg " + (currentState.diceLocked[i] ? "diceimg_locked" : "diceimg_normal");
+		if (currentState.usingSixth) {
+			document.getElementById("dice_" + (i + 1)).className += " diceimg_squeeze";
+		}
+	}
+}
 
 // Render the page based on the current state
 function render() {
@@ -247,7 +263,6 @@ function render() {
 	document.getElementById("dice_6").style.display = currentState.usingSixth ? "inline" : "none";
 	document.getElementById("dice_6").src = "static/yz/img_dice_" + currentState.dice[5] + ".png";
 	// Dice
-	// TODO: add question mark mid-roll (quick re-render)
 	for (let i = 0; i < 5; i++) {
 		let imgsrc = "static/yz/img_dice_" + currentState.dice[i] + ".png";
 		document.getElementById("dice_" + (i + 1)).src = imgsrc;
@@ -366,6 +381,7 @@ document.getElementById("dice_6").addEventListener("click", () => {
 
 // Update the state based on the click of the button and the current state
 mainbutton.addEventListener("click", () => {
+	let rolledDice = false;
 	if (currentState.winner != -1) {
 		// Winner already decided: restart the entire game
 		restartComplete();
@@ -378,11 +394,23 @@ mainbutton.addEventListener("click", () => {
 			rollDice();
 			currentState.turnRollNumber++;
 			calculatePossibilities();
+			rolledDice = true;
 		}
 	}
 	// Update state: possible moves, scores, etc.
 	// Render
-	render();
+	if (rolledDice) {
+		// Rolling animation
+		// TODO: refactor?
+		renderDiceRolling(5);
+		setTimeout(renderDiceRolling(4), 20);
+		setTimeout(renderDiceRolling(3), 40);
+		setTimeout(renderDiceRolling(2), 60);
+		setTimeout(renderDiceRolling(1), 80);
+		setTimeout(render, 100);
+	} else {
+		render();
+	}
 });
 
 // PAGE SETUP: generate the table by moves
