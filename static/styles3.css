@@ -18,6 +18,7 @@ body {
     color: rgb(191, 196, 204);
     padding: 0px; /* Normally 8px, but 0px for Cadecraft homepage */
     text-align: center; /* For Cadecraft homepage */
+    margin: 0px;
 }
 ::-webkit-scrollbar {
     display: none;
@@ -255,13 +256,14 @@ div.progress_inner {
 }
 
 /* Cadecraft Homepage specific features */
-@font-face { font-family: 'Starbase Disconnect';
-    src: url('/static/fonts/starbase-disconnect.woff2') format(woff2), /* todo: re-add initial / */
-    url('/static/fonts/starbase-disconnect.woff') format(woff);
+@font-face {
+    font-family: 'Starbase Disconnect';
+    src: url('./fonts/starbase-disconnect.ttf');
 }
-@font-face { font-family: 'Starbase Disconnect'; font-weight:bold;
-    src: url('/static/fonts/starbase-disconnect.woff2') format(woff2),
-    url('/static/fonts/starbase-disconnect.woff') format(woff);
+@font-face {
+    font-family: 'Starbase Disconnect';
+    font-weight: bold;
+    src: url('./fonts/starbase-disconnect.ttf');
 }
 div.maindiv {
     width: 850px;
